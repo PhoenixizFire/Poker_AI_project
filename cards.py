@@ -53,12 +53,18 @@ class Deck:
         self.shuffle()
 
     def create_deck(self):
+        print("Adding cards to the deck")
         for value in range(13):
             for figure in ['Hearts','Spades','Clubs','Diamonds']:
                 self.content.append(Card(value+1,figure))
 
     def shuffle(self):
+        print("Shuffling deck")
         random.shuffle(self.content)
+
+    def reset(self):
+        print("Resetting the deck")
+        self.__init__()
 
     def __repr__(self):
         return str(self.content)

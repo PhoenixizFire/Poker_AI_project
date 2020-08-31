@@ -16,7 +16,7 @@ class Game:
         print('Shuffling the cards')
         self.deck = Deck()
         print('Filling players pockets')
-        self.players = [Player(base_money) for i in range(n_players)]
+        self.players = [Player(i+1,base_money) for i in range(n_players)]
         self.main()
     
     def main(self):
@@ -26,6 +26,10 @@ class Game:
             self.set_roles(turn)
             self.set_blinds()
             self.set_cards()
+            ### GAME
+            self.set_first_round()
+            ### GAME
+            self.deck.reset()
             break
 
     def set_roles(self,turn):
@@ -36,31 +40,45 @@ class Game:
             i.big_blind = False
         print("Players status reset")
         self.players[(turn-1)%n_players].dealer = True
-        print(f"Player {(turn-1)%n_players} is the dealer")
+        print(f"Player {((turn-1)%n_players)+1} is the dealer")
         self.players[turn%n_players].small_blind = True
-        print(f"Player {turn%n_players} is the small blind")
+        print(f"Player {(turn%n_players)+1} is the small blind")
         self.players[(turn+1)%n_players].big_blind = True
-        print(f"Player {(turn+1)%n_players} is the dealer")
+        print(f"Player {((turn+1)%n_players)+1} is the dealer")
 
     def set_blinds(self):
         for i in self.players:
-            if i.small_blind==True:i.set_blind()
+            if i.small_blind==True:
+                self.board.small_blind = i.set_blind()
         print('Small blind set')
         for i in self.players:
-            if i.big_blind==True:i.set_blind()
+            if i.big_blind==True:
+                self.board.big_blind = i.set_blind()
         print('Big blind set')
 
     def set_cards(self):
+        for i in self.players:
+            i.hand = list()
         print('Distributing cards')
         for i in self.players+self.players:
             draw = random.choice(self.deck.content)
             i.hand.append(draw)
             self.deck.content.remove(draw)
         for i in self.players:
-            print(i.hand)
+            print(i)
 
     def set_first_round(self):
-        pass
+        n_players = len(self.players)
+        for i in self.players:
+            if i.big_blind:
+                get_id = i.id
+        play_order = [(get_id+i)%n_players+1 for i in range(n_players)]
+        ## print(f"{play_order}")
+        for i in play_order:
+            for j in self.players:
+                if j.id==i:
+                    ## PLAY
+                    print(f"Player {i}, what do you want to do ?")
 
     def the_flop(self):
         for _ in range(3):
