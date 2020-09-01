@@ -32,6 +32,27 @@ class Game:
             self.deck.reset()
             break
 
+    def available_moves(self,phase):
+        moves = list()
+        moves.append("Fold") # EVERYTIME
+        moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+        moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+        moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+        moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+        return moves
+
+    def play_moves(self,player,choice):
+        if choice == "Fold":
+            player.fold()
+        elif choice == "Call":
+            player.call()
+        elif choice == "Raise":
+            player.relaunch()
+        elif choice == "Bet":
+            player.bet()
+        elif choice == "Check":
+            player.check()
+
     def set_roles(self,turn):
         n_players = len(self.players)
         for i in self.players:
@@ -56,7 +77,7 @@ class Game:
                 self.board.big_blind = i.set_blind()
         print('Big blind set')
 
-    def set_cards(self):
+    def set_cards(self): # Distribution starts from small blind and goes on
         for i in self.players:
             i.hand = list()
         print('Distributing cards')
@@ -78,9 +99,10 @@ class Game:
             for j in self.players:
                 if j.id==i:
                     ## PLAY
-                    print(f"Player {i}, what do you want to do ?")
+                    choice = input(f"Player {i}, what do you want to do ? {self.available_moves(1)}")
+                    self.play_moves(j,choice)
 
-    def the_flop(self):
+    def the_flop(self): # Need to burn the first card from the deck before flopping
         for _ in range(3):
             draw = random.choice(self.deck.content)
             self.board.community_cards.append(draw)
@@ -89,7 +111,7 @@ class Game:
     def set_second_round(self):
         pass
 
-    def the_turn(self): #same as the flop but one card only
+    def the_turn(self): #same as the flop but one card only # Need to burn the first card from the deck before flopping
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
@@ -97,7 +119,7 @@ class Game:
     def set_third_round(self): #same as second
         pass
 
-    def the_river(self): #same as the turn
+    def the_river(self): #same as the turn # Need to burn the first card from the deck before flopping
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)

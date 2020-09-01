@@ -8,6 +8,7 @@ class Player:
         self.small_blind = False
         self.big_blind = False
         self.current_bet = int()
+        self.active = True
 
     @property
     def dealer(self):
