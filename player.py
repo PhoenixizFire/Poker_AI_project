@@ -42,7 +42,8 @@ class Player:
             arg = "small"
         elif self.big_blind==True:
             arg = "big"
-        bet = int(input(f"Setting {arg} blind. How much do you pay player {self.id} ? "))
+        bet = input(f"Setting {arg} blind. How much do you pay player {self.id} ? ")
+        bet = int(bet)
         self.money-=bet
         self.current_bet+=bet
         return bet
@@ -57,7 +58,7 @@ class Player:
 
     def fold(self):
         # Down the hand without paying further (any turn)
-        pass
+        self.active = False
 
     def bet(self):
         # Second turn

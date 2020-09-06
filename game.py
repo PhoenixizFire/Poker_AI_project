@@ -35,11 +35,22 @@ class Game:
     def available_moves(self,phase):
         moves = list()
         moves.append("Fold") # EVERYTIME
-        moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
-        moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
-        moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
-        moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+        if phase==1 or self.board.current_bid>0:
+            moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+            moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+        if phase>1 and self.board.current_bid==0:
+            moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+            moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
         return moves
+
+    def next_phase(self):
+        active_players = list()
+        for i in self.players:
+            if i.active==True:
+                active_players.append(i.current_bet)
+        if len(active_players)==1:
+            return True
+        return active_players[1:] == active_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL. DOESNT ACTUALLY TAKE IN COUNT IF ALL-IN.
 
     def play_moves(self,player,choice):
         if choice == "Fold":
@@ -97,10 +108,18 @@ class Game:
         ## print(f"{play_order}")
         for i in play_order:
             for j in self.players:
-                if j.id==i:
+                if j.id==i and j.active==True:
                     ## PLAY
                     choice = input(f"Player {i}, what do you want to do ? {self.available_moves(1)}")
                     self.play_moves(j,choice)
+        while_token = 0
+        while not self.next_phase():
+            active_id = play_order[while_token%n_players]
+            for i in self.players:
+                if i.id==active_id and i.active==True:
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
+                    self.play_moves(i,choice)
+            while_token+=1
 
     def the_flop(self): # Need to burn the first card from the deck before flopping
         for _ in range(3):
