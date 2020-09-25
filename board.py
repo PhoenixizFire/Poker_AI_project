@@ -8,11 +8,20 @@ class Board:
         self.big_blind = int()
         self.current_bid = 0
         self.community_cards = list()
+        self.side_pots = list()
 
     @property
+    def current_bid(self):
+        return self._current_bid
+
+    @current_bid.setter
     def current_bid(self,value):
         self._current_bid = value
 
-    @current_bid.getter
-    def current_bid(self):
-        return self._current_bid
+    @property
+    def side_pots(self):
+        return self._side_pots
+
+    @side_pots.setter
+    def side_pots(self,situation): #???
+        pass #Schéma : List of {"players":list(),"value":int()} for each side pot

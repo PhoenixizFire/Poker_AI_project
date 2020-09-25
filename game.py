@@ -45,20 +45,28 @@ class Game:
 
     def next_phase(self):
         active_players = list()
+        betting_players = list()
+        active_bid = self.board.current_bid
         for i in self.players:
             if i.active==True:
-                active_players.append(i.current_bet)
-        if len(active_players)==1:
+                active_players.append(i)
+                if i.all_in==False:
+                    betting_players.append(i.current_bet)
+        if len(active_players)==1: #IF ONLY ONE PLAYER LEFT => NEXT PHASE
             return True
-        return active_players[1:] == active_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL. DOESNT ACTUALLY TAKE IN COUNT IF ALL-IN.
+        else: #IF MORE THAN ONE PLAYER LEFT
+            if len(betting_players)==0: #IF NONE IS BETTING (EVERY ACTIVE PLAYER GOES ALL-IN)
+                return True
+            else:
+                return betting_players[1:] == betting_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL (IF ALL-IN THEN NOT CHECKED)
 
     def play_moves(self,player,choice):
         if choice == "Fold":
             player.fold()
         elif choice == "Call":
-            player.call()
+            player.call(self.board.current_bid)
         elif choice == "Raise":
-            player.relaunch()
+            player.relaunch(self.board.current_bid)
         elif choice == "Bet":
             player.bet()
         elif choice == "Check":
@@ -108,7 +116,7 @@ class Game:
         ## print(f"{play_order}")
         for i in play_order:
             for j in self.players:
-                if j.id==i and j.active==True:
+                if j.id==i and j.active==True and j.all_in==False:
                     ## PLAY
                     choice = input(f"Player {i}, what do you want to do ? {self.available_moves(1)}")
                     self.play_moves(j,choice)
@@ -116,7 +124,7 @@ class Game:
         while not self.next_phase():
             active_id = play_order[while_token%n_players]
             for i in self.players:
-                if i.id==active_id and i.active==True:
+                if i.id==active_id and i.active==True and i.all_in==False:
                     choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
                     self.play_moves(i,choice)
             while_token+=1

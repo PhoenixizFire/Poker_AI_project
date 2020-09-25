@@ -1,14 +1,15 @@
 class Player:
 
     def __init__(self,idty,money):
-        self.id = idty
-        self.money = money
-        self.hand = list()
-        self.dealer = False
-        self.small_blind = False
-        self.big_blind = False
-        self.current_bet = int()
-        self.active = True
+        self.id = idty #Identité du joueur
+        self.money = money #Argent du joueur
+        self.hand = list() #Cartes en main du joueur
+        self.dealer = False # Est-il le dealer sur la manche ?
+        self.small_blind = False # Est-il small blind sur la manche ?
+        self.big_blind = False # Est-il big blind sur la manche ?
+        self.current_bet = int() # Combien a-t-il de jetons devant lui pour ce tour ?
+        self.active = True # Le joueur est-il toujours actif ou s'est-il couché ?
+        self.all_in = False # Le joueur a-t'il fait tapis ?
 
     @property
     def dealer(self):
@@ -42,27 +43,38 @@ class Player:
             arg = "small"
         elif self.big_blind==True:
             arg = "big"
-        bet = input(f"Setting {arg} blind. How much do you pay player {self.id} ? ")
+        bet = input(f"Setting {arg} blind. How much do you pay, player {self.id} ? ")
         bet = int(bet)
         self.money-=bet
         self.current_bet+=bet
         return bet
 
-    def call(self):
+    def call(self,bid):
         # Pay same as Big Blind (First turn or if someone already bet in further turns)
-        pass
+        difference = bid - self.current_bet
+        self.money-=difference
+        self.current_bet+=difference
 
-    def relaunch(self): #raise
+    def relaunch(self,bid): #raise
         # Pay more than Big Blind (First turn or if someone already bet in further turns)
-        pass
+        qty = input(f"How much do you want to raise to, player {self.id} ? ")
+        qty = int(qty)
+        difference = qty-self.current_bet
+        self.money-=difference
+        self.current_bet+=difference
 
-    def fold(self):
+    def fold(self,active_pot):
         # Down the hand without paying further (any turn)
         self.active = False
+        active_pot+=self.current_bet
+        self.current_bet = 0
 
     def bet(self):
-        # Second turn
-        pass
+        # Second turn and further
+        bet = input(f"How much do you wanna bet, player {self.id} ? ")
+        bet = int(bet)
+        self.money-=bet
+        self.current_bet+=bet
 
     def check(self):
         # Second turn and further only if nobody bet before you (wait for other players to play)
