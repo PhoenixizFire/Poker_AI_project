@@ -15,6 +15,7 @@ class Game:
         self.board = Board()
         print('Shuffling the cards')
         self.deck = Deck()
+        self.deck.big
         print('Filling players pockets')
         self.players = [Player(i+1,base_money) for i in range(n_players)]
         self.main()
@@ -26,9 +27,20 @@ class Game:
             self.set_roles(turn)
             self.set_blinds()
             self.set_cards()
-            ### GAME
+
             self.set_first_round()
-            ### GAME
+            self.the_flop()
+            self.resume_active_players()
+
+            self.set_second_round()
+            self.the_turn()
+            self.resume_active_players()
+
+            self.set_third_round()
+            self.the_river()
+            self.resume_active_players()
+
+            self.set_fourth_round()
             self.deck.reset()
             break
 
@@ -53,22 +65,30 @@ class Game:
                 if i.all_in==False:
                     betting_players.append(i.current_bet)
         if len(active_players)==1: #IF ONLY ONE PLAYER LEFT => NEXT PHASE
+            for i in active_players:
+                if i.active:
+                    print(f"Player {i.id} won the round. He won {self.board.pot}") #TODO Add the correct pot management with the winning management
             return True
         else: #IF MORE THAN ONE PLAYER LEFT
             if len(betting_players)==0: #IF NONE IS BETTING (EVERY ACTIVE PLAYER GOES ALL-IN)
                 return True
             else:
-                return betting_players[1:] == betting_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL (IF ALL-IN THEN NOT CHECKED)
+                if sum(betting_players)==0:
+                    return False
+                else:
+                    return betting_players[1:] == betting_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL (IF ALL-IN THEN NOT CHECKED)
 
-    def play_moves(self,player,choice):
+    def play_moves(self,player,choice,phase):
+        while choice not in ["Fold","Call","Raise","Bet","Check"]:
+           choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase)}")
         if choice == "Fold":
-            player.fold()
+            self.board.pot = player.fold(self.board.pot)
         elif choice == "Call":
             player.call(self.board.current_bid)
         elif choice == "Raise":
-            player.relaunch(self.board.current_bid)
+            self.board.current_bid = player.relaunch(self.board.current_bid)
         elif choice == "Bet":
-            player.bet()
+            self.board.current_bid = player.bet()
         elif choice == "Check":
             player.check()
 
@@ -78,13 +98,13 @@ class Game:
             i.dealer = False
             i.small_blind = False
             i.big_blind = False
-        print("Players status reset")
+        print("\033[31m"+"Players status reset"+"\033[0m")
         self.players[(turn-1)%n_players].dealer = True
         print(f"Player {((turn-1)%n_players)+1} is the dealer")
         self.players[turn%n_players].small_blind = True
         print(f"Player {(turn%n_players)+1} is the small blind")
         self.players[(turn+1)%n_players].big_blind = True
-        print(f"Player {((turn+1)%n_players)+1} is the dealer")
+        print(f"Player {((turn+1)%n_players)+1} is the big blind")
 
     def set_blinds(self):
         for i in self.players:
@@ -94,6 +114,7 @@ class Game:
         for i in self.players:
             if i.big_blind==True:
                 self.board.big_blind = i.set_blind()
+        self.board.current_bid = self.board.big_blind
         print('Big blind set')
 
     def set_cards(self): # Distribution starts from small blind and goes on
@@ -107,52 +128,108 @@ class Game:
         for i in self.players:
             print(i)
 
+    def resume_active_players(self):
+        for i in self.players:
+            if i.active:
+                print(i)
+
     def set_first_round(self):
         n_players = len(self.players)
         for i in self.players:
             if i.big_blind:
                 get_id = i.id
         play_order = [(get_id+i)%n_players+1 for i in range(n_players)]
-        ## print(f"{play_order}")
-        for i in play_order:
-            for j in self.players:
-                if j.id==i and j.active==True and j.all_in==False:
-                    ## PLAY
-                    choice = input(f"Player {i}, what do you want to do ? {self.available_moves(1)}")
-                    self.play_moves(j,choice)
         while_token = 0
         while not self.next_phase():
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
-                    self.play_moves(i,choice)
+                    self.play_moves(i,choice,1)
             while_token+=1
+        for i in self.players:
+            self.board.pot+=i.current_bet
+            i.current_bet=0
+        self.board.current_bid=0
 
     def the_flop(self): # Need to burn the first card from the deck before flopping
         for _ in range(3):
             draw = random.choice(self.deck.content)
             self.board.community_cards.append(draw)
             self.deck.content.remove(draw)
+        print(self.board)
 
     def set_second_round(self):
-        pass
+        n_players = len(self.players)
+        for i in self.players:
+            if i.small_blind:
+                get_id = i.id
+        play_order = [(get_id+i)%n_players+1 for i in range(n_players)]
+        while_token = 0
+        while not self.next_phase():
+            active_id = play_order[while_token%n_players]
+            for i in self.players:
+                if i.id==active_id and i.active==True and i.all_in==False:
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2)}")
+                    self.play_moves(i,choice,2)
+            while_token+=1
+        for i in self.players:
+            self.board.pot+=i.current_bet
+            i.current_bet=0
+            self.checked=False
+        self.board.current_bid=0
 
     def the_turn(self): #same as the flop but one card only # Need to burn the first card from the deck before flopping
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
+        print(self.board)
 
     def set_third_round(self): #same as second
-        pass
+        n_players = len(self.players)
+        for i in self.players:
+            if i.small_blind:
+                get_id = i.id
+        play_order = [(get_id+i)%n_players+1 for i in range(n_players)]
+        while_token = 0
+        while not self.next_phase():
+            active_id = play_order[while_token%n_players]
+            for i in self.players:
+                if i.id==active_id and i.active==True and i.all_in==False:
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3)}")
+                    self.play_moves(i,choice,3)
+            while_token+=1
+        for i in self.players:
+            self.board.pot+=i.current_bet
+            i.current_bet=0
+            self.checked=False
+        self.board.current_bid=0
 
     def the_river(self): #same as the turn # Need to burn the first card from the deck before flopping
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
+        print(self.board)
 
     def set_fourth_round(self): #same as second and third
-        pass
+        n_players = len(self.players)
+        for i in self.players:
+            if i.small_blind:
+                get_id = i.id
+        play_order = [(get_id+i)%n_players+1 for i in range(n_players)]
+        while_token = 0
+        while not self.next_phase():
+            active_id = play_order[while_token%n_players]
+            for i in self.players:
+                if i.id==active_id and i.active==True and i.all_in==False:
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4)}")
+                    self.play_moves(i,choice,4)
+            while_token+=1
+        for i in self.players:
+            self.board.pot+=i.current_bet
+            i.current_bet=0
+            self.checked=False
+        self.board.current_bid=0
 
     def showdown(self): #everyone reveals their cards
         pass

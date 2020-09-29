@@ -1,4 +1,5 @@
 import random
+import colorama as cr
 
 class Card:
 
@@ -20,11 +21,11 @@ class Card:
             return f"{self.value} of {self.figure}"""
 
     def __repr__(self):
-        return self.short
+        return cr.Back.WHITE+self.short+cr.Style.RESET_ALL
 
     def name(self):
         value,figure = int(),str()
-        if self.value==1:
+        if self.value==14:
             value = "A"
         elif self.value==11:
             value = "J"
@@ -35,14 +36,14 @@ class Card:
         else:
             value = str(self.value)
         if self.figure=="Hearts":
-            figure = "♥"
+            figure = cr.Fore.RED+"♥"+cr.Style.RESET_ALL
         elif self.figure=="Spades":
-            figure = "♠"
+            figure = cr.Fore.BLACK+"♠"+cr.Style.RESET_ALL
         elif self.figure=="Clubs":
-            figure = "♣"
+            figure = cr.Fore.BLACK+"♣"+cr.Style.RESET_ALL
         elif self.figure=="Diamonds":
-            figure = "♦"
-        return f"{value}{figure}"
+            figure = cr.Fore.RED+"♦"+cr.Style.RESET_ALL
+        return f"{cr.Fore.BLACK}{value}{figure}{cr.Style.RESET_ALL}"
 
 
 class Deck:
@@ -51,10 +52,11 @@ class Deck:
         self.content = list()
         self.create_deck()
         self.shuffle()
+        self.big = self.intro_cards()
 
     def create_deck(self):
         print("Adding cards to the deck")
-        for value in range(13):
+        for value in range(1,14):
             for figure in ['Hearts','Spades','Clubs','Diamonds']:
                 self.content.append(Card(value+1,figure))
 
@@ -68,3 +70,16 @@ class Deck:
 
     def __repr__(self):
         return str(self.content)
+
+    def intro_cards(self):
+        print(f"""{cr.Back.WHITE}{cr.Fore.RED}
+A           A\r
+♥           ♥\r
+             \r
+             \r
+      ♥      \r
+             \r
+             \r
+♥           ♥\r
+A           A\r
+{cr.Style.RESET_ALL}""")
