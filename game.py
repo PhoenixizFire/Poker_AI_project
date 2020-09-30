@@ -2,6 +2,8 @@ from board import Board
 from cards import Deck
 from player import Player
 import random
+import operator
+from functools import reduce
 
 ## n_players between 2 to 10. 3 to 10 for now on
 ## if 2 players, Dealer is Small Blind
@@ -9,7 +11,7 @@ import random
 
 class Game:
 
-    def __init__(self,n_players,base_money):
+    def __init__(self,n_players,base_money,autoplay=False):
         print('Starting the game')
         print('Creating the board')
         self.board = Board()
@@ -18,29 +20,30 @@ class Game:
         self.deck.big
         print('Filling players pockets')
         self.players = [Player(i+1,base_money) for i in range(n_players)]
-        self.main()
+        self.main(autoplay)
     
-    def main(self):
+    def main(self,autoplay=False):
         turn = 0
         while len(self.players)>1:
             turn+=1
             self.set_roles(turn)
-            self.set_blinds()
+            self.set_blinds(autoplay)
             self.set_cards()
 
-            self.set_first_round()
+            self.set_first_round(autoplay)
             self.the_flop()
             self.resume_active_players()
 
-            self.set_second_round()
+            self.set_second_round(autoplay)
             self.the_turn()
             self.resume_active_players()
 
-            self.set_third_round()
+            self.set_third_round(autoplay)
             self.the_river()
             self.resume_active_players()
 
-            self.set_fourth_round()
+            self.set_fourth_round(autoplay)
+            self.showdown()
             self.deck.reset()
             break
 
@@ -79,7 +82,7 @@ class Game:
                     return betting_players[1:] == betting_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL (IF ALL-IN THEN NOT CHECKED)
 
     def play_moves(self,player,choice,phase):
-        while choice not in ["Fold","Call","Raise","Bet","Check"]:
+        while choice not in self.available_moves(phase):
            choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase)}")
         if choice == "Fold":
             self.board.pot = player.fold(self.board.pot)
@@ -106,14 +109,20 @@ class Game:
         self.players[(turn+1)%n_players].big_blind = True
         print(f"Player {((turn+1)%n_players)+1} is the big blind")
 
-    def set_blinds(self):
+    def set_blinds(self,autoplay=False):
         for i in self.players:
             if i.small_blind==True:
-                self.board.small_blind = i.set_blind()
+                if autoplay:
+                    self.board.small_blind = i.set_blind(25)
+                else:
+                    self.board.small_blind = i.set_blind()
         print('Small blind set')
         for i in self.players:
             if i.big_blind==True:
-                self.board.big_blind = i.set_blind()
+                if autoplay:
+                    self.board.big_blind = i.set_blind(50)
+                else:
+                    self.board.big_blind = i.set_blind()
         self.board.current_bid = self.board.big_blind
         print('Big blind set')
 
@@ -133,7 +142,7 @@ class Game:
             if i.active:
                 print(i)
 
-    def set_first_round(self):
+    def set_first_round(self,autoplay=False):
         n_players = len(self.players)
         for i in self.players:
             if i.big_blind:
@@ -144,7 +153,10 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
+                    if autoplay:
+                        choice = "Fold"
+                    else:
+                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
                     self.play_moves(i,choice,1)
             while_token+=1
         for i in self.players:
@@ -159,7 +171,7 @@ class Game:
             self.deck.content.remove(draw)
         print(self.board)
 
-    def set_second_round(self):
+    def set_second_round(self,autoplay=False):
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -185,7 +197,7 @@ class Game:
         self.deck.content.remove(draw)
         print(self.board)
 
-    def set_third_round(self): #same as second
+    def set_third_round(self,autoplay=False): #same as second
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -211,7 +223,7 @@ class Game:
         self.deck.content.remove(draw)
         print(self.board)
 
-    def set_fourth_round(self): #same as second and third
+    def set_fourth_round(self,autoplay=False): #same as second and third
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -231,8 +243,150 @@ class Game:
             self.checked=False
         self.board.current_bid=0
 
-    def showdown(self): #everyone reveals their cards
-        pass
+    def showdown(self): #everyone reveals their cards #TODO manage exact ties
+        scores = dict()
+        for p in self.players:
+            p.combo_score = self.board.highest_combo(p)
+            scores[f"Player {p.id}"]=p.combo_score
+            print(f"Player {p.id} has a score of {p.combo_score}")
+        print(scores)
+        max_score = max(scores.items(),key=operator.itemgetter(1))[1]
+        print(list(scores.values()))
+        print(list(scores.values()).count(max_score))
+        if list(scores.values()).count(max_score)==1:
+            for i in self.players:
+                if i.combo_score==max_score:
+                    print(f"Player {i.id} wins")
+        else:
+            top_cards = dict()
+            winners = [x for x,y in scores.items() if y==max_score]
+            print(f"{winners} are tied for the win")
+            if max_score==1:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.highest_card(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==2:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.one_pair(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==3:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(reduce(operator.add,self.board.two_pair(p)))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==4:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.three_of_a_kind(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==5:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.straight(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==6:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.flush(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(i))[0]
+                    print(f"{winner} wins")
+            if max_score==7:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.full_house(p)[0])
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==8:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.four_of_a_kind(p))
+                print(top_cards)
+                max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
+                print(f"Max card is : {max_card}")
+                if list(top_cards.values()).count(max_card)>1:
+                    print("Temporary tie")
+                else:
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"{winner} wins")
+            if max_score==9:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.straight_flush(p))
+                print(top_cards)
+                winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                print(f"{winner} wins")
+            if max_score==10:
+                for p in self.players:
+                    if p.combo_score==max_score:
+                        top_cards[f"Player {p.id}"]=max(self.board.royal_flush(p))
+                print(top_cards)
+                winner= max(top_cards.items(),key=operator.itemgetter(1))[0]
+                print(f"{winner} wins")
+
+
+
+
+
+
+
+
+
+
+
+
+        # FIVE CARD RULES ALWAYS ACT : For One_Pair, Two_Pair, Three_of_a_Kind, always the kickers up to 5 cards used.
+        # In rare case of Four of a Kind in community cards, also take that into account
+        # IF THE 5 CARDS ARE THE SAME : TIE = SPLIT THE POT
+
         #ONE PAIR (Detect two of the same value) Highest pair wins
         #TWO PAIR (Detect two of the same value twice) Highest value in pairs wins
         #THREE OF A KIND (Detect three of the same value) Highest three of a kind wins

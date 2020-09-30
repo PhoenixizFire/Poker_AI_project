@@ -23,6 +23,12 @@ class Card:
     def __repr__(self):
         return cr.Back.WHITE+self.short+cr.Style.RESET_ALL
 
+    def __gt__(self,b):
+        return self.value>b.value
+
+    def __lt__(self,b):
+        return self.value<b.value
+
     def name(self):
         value,figure = int(),str()
         if self.value==14:
@@ -70,6 +76,7 @@ class Deck:
 
     def __repr__(self):
         return str(self.content)
+        
 
     def intro_cards(self):
         print(f"""{cr.Back.WHITE}{cr.Fore.RED}

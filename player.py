@@ -11,6 +11,7 @@ class Player:
         self.active = True # Le joueur est-il toujours actif ou s'est-il couché ?
         self.all_in = False # Le joueur a-t-il fait tapis ?
         self.checked = False # Le joueur a-t-il check ? 
+        self.combo_score = 0
 
     @property
     def dealer(self):
@@ -39,8 +40,11 @@ class Player:
     def __repr__(self):
         return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
 
-    def set_blind(self):
-        bet = "bet"
+    def set_blind(self,auto=0):
+        if auto==0:
+            bet = "bet"
+        else:
+            bet = str(auto)
         if self.small_blind==True:
             arg = "small"
         elif self.big_blind==True:

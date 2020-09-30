@@ -31,41 +31,157 @@ class Board:
 
     def highest_card(self,player):
         max_value = 0
-        for i in self.community_cards+player.cards:
+        for i in self.community_cards+player.hand:
             if i.value>max_value:
                 high_card = i
+                max_value = i.value
         return high_card
 
     def one_pair(self,player):
-        for i in self.community_cards+player.cards:
-            for j in self.community_cards+player.cards:
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if x!=i]:
                 if i.value==j.value:
-                    if i.figure==j.figure:
-                        pass
-                    else:
-                        return [i,j]
+                    return [i,j]
         return None
 
     def two_pair(self,player):
-        pass
+        pairing = list()
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if x!=i]:
+                if i.value==j.value:
+                    pairing.append([i,j])
+                    cards.remove(i)
+                    cards.remove(j)
+        if len(pairing)==2:
+            return pairing
+        elif len(pairing)>2:
+            #print("More than 2 pairs detected, what to do ?")
+            #print(f"Issue there : {pairing}")
+            if pairing[0][0].value>pairing[1][0].value:
+                if pairing[1][0].value>pairing[2][0].value:
+                    return [pairing[0],pairing[1]]
+                else:
+                    return [pairing[0],pairing[2]]
+            else:
+                if pairing[0][0].value>pairing[2][0].value:
+                    return [pairing[1],pairing[0]]
+                else:
+                    return [pairing[1],pairing[2]]
+        else:
+            return None
 
     def three_of_a_kind(self,player):
-        pass
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if i!=x]:
+                if i.value==j.value:
+                    for k in [x for x in cards if (i!=x and j!=x)]:
+                        if j.value==k.value:
+                            return [i,j,k]
+        return None
+
 
     def straight(self,player):
-        pass
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if i!=x]:
+                if i.value+1==j.value:
+                    for k in [x for x in cards if (i!=x and j!=x)]:
+                        if j.value+1==k.value:
+                            for l in [x for x in cards if (i!=x and j!=x and k!=x)]:
+                                if k.value+1==l.value:
+                                    for m in [x for x in cards if (i!=x and j!=x and k!=x and l!=x)]:
+                                        if l.value+1==m.value:
+                                            return [i,j,k,l,m]
+        return None
 
     def flush(self,player):
-        pass
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if i!=x]:
+                if i.figure==j.figure:
+                    for k in [x for x in cards if (i!=x and j!=x)]:
+                        if j.figure==k.figure:
+                            for l in [x for x in cards if (i!=x and j!=x and k!=x)]:
+                                if k.figure==l.figure:
+                                    for m in [x for x in cards if (i!=x and j!=x and k!=x and l!=x)]:
+                                        if l.figure==m.figure:
+                                            return [i,j,k,l,m]
+        return None
 
     def full_house(self,player):
-        pass
+        pair = self.one_pair(player)
+        three = self.three_of_a_kind(player)
+        if pair != None and three!=None:
+            if pair[0].value != three[0].value:
+                return [pair,three]
+        return None
 
     def four_of_a_kind(self,player):
-        pass
+        cards = self.community_cards+player.hand
+        for i in cards:
+            for j in [x for x in cards if i!=x]:
+                if i.value==j.value:
+                    for k in [x for x in cards if (i!=x and j!=x)]:
+                        if j.value==k.value:
+                            for l in [x for x in cards if (i!=x and j!=x and k!=x)]:
+                                if k.value==l.value:
+                                    return [i,j,k,l]
+        return None
 
     def straight_flush(self,player):
-        pass
+        straight = self.straight(player)
+        if straight!=None:
+            if straight[0].figure==straight[1].figure==straight[2].figure==straight[3].figure==straight[4].figure:
+                return straight
+        return None
 
     def royal_flush(self,player):
-        pass
+        flush = self.straight_flush(player)
+        if flush!=None:
+            if flush[0].value==10:
+                return flush
+        return None
+
+    def highest_combo(self,player):
+        royal_flush = self.royal_flush(player)
+        if royal_flush!=None:
+            print(f"Player {player.id} has a Royal Flush : {royal_flush}")
+            return 10
+        straight_flush = self.straight_flush(player)
+        if straight_flush!=None:
+            print(f"Player {player.id} has a Straight Flush : {straight_flush}")
+            return 9
+        four = self.four_of_a_kind(player)
+        if four!=None:
+            print(f"Player {player.id} has a Four of a Kind : {four}")
+            return 8
+        full = self.full_house(player)
+        if full!=None:
+            print(f"Player {player.id} has a Full House : {full}")
+            return 7
+        flush = self.flush(player)
+        if flush!=None:
+            print(f"Player {player.id} has a Flush : {flush}")
+            return 6
+        straight = self.straight(player)
+        if straight!=None:
+            print(f"Player {player.id} has a Straight : {straight}")
+            return 5
+        three = self.three_of_a_kind(player)
+        if three!=None:
+            print(f"Player {player.id} has a Three of a Kind : {three}")
+            return 4
+        two_pair = self.two_pair(player)
+        if two_pair!=None:
+            print(f"Player {player.id} has Two Pairs : {two_pair}")
+            return 3
+        pair = self.one_pair(player)
+        if pair!=None:
+            print(f"Player {player.id} has a Pair : {pair}")
+            return 2
+        highest_card = self.highest_card(player)
+        print(f"Player {player.id} highest card is : {highest_card}")
+        return 1
