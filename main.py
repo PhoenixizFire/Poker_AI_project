@@ -9,7 +9,7 @@ from game import Game
 
 if __name__=='__main__':
     os.system('color')
-    if sys.argv[1]=='autoplay':
-        Game(6,1500,autoplay=True)
-    else:
+    if len(sys.argv)==1:
         Game(6,1500)
+    elif sys.argv[1]=='autoplay':
+        Game(6,1500,autoplay=True)

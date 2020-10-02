@@ -12,6 +12,7 @@ class Player:
         self.all_in = False # Le joueur a-t-il fait tapis ?
         self.checked = False # Le joueur a-t-il check ? 
         self.combo_score = 0
+        self.kickers = list()
 
     @property
     def dealer(self):

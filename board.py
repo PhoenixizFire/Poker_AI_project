@@ -1,3 +1,5 @@
+import operator
+from functools import reduce
 from cards import Deck
 
 class Board:
@@ -55,7 +57,10 @@ class Board:
                     cards.remove(i)
                     cards.remove(j)
         if len(pairing)==2:
-            return pairing
+            if pairing[0][0].value>pairing[1][0].value:
+                return [pairing[0],pairing[1]]
+            else:
+                return [pairing[1],pairing[0]]
         elif len(pairing)>2:
             #print("More than 2 pairs detected, what to do ?")
             #print(f"Issue there : {pairing}")
@@ -63,12 +68,18 @@ class Board:
                 if pairing[1][0].value>pairing[2][0].value:
                     return [pairing[0],pairing[1]]
                 else:
-                    return [pairing[0],pairing[2]]
+                    if pairing[0][0].value>pairing[2][0].value:
+                        return [pairing[0],pairing[2]]
+                    else:
+                        return [pairing[2],pairing[0]]
             else:
                 if pairing[0][0].value>pairing[2][0].value:
                     return [pairing[1],pairing[0]]
                 else:
-                    return [pairing[1],pairing[2]]
+                    if pairing[1][0].value>pairing[2][0].value:
+                        return [pairing[1],pairing[2]]
+                    else:
+                        return [pairing[2],pairing[1]]
         else:
             return None
 
@@ -94,7 +105,7 @@ class Board:
                                 if k.value+1==l.value:
                                     for m in [x for x in cards if (i!=x and j!=x and k!=x and l!=x)]:
                                         if l.value+1==m.value:
-                                            return [i,j,k,l,m]
+                                            return [m,l,k,j,i]
         return None
 
     def flush(self,player):
@@ -108,15 +119,30 @@ class Board:
                                 if k.figure==l.figure:
                                     for m in [x for x in cards if (i!=x and j!=x and k!=x and l!=x)]:
                                         if l.figure==m.figure:
-                                            return [i,j,k,l,m]
+                                            return sorted([i,j,k,l,m],key=lambda x: x.value,reverse=True)
         return None
 
-    def full_house(self,player):
-        pair = self.one_pair(player)
-        three = self.three_of_a_kind(player)
+    def full_house(self,player): #TODO Avoid conflicts
+        cards = self.community_cards+player.hand
+        pair,three = None,None
+        for i in cards:
+            for j in [x for x in cards if i!=x]:
+                if i.value==j.value:
+                    for k in [x for x in cards if (i!=x and j!=x)]:
+                        if j.value==k.value:
+                            three = [i,j,k]
+        if three==None:
+            return None
+        cards = [x for x in cards if not x in three]
+        for l in cards:
+            for m in [x for x in cards if l!=x]:
+                if l.value==m.value:
+                    pair = [l,m]
+        #pair = self.one_pair(player)
+        #three = self.three_of_a_kind(player)
         if pair != None and three!=None:
             if pair[0].value != three[0].value:
-                return [pair,three]
+                return [three,pair]
         return None
 
     def four_of_a_kind(self,player):
@@ -185,3 +211,42 @@ class Board:
         highest_card = self.highest_card(player)
         print(f"Player {player.id} highest card is : {highest_card}")
         return 1
+
+    def kicker_cards(self,player):
+        player.combo_score = self.highest_combo(player)
+        cards = player.hand + self.community_cards
+        kickers = list()
+        if player.combo_score==1: #One best card
+            card = self.highest_card(player)
+            kickers = [x for x in cards if (x.value,x.figure)!=(card.value,card.figure)]
+            kickers = sorted(kickers, key=lambda x: x.value,reverse=True)
+            kickers = kickers[:4]
+            print(f"{[card,]+kickers}")
+            return kickers
+        if player.combo_score==2: #Two best cards
+            pair = self.one_pair(player)
+            kickers = [x for x in cards if x not in pair]
+            kickers = sorted(kickers, key=lambda x: x.value,reverse=True)
+            kickers = kickers[:3]
+            print(pair+kickers)
+            return kickers                        
+        if player.combo_score==4: #Three best cards
+            three = self.three_of_a_kind(player)
+            kickers = [x for x in cards if x not in three]
+            kickers = sorted(kickers, key=lambda x : x.value,reverse=True)
+            kickers = kickers[:2]
+            print(three+kickers)
+            return kickers
+        if player.combo_score in [3,8]: #Four best cards
+            if player.combo_score==3:
+                hand = reduce(operator.add,self.two_pair(player))
+                kickers = [x for x in cards if x not in hand]
+            if player.combo_score==8:
+                hand = self.four_of_a_kind(player)
+                kickers = [x for x in cards if x not in hand]
+            kickers = sorted(kickers,key=lambda x:x.value)
+            kickers = kickers[:1]
+            print(hand+kickers)
+            return kickers
+        if player.combo_score in [5,6,7,9,10]: #Five best cards
+            pass

@@ -43,7 +43,7 @@ class Game:
             self.resume_active_players()
 
             self.set_fourth_round(autoplay)
-            self.showdown()
+            self.distribute_pots(self.players,self.board.pot)
             self.deck.reset()
             break
 
@@ -243,145 +243,331 @@ class Game:
             self.checked=False
         self.board.current_bid=0
 
-    def showdown(self): #everyone reveals their cards #TODO manage exact ties
+    def distribute_pots(self,player_list,pot):
+        win = self.showdown(player_list,pot)
+        if type(win)==list: # Two or more winners (type: list())
+            pass
+        else: # One winner
+            win.money+=pot
+            pot = 0 # TODO Work on the pot issue
+
+    def showdown(self,player_list,pot): #everyone reveals their cards #TODO manage pots
         scores = dict()
-        for p in self.players:
-            p.combo_score = self.board.highest_combo(p)
+        for p in player_list: #[x for x in self.players if x.active==True]:
+            p.kickers = self.board.kicker_cards(p)
             scores[f"Player {p.id}"]=p.combo_score
             print(f"Player {p.id} has a score of {p.combo_score}")
-        print(scores)
+        #print(scores)
         max_score = max(scores.items(),key=operator.itemgetter(1))[1]
         print(list(scores.values()))
-        print(list(scores.values()).count(max_score))
+        #print(list(scores.values()).count(max_score))
         if list(scores.values()).count(max_score)==1:
-            for i in self.players:
+            for i in player_list:
                 if i.combo_score==max_score:
                     print(f"Player {i.id} wins")
+                    return i
         else:
             top_cards = dict()
             winners = [x for x,y in scores.items() if y==max_score]
             print(f"{winners} are tied for the win")
+
             if max_score==1:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.highest_card(p))
+                        top_cards[p]=self.board.highest_card(p)
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
                 if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                    cc=0
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value==self.board.highest_card(x).value]
+                    print(finalists)
+                    kicker_cards = len(finalists[0].kickers)
+                    while cc<kicker_cards:
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=p.kickers[cc]
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        if list(final_battle.values()).count(max_card)>1:
+                            for p in finalists.copy():
+                                if p.kickers[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==2:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.one_pair(p))
+                        top_cards[p]=max(self.board.one_pair(p))
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
-                if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                if [x.value for x in list(top_cards.values())].count(max_card.value)>1:
+                    cc=0
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.one_pair(x)]]
+                    print(finalists)
+                    kicker_cards = len(finalists[0].kickers)
+                    while cc<kicker_cards:
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=p.kickers[cc]
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        print(f"Max card is : {max_card}")
+                        if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
+                            for p in finalists.copy():
+                                if p.kickers[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==3:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(reduce(operator.add,self.board.two_pair(p)))
+                        top_cards[p]=max(self.board.two_pair(p)[0])
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
-                if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                print([x.value for x in list(top_cards.values())].count(max_card.value))
+                if [x.value for x in list(top_cards.values())].count(max_card.value)>1:
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.two_pair(x)[0]]]
+                    #print(finalists)
+                    final_battle=dict()
+                    for p in finalists:
+                        final_battle[p]=max(self.board.two_pair(p)[1])
+                    max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                    print(f"Max card is : {max_card}")
+                    print([x.value for x in list(final_battle.values())].count(max_card.value))
+                    if list(final_battle.values()).count(max_card)>1:
+                        print("Comparing the second pair")
+                        for p in finalists.copy():
+                            if final_battle[p].value!=max_card.value:
+                                finalists.remove(p)
+                    else:
+                        winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                        print(f"Player {winner.id} wins")
+                        return winner
+                    if len(finalists)>1:
+                        print("Comparing the last card")
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=p.kickers[0]
+                        print(final_battle)
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        print(f"Max card is : {max_card}")
+                        print([x.value for x in list(final_battle.values())].count(max_card.value))
+                        if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
+                            print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                            return finalists
+                        del final_battle
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==4:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.three_of_a_kind(p))
+                        top_cards[p]=max(self.board.three_of_a_kind(p))
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
                 if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                    cc=0
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.three_of_a_kind(x)]]
+                    print(finalists)
+                    kicker_cards = len(finalists[0].kickers)
+                    while cc<kicker_cards:
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=p.kickers[cc]
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        if list(final_battle.values()).count(max_card)>1:
+                            for p in finalists.copy():
+                                if p.kickers[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==5:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.straight(p))
+                        top_cards[p]=max(self.board.straight(p))
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
-                if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                print(list(top_cards.values()))
+                if [x.value for x in list(top_cards.values())].count(max_card.value)>1:
+                    cc=1
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.straight(x)]]
+                    print(finalists)
+                    while cc<5:
+                        print(f"cc : {cc} ; kicker_cards : {kicker_cards}")
+                        print(f"finalists : {finalists}")
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=self.board.straight(p)[cc]
+                        print(final_battle)
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        print(f"Max card is : {max_card}")
+                        print([x.value for x in list(final_battle.values())].count(max_card.value))
+                        if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
+                            for p in finalists.copy():
+                                if p.hand[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                        del final_battle
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==6:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.flush(p))
+                        top_cards[p]=max(self.board.flush(p))
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
-                if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                if [x.value for x in list(top_cards.values())].count(max_card.value)>1:
+                    cc=1
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.flush(x)]]
+                    #print(f"Finalists : {finalists}")
+                    while cc<5:
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=self.board.flush(p)[cc]
+                        print(final_battle)
+                        #print(final_battle.items())
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        print(f"Max card is : {max_card}")
+                        if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
+                            for p in finalists.copy():
+                                if p.hand[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                        del final_battle
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
-                    winner = max(top_cards.items(),key=operator.itemgetter(i))[0]
-                    print(f"{winner} wins")
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==7:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.full_house(p)[0])
+                        top_cards[p]=max(self.board.full_house(p)[0])
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
                 if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.full_house(x)[0]]]
+                    print(finalists)
+                    final_battle=dict()
+                    for p in finalists:
+                        final_battle[p]=self.board.full_house(p)[1][0]
+                    max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                    print(f"Max card is : {max_card}")
+                    if list(final_battle.values()).count(max_card)>1:
+                        for p in finalists.copy():
+                            if self.board.full_house(p)[1][0].value!=max_card.value:
+                                finalists.remove(p)
+                    else:
+                        winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                        print(f"Player {winner.id} wins")
+                        return winner
+                    if list(final_battle.values()).count(max_card)>1:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==8:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.four_of_a_kind(p))
+                        top_cards[p]=max(self.board.four_of_a_kind(p))
                 print(top_cards)
                 max_card = max(top_cards.items(),key=operator.itemgetter(1))[1]
                 print(f"Max card is : {max_card}")
                 if list(top_cards.values()).count(max_card)>1:
-                    print("Temporary tie")
+                    cc=0
+                    finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.four_of_a_kind(x)]]
+                    print(finalists)
+                    kicker_cards = len(finalists[0].kickers)
+                    while cc<kicker_cards:
+                        final_battle=dict()
+                        for p in finalists:
+                            final_battle[p]=p.kickers[cc]
+                        max_card = max(final_battle.items(),key=operator.itemgetter(1))[1]
+                        if list(final_battle.values()).count(max_card)>1:
+                            for p in finalists.copy():
+                                if p.kickers[cc].value!=max_card.value:
+                                    finalists.remove(p)
+                            cc+=1
+                        else:
+                            winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
+                            print(f"Player {winner.id} wins")
+                            return winner
+                    if cc==kicker_cards:
+                        print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
+                        return finalists
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                    print(f"{winner} wins")
+                    print(f"Player {winner.id} wins")
+                    return winner
             if max_score==9:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.straight_flush(p))
+                        top_cards[p]=max(self.board.straight_flush(p))
                 print(top_cards)
                 winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                print(f"{winner} wins")
+                print(f"Player {winner.id} wins")
+                return winner
             if max_score==10:
-                for p in self.players:
+                for p in player_list:
                     if p.combo_score==max_score:
-                        top_cards[f"Player {p.id}"]=max(self.board.royal_flush(p))
+                        top_cards[p]=max(self.board.royal_flush(p))
                 print(top_cards)
                 winner= max(top_cards.items(),key=operator.itemgetter(1))[0]
-                print(f"{winner} wins")
-
-
-
-
-
-
-
-
-
-
-
+                print(f"Player {winner.id} wins")
+                return winner
 
         # FIVE CARD RULES ALWAYS ACT : For One_Pair, Two_Pair, Three_of_a_Kind, always the kickers up to 5 cards used.
         # In rare case of Four of a Kind in community cards, also take that into account
