@@ -82,7 +82,7 @@ class Player:
         active_pot+=self.current_bet
         self.current_bet = 0
         return active_pot
-        print(self)
+        #print(self)
 
     def bet(self):
         # Second turn and further

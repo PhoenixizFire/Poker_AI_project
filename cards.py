@@ -90,3 +90,4 @@ A           A\r
 ♥           ♥\r
 A           A\r
 {cr.Style.RESET_ALL}""")
+        return "Big"

@@ -61,7 +61,7 @@ class Game:
     def next_phase(self):
         active_players = list()
         betting_players = list()
-        active_bid = self.board.current_bid
+        #active_bid = self.board.current_bid
         for i in self.players:
             if i.active==True:
                 active_players.append(i)
@@ -244,14 +244,14 @@ class Game:
         self.board.current_bid=0
 
     def distribute_pots(self,player_list,pot):
-        win = self.showdown(player_list,pot)
+        win = self.showdown(player_list)
         if type(win)==list: # Two or more winners (type: list())
             pass
         else: # One winner
             win.money+=pot
             pot = 0 # TODO Work on the pot issue
 
-    def showdown(self,player_list,pot): #everyone reveals their cards #TODO manage pots
+    def showdown(self,player_list): #everyone reveals their cards #TODO manage pots
         scores = dict()
         for p in player_list: #[x for x in self.players if x.active==True]:
             p.kickers = self.board.kicker_cards(p)
@@ -427,7 +427,6 @@ class Game:
                     finalists = [x for x in player_list if x.combo_score==max_score and max_card.value in [i.value for i in self.board.straight(x)]]
                     print(finalists)
                     while cc<5:
-                        print(f"cc : {cc} ; kicker_cards : {kicker_cards}")
                         print(f"finalists : {finalists}")
                         final_battle=dict()
                         for p in finalists:

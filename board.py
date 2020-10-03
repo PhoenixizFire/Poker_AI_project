@@ -29,7 +29,7 @@ class Board:
 
     @side_pots.setter
     def side_pots(self,situation): #???
-        pass #Schéma : List of {"players":list(),"value":int()} for each side pot
+        self._side_pots = situation #Schéma : List of {"players":list(),"value":int()} for each side pot
 
     def highest_card(self,player):
         max_value = 0
