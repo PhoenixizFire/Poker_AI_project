@@ -4,16 +4,16 @@ from cards import Deck
 
 class Board:
 
-    def __init__(self):
-        self.pot = 0
+    def __init__(self,player_list):
+        self.pots = list()
+        self.new_pot(player_list)
         self.small_blind = int()
         self.big_blind = int()
         self.current_bid = 0
         self.community_cards = list()
-        self.side_pots = list()
 
     def __repr__(self):
-        return f"\nCards :\n{self.community_cards} ; Pot : {self.pot}\n"
+        return f"\nCards :\n{self.community_cards} ; Pot : {self.pots[0]['value']}\n"
 
     @property
     def current_bid(self):
@@ -24,12 +24,27 @@ class Board:
         self._current_bid = value
 
     @property
-    def side_pots(self):
-        return self._side_pots
+    def active_pot(self):
+        return self.pots[-1]
 
-    @side_pots.setter
-    def side_pots(self,situation): #???
-        self._side_pots = situation #Schéma : List of {"players":list(),"value":int()} for each side pot
+    @active_pot.setter
+    def active_pot(self,value):
+        self.active_pot['value'] = value
+
+    def new_pot(self,player_list):
+        self.pots.append(
+            {
+                "_id" : len(self.pots)+1,
+                "player_list" : player_list,
+                "value" : 0
+            }
+        )
+
+    def reset_board(self):
+        self.small_blind = int()
+        self.big_blind = int()
+        self.current_bid = 0
+        self.community_cards = list()
 
     def highest_card(self,player):
         max_value = 0

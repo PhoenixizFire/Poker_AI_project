@@ -13,39 +13,70 @@ class Game:
 
     def __init__(self,n_players,base_money,autoplay=False):
         print('Starting the game')
-        print('Creating the board')
-        self.board = Board()
+        print('The players come sit around the table')
+        self.players = [Player(i+1,base_money) for i in range(n_players)]
+        print('Setting up the board')
+        self.board = Board(self.players)
         print('Shuffling the cards')
         self.deck = Deck()
         self.deck.big
-        print('Filling players pockets')
-        self.players = [Player(i+1,base_money) for i in range(n_players)]
         self.main(autoplay)
     
     def main(self,autoplay=False):
         turn = 0
         while len(self.players)>1:
             turn+=1
-            self.set_roles(turn)
-            self.set_blinds(autoplay)
-            self.set_cards()
+            while True:
+                self.set_roles(turn)
+                self.set_blinds(autoplay)
+                self.set_cards()
 
-            self.set_first_round(autoplay)
-            self.the_flop()
-            self.resume_active_players()
+                self.set_first_round(autoplay)
+                self.the_flop()
+                if len([x for x in self.players if x.active])==1:
+                    self.the_turn()
+                    self.the_river()
+                    break
+                else:
+                    self.resume_active_players()
 
-            self.set_second_round(autoplay)
-            self.the_turn()
-            self.resume_active_players()
+                self.set_second_round(autoplay)
+                self.the_turn()
+                if len([x for x in self.players if x.active])==1:
+                    self.the_river()
+                    break
+                else:
+                    self.resume_active_players()
 
-            self.set_third_round(autoplay)
-            self.the_river()
-            self.resume_active_players()
+                self.set_third_round(autoplay)
+                self.the_river()
+                if len([x for x in self.players if x.active])==1:
+                    break
+                else:
+                    self.resume_active_players()
 
-            self.set_fourth_round(autoplay)
-            self.distribute_pots(self.players,self.board.pot)
+                self.set_fourth_round(autoplay)
+                break
+            self.distribute_pots()
             self.deck.reset()
+            self.resume_active_players()
             break
+
+    def pprint(func):
+        def magic(self,phase):
+            print("#### ==== ####")
+            func(self,phase)
+            print("#### ==== ####")
+        return magic
+
+    def burn_card(func):
+        def burn(self):
+            draw = random.choice(self.deck.content)
+            print(f"{draw} gets burnt")
+            self.deck.content.remove(draw)
+            func(self)
+        return burn
+
 
     def available_moves(self,phase):
         moves = list()
@@ -61,7 +92,6 @@ class Game:
     def next_phase(self):
         active_players = list()
         betting_players = list()
-        #active_bid = self.board.current_bid
         for i in self.players:
             if i.active==True:
                 active_players.append(i)
@@ -70,7 +100,7 @@ class Game:
         if len(active_players)==1: #IF ONLY ONE PLAYER LEFT => NEXT PHASE
             for i in active_players:
                 if i.active:
-                    print(f"Player {i.id} won the round. He won {self.board.pot}") #TODO Add the correct pot management with the winning management
+                    print(f"Player {i.id} won the round.") #TODO Add the correct pot management with the winning management
             return True
         else: #IF MORE THAN ONE PLAYER LEFT
             if len(betting_players)==0: #IF NONE IS BETTING (EVERY ACTIVE PLAYER GOES ALL-IN)
@@ -85,7 +115,7 @@ class Game:
         while choice not in self.available_moves(phase):
            choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase)}")
         if choice == "Fold":
-            self.board.pot = player.fold(self.board.pot)
+            self.board.active_pot = player.fold(self.board.active_pot)
         elif choice == "Call":
             player.call(self.board.current_bid)
         elif choice == "Raise":
@@ -142,6 +172,7 @@ class Game:
             if i.active:
                 print(i)
 
+    @pprint
     def set_first_round(self,autoplay=False):
         n_players = len(self.players)
         for i in self.players:
@@ -160,17 +191,20 @@ class Game:
                     self.play_moves(i,choice,1)
             while_token+=1
         for i in self.players:
-            self.board.pot+=i.current_bet
+            self.board.active_pot['value']+=i.current_bet
             i.current_bet=0
         self.board.current_bid=0
 
+    @burn_card
     def the_flop(self): # Need to burn the first card from the deck before flopping
+        print("### THE FLOP ###\r")
         for _ in range(3):
             draw = random.choice(self.deck.content)
             self.board.community_cards.append(draw)
             self.deck.content.remove(draw)
         print(self.board)
 
+    @pprint
     def set_second_round(self,autoplay=False):
         n_players = len(self.players)
         for i in self.players:
@@ -186,17 +220,20 @@ class Game:
                     self.play_moves(i,choice,2)
             while_token+=1
         for i in self.players:
-            self.board.pot+=i.current_bet
+            self.board.active_pot['value']+=i.current_bet
             i.current_bet=0
             self.checked=False
         self.board.current_bid=0
 
+    @burn_card
     def the_turn(self): #same as the flop but one card only # Need to burn the first card from the deck before flopping
+        print("### THE TURN ###\r")
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
         print(self.board)
 
+    @pprint
     def set_third_round(self,autoplay=False): #same as second
         n_players = len(self.players)
         for i in self.players:
@@ -212,17 +249,20 @@ class Game:
                     self.play_moves(i,choice,3)
             while_token+=1
         for i in self.players:
-            self.board.pot+=i.current_bet
+            self.board.active_pot['value']+=i.current_bet
             i.current_bet=0
             self.checked=False
         self.board.current_bid=0
 
+    @burn_card
     def the_river(self): #same as the turn # Need to burn the first card from the deck before flopping
+        print("### THE RIVER ###\r")
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
         print(self.board)
 
+    @pprint
     def set_fourth_round(self,autoplay=False): #same as second and third
         n_players = len(self.players)
         for i in self.players:
@@ -238,18 +278,21 @@ class Game:
                     self.play_moves(i,choice,4)
             while_token+=1
         for i in self.players:
-            self.board.pot+=i.current_bet
+            self.board.active_pot['value']+=i.current_bet
             i.current_bet=0
             self.checked=False
         self.board.current_bid=0
 
-    def distribute_pots(self,player_list,pot):
-        win = self.showdown(player_list)
-        if type(win)==list: # Two or more winners (type: list())
-            pass
-        else: # One winner
-            win.money+=pot
-            pot = 0 # TODO Work on the pot issue
+    def distribute_pots(self):
+        for i in self.board.pots:
+            player_list = i['player_list']
+            pot = i['value']
+            win = self.showdown(player_list)
+            if type(win)==list:
+                pass
+            else: # One winner
+                win.money+=pot
+                pot = 0
 
     def showdown(self,player_list): #everyone reveals their cards #TODO manage pots
         scores = dict()

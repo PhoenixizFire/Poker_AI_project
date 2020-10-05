@@ -76,13 +76,13 @@ class Player:
         print(self)
         return self.current_bet
 
-    def fold(self,active_pot):
+    def fold(self,pot):
         # Down the hand without paying further (any turn)
+        active_pot = pot['value']
         self.active = False
-        active_pot+=self.current_bet
+        active_pot += self.current_bet
         self.current_bet = 0
         return active_pot
-        #print(self)
 
     def bet(self):
         # Second turn and further
