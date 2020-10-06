@@ -4,11 +4,11 @@ from cards import Deck
 
 class Board:
 
-    def __init__(self,player_list):
+    def __init__(self,sb,bb,player_list):
         self.pots = list()
         self.new_pot(player_list)
-        self.small_blind = int()
-        self.big_blind = int()
+        self.small_blind = sb
+        self.big_blind = bb
         self.current_bid = 0
         self.community_cards = list()
 

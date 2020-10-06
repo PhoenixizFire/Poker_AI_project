@@ -41,6 +41,10 @@ class Player:
     def __repr__(self):
         return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
 
+    def __del__(self):
+        print(f"Deleting player {self.id}")
+        del self
+
     def set_blind(self,auto=0):
         if auto==0:
             bet = "bet"
@@ -74,6 +78,8 @@ class Player:
         self.money-=difference
         self.current_bet+=difference
         print(self)
+        if self.money==0:
+            self.all_in=True
         return self.current_bet
 
     def fold(self,pot):
@@ -98,3 +104,11 @@ class Player:
     def check(self):
         # Second turn and further only if nobody bet before you (wait for other players to play)
         print(self)
+
+    def tapis(self):
+        self.current_bet+=self.money
+        self.money = 0
+        print("Self.all_in=False")
+        self.all_in = True
+        print("Self.all_in=True")
+        return self.current_bet

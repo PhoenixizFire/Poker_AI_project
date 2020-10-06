@@ -11,15 +11,16 @@ from functools import reduce
 
 class Game:
 
-    def __init__(self,n_players,base_money,autoplay=False):
+    def __init__(self,n_players,base_money,sb=25,bb=50,autoplay=False):
         print('Starting the game')
         print('The players come sit around the table')
         self.players = [Player(i+1,base_money) for i in range(n_players)]
         print('Setting up the board')
-        self.board = Board(self.players)
+        self.board = Board(sb,bb,self.players)
         print('Shuffling the cards')
         self.deck = Deck()
         self.deck.big
+        self.all_in = False
         self.main(autoplay)
     
     def main(self,autoplay=False):
@@ -59,6 +60,11 @@ class Game:
                 break
             self.distribute_pots()
             self.deck.reset()
+            for i in self.players:
+                if i.money==0:
+                    self.players.remove(i)
+                else:
+                    print(i.id,i.money)
             self.resume_active_players()
             break
 
@@ -66,7 +72,7 @@ class Game:
         def magic(self,phase):
             print("#### ==== ####")
             func(self,phase)
-            print("#### ==== ####")
+            print("#### ==== ####\n")
         return magic
 
     def burn_card(func):
@@ -77,16 +83,18 @@ class Game:
             func(self)
         return burn
 
-
-    def available_moves(self,phase):
+    def available_moves(self,phase,player):
         moves = list()
         moves.append("Fold") # EVERYTIME
-        if phase==1 or self.board.current_bid>0:
-            moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
-            moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
-        if phase>1 and self.board.current_bid==0:
-            moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
-            moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+        if player.money<=self.board.current_bid:
+            moves.append("All-in")
+        else:
+            if phase==1 or self.board.current_bid>0:
+                moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+                moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+            if phase>1 and self.board.current_bid==0:
+                moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
+                moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
         return moves
 
     def next_phase(self):
@@ -109,21 +117,29 @@ class Game:
                 if sum(betting_players)==0:
                     return False
                 else:
+                    if len(betting_players)==1:
+                        if betting_players[0]!=self.board.current_bid:
+                            return False
                     return betting_players[1:] == betting_players[:-1] #BOOLEAN IF ALL BETS FOR CURRENT PLAYERS ARE EQUAL (IF ALL-IN THEN NOT CHECKED)
 
     def play_moves(self,player,choice,phase):
-        while choice not in self.available_moves(phase):
-           choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase)}")
+        while choice not in self.available_moves(phase,player):
+           choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase,player)}")
         if choice == "Fold":
             self.board.active_pot = player.fold(self.board.active_pot)
         elif choice == "Call":
             player.call(self.board.current_bid)
         elif choice == "Raise":
             self.board.current_bid = player.relaunch(self.board.current_bid)
+            if player.all_in==True:
+                self.all_in=True
         elif choice == "Bet":
             self.board.current_bid = player.bet()
         elif choice == "Check":
             player.check()
+        elif choice == "All-in":
+            self.all_in=True
+            player.tapis()
 
     def set_roles(self,turn):
         n_players = len(self.players)
@@ -142,19 +158,13 @@ class Game:
     def set_blinds(self,autoplay=False):
         for i in self.players:
             if i.small_blind==True:
-                if autoplay:
-                    self.board.small_blind = i.set_blind(25)
-                else:
-                    self.board.small_blind = i.set_blind()
-        print('Small blind set')
+                self.board.small_blind = i.set_blind(25)
+        print(f'Small blind set at {self.board.small_blind}')
         for i in self.players:
             if i.big_blind==True:
-                if autoplay:
-                    self.board.big_blind = i.set_blind(50)
-                else:
-                    self.board.big_blind = i.set_blind()
+                self.board.big_blind = i.set_blind(50)
         self.board.current_bid = self.board.big_blind
-        print('Big blind set')
+        print(f'Big blind set at {self.board.big_blind}')
 
     def set_cards(self): # Distribution starts from small blind and goes on
         for i in self.players:
@@ -187,7 +197,7 @@ class Game:
                     if autoplay:
                         choice = "Fold"
                     else:
-                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1)}")
+                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     self.play_moves(i,choice,1)
             while_token+=1
         for i in self.players:
@@ -216,7 +226,8 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2)}")
+                    print(i.all_in)
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
                     self.play_moves(i,choice,2)
             while_token+=1
         for i in self.players:
@@ -245,7 +256,8 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3)}")
+                    print(i.all_in)
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
                     self.play_moves(i,choice,3)
             while_token+=1
         for i in self.players:
@@ -274,7 +286,8 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4)}")
+                    print(i.all_in)
+                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
                     self.play_moves(i,choice,4)
             while_token+=1
         for i in self.players:
@@ -287,7 +300,7 @@ class Game:
         for i in self.board.pots:
             player_list = i['player_list']
             pot = i['value']
-            win = self.showdown(player_list)
+            win = self.showdown([x for x in player_list if x.active==True])
             if type(win)==list:
                 pass
             else: # One winner
