@@ -43,7 +43,6 @@ class Player:
 
     def __del__(self):
         print(f"Deleting player {self.id}")
-        del self
 
     def set_blind(self,auto=0):
         if auto==0:
@@ -64,6 +63,7 @@ class Player:
     def call(self,bid):
         # Pay same as Big Blind (First turn or if someone already bet in further turns)
         difference = bid - self.current_bet
+        self.checked = False
         self.money-=difference
         self.current_bet+=difference
         print(self)
@@ -71,6 +71,7 @@ class Player:
     def relaunch(self,bid): #raise
         # Pay more than Big Blind (First turn or if someone already bet in further turns)
         qty = "qty"
+        self.checked = False
         while not qty.isdecimal():
             qty = input(f"How much do you want to raise to, player {self.id} ? ")
         qty = int(qty)
@@ -92,6 +93,7 @@ class Player:
 
     def bet(self):
         # Second turn and further
+        self.checked = False
         bet = "bet"
         while not bet.isdecimal():
             bet = input(f"How much do you wanna bet, player {self.id} ? ")
@@ -99,16 +101,18 @@ class Player:
         self.money-=bet
         self.current_bet+=bet
         print(self)
+        if self.money==0:
+            self.all_in=True
         return self.current_bet
 
     def check(self):
+        self.checked = True
         # Second turn and further only if nobody bet before you (wait for other players to play)
         print(self)
 
     def tapis(self):
+        self.checked = False
         self.current_bet+=self.money
         self.money = 0
-        print("Self.all_in=False")
         self.all_in = True
-        print("Self.all_in=True")
         return self.current_bet
