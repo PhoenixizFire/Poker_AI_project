@@ -13,3 +13,9 @@ if __name__=='__main__':
         Game(6,1500)
     elif sys.argv[1]=='autoplay':
         Game(6,1500,autoplay=True)
+    elif sys.argv[1]=='simulation':
+        Game(6,1500,simulation=True)
+    elif sys.argv[1]=='trAIning':
+        Game(6,1500,training=True)
+    elif sys.argv[1]=='plAyIng':
+        Game(6,1500,AI=True)

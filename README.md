@@ -5,6 +5,11 @@
 
 #### <u>Current dependencies :</u>
 - random (No install to do)
+- operator (No install to do)
+- functools (No install to do)
+- os (No install to do)
+- sys (No install to do)
+- colorama (Might need to install using `pip install colorama`)
 <br>
 <br>
 
@@ -16,7 +21,7 @@
 
 ### <u>Ce que fait le projet :</u>
 Dans l'état actuel :
-- Une partie de Poker (règles Texas Hold'Em) se déroule dans la console de commande. En cours de développement.
+- Une partie de Poker (règles Texas Hold'Em) se déroule dans la console de commande. Développement terminé.
 
 Dans la prévision :
 - Une partie de Poker se joue sur une interface visuelle type Tkinter.
@@ -34,7 +39,7 @@ Dans la prévision :
 
 ### <u>What this project does :</u>
 Right now :
-- A Poker game (Texas Hold'Em) runs in the command prompt. Work in progress.
+- A Poker game (Texas Hold'Em) runs in the command prompt. Done.
 
 Planned :
 - A Poker game is run using a GUI like Tkinter.

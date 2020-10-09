@@ -11,7 +11,7 @@ from functools import reduce
 
 class Game:
 
-    def __init__(self,n_players,base_money,sb=25,bb=50,autoplay=False):
+    def __init__(self,n_players,base_money,sb=25,bb=50,autoplay=False,simulation=False,training=False,AI=False):
         print('Starting the game')
         print('The players come sit around the table')
         self.players = [Player(i+1,base_money) for i in range(n_players)]
@@ -29,7 +29,7 @@ class Game:
             turn+=1
             while True:
                 self.set_roles(turn)
-                self.set_blinds(autoplay)
+                self.set_blinds()
                 self.set_cards()
 
                 self.set_first_round(autoplay)
@@ -154,7 +154,7 @@ class Game:
         self.players[(turn+1)%n_players].big_blind = True
         print(f"Player {((turn+1)%n_players)+1} is the big blind")
 
-    def set_blinds(self,autoplay=False):
+    def set_blinds(self:
         for i in self.players:
             if i.small_blind==True:
                 self.board.small_blind = i.set_blind(25)
@@ -643,20 +643,26 @@ class Game:
                     print(f"Player {winner.id} wins")
                     return winner
             if max_score==9:
-                for p in player_list:
-                    if p.combo_score==max_score:
-                        top_cards[p]=max(self.board.straight_flush(p))
-                print(top_cards)
-                winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
-                print(f"Player {winner.id} wins")
+                if self.board.straight_flush(Player("Dummy",0))==sorted(self.board.community_cards,key=lambda x: x.value,reverse=True):
+                    winner = player_list
+                else:
+                    for p in player_list:
+                        if p.combo_score==max_score:
+                            top_cards[p]=max(self.board.straight_flush(p))
+                    print(top_cards)
+                    winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"Player {winner.id} wins")
                 return winner
             if max_score==10:
-                for p in player_list:
-                    if p.combo_score==max_score:
-                        top_cards[p]=max(self.board.royal_flush(p))
-                print(top_cards)
-                winner= max(top_cards.items(),key=operator.itemgetter(1))[0]
-                print(f"Player {winner.id} wins")
+                if self.board.royal_flush(Player("Dummy",0))==sorted(self.board.community_cards,key=lambda x: x.value,reverse=True):
+                    winner = player_list
+                else:
+                    for p in player_list:
+                        if p.combo_score==max_score:
+                            top_cards[p]=max(self.board.royal_flush(p))
+                    print(top_cards)
+                    winner= max(top_cards.items(),key=operator.itemgetter(1))[0]
+                    print(f"Player {winner.id} wins")
                 return winner
 
         # FIVE CARD RULES ALWAYS ACT : For One_Pair, Two_Pair, Three_of_a_Kind, always the kickers up to 5 cards used.
