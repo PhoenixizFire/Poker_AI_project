@@ -154,7 +154,7 @@ class Game:
         self.players[(turn+1)%n_players].big_blind = True
         print(f"Player {((turn+1)%n_players)+1} is the big blind")
 
-    def set_blinds(self:
+    def set_blinds(self):
         for i in self.players:
             if i.small_blind==True:
                 self.board.small_blind = i.set_blind(25)
