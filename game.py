@@ -1,6 +1,7 @@
 from board import Board
 from cards import Deck
 from player import Player
+from bots import Bot
 import random
 import operator
 from functools import reduce
@@ -14,16 +15,19 @@ class Game:
     def __init__(self,n_players,base_money,sb=25,bb=50,autoplay=False,simulation=False,training=False,AI=False):
         print('Starting the game')
         print('The players come sit around the table')
-        self.players = [Player(i+1,base_money) for i in range(n_players)]
+        if simulation==True:
+            self.players = [Player(i+1,base_money,bot=Bot(random.choice(["Folder","Coward","Payer","Follower","Risky","Rich"]))) for i in range(n_players-1)]+[Player(n_players,base_money)]
+        else:
+            self.players = [Player(i+1,base_money) for i in range(n_players)]
         print('Setting up the board')
         self.board = Board(sb,bb,self.players)
         print('Shuffling the cards')
         self.deck = Deck()
         self.deck.big
         self.all_in = False
-        self.main(autoplay)
+        self.main(autoplay,simulation)
     
-    def main(self,autoplay=False):
+    def main(self,autoplay=False,simulation=False):
         turn = 0
         while len(self.players)>1:
             turn+=1
@@ -32,7 +36,7 @@ class Game:
                 self.set_blinds()
                 self.set_cards()
 
-                self.set_first_round(autoplay)
+                self.set_first_round(autoplay,simulation)
                 self.the_flop()
                 if len([x for x in self.players if x.active])==1:
                     self.the_turn()
@@ -41,7 +45,7 @@ class Game:
                 else:
                     self.resume_active_players()
 
-                self.set_second_round(autoplay)
+                self.set_second_round(autoplay,simulation)
                 self.the_turn()
                 if len([x for x in self.players if x.active])==1:
                     self.the_river()
@@ -49,14 +53,14 @@ class Game:
                 else:
                     self.resume_active_players()
 
-                self.set_third_round(autoplay)
+                self.set_third_round(autoplay,simulation)
                 self.the_river()
                 if len([x for x in self.players if x.active])==1:
                     break
                 else:
                     self.resume_active_players()
 
-                self.set_fourth_round(autoplay)
+                self.set_fourth_round(autoplay,simulation)
                 break
             self.distribute_pots()
             self.deck.reset()
@@ -65,9 +69,9 @@ class Game:
             break
 
     def pprint(func):
-        def magic(self,phase):
+        def magic(self,phase,opt):
             print("#### ==== ####")
-            func(self,phase)
+            func(self,phase,opt)
             print("#### ==== ####\n")
         return magic
 
@@ -182,7 +186,7 @@ class Game:
                 print(i)
 
     @pprint
-    def set_first_round(self,autoplay=False):
+    def set_first_round(self,autoplay=False,simulation=False):
         n_players = len(self.players)
         for i in self.players:
             if i.big_blind:
@@ -195,6 +199,11 @@ class Game:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     if autoplay:
                         choice = "Fold"
+                    if simulation:
+                        if i.bot!=None:
+                            choice = i.bot.action(self.available_moves(1,i))
+                        else:
+                            choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     else:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     self.play_moves(i,choice,1)
@@ -214,7 +223,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_second_round(self,autoplay=False):
+    def set_second_round(self,autoplay=False,simulation=False):
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -225,7 +234,13 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
+                    if simulation:
+                        if i.bot!=False:
+                            choice = i.bot.action(self.available_moves(1,i))
+                        else:
+                            choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
+                    else:
+                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
                     self.play_moves(i,choice,2)
             while_token+=1
         for i in self.players:
@@ -243,7 +258,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_third_round(self,autoplay=False): #same as second
+    def set_third_round(self,autoplay=False,simulation=False): #same as second
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -254,7 +269,13 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
+                    if simulation:
+                        if i.bot!=False:
+                            choice = i.bot.action(self.available_moves(1,i))
+                        else:
+                            choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
+                    else:
+                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
                     self.play_moves(i,choice,3)
             while_token+=1
         for i in self.players:
@@ -272,7 +293,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_fourth_round(self,autoplay=False): #same as second and third
+    def set_fourth_round(self,autoplay=False,simulation=False): #same as second and third
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -283,7 +304,13 @@ class Game:
             active_id = play_order[while_token%n_players]
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
-                    choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
+                    if simulation:
+                        if i.bot!=False:
+                            choice = i.bot.action(self.available_moves(1,i))
+                        else:
+                            choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
+                    else:
+                        choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
                     self.play_moves(i,choice,4)
             while_token+=1
         self.manage_pots()

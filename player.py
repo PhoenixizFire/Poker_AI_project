@@ -1,6 +1,6 @@
 class Player:
 
-    def __init__(self,idty,money):
+    def __init__(self,idty,money,bot=None):
         self.id = idty #Identité du joueur
         self.money = money #Argent du joueur
         self.hand = list() #Cartes en main du joueur
@@ -13,6 +13,7 @@ class Player:
         self.checked = False # Le joueur a-t-il check ? 
         self.combo_score = 0
         self.kickers = list()
+        self.bot = bot
 
     @property
     def dealer(self):
@@ -39,7 +40,10 @@ class Player:
         self._big_blind = boolean
 
     def __repr__(self):
-        return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
+        if self.bot==None:
+            return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
+        else:
+            return f"\n[BOT] Player {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"            
 
     def __del__(self):
         print(f"Deleting player {self.id}")
@@ -72,6 +76,8 @@ class Player:
         # Pay more than Big Blind (First turn or if someone already bet in further turns)
         qty = "qty"
         self.checked = False
+        if self.bot!=None:
+            qty = self.bot.action_relaunch(self.money)
         while not qty.isdecimal():
             qty = input(f"How much do you want to raise to, player {self.id} ? ")
         qty = int(qty)
@@ -95,6 +101,8 @@ class Player:
         # Second turn and further
         self.checked = False
         bet = "bet"
+        if self.bot!=None:
+            bet = self.bot.action_bet(self.money)
         while not bet.isdecimal():
             bet = input(f"How much do you wanna bet, player {self.id} ? ")
         bet = int(bet)
