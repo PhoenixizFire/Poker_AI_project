@@ -4,6 +4,7 @@ from player import Player
 from bots import Bot
 import random
 import operator
+import colorama as cr
 from functools import reduce
 
 ## n_players between 2 to 10. 3 to 10 for now on
@@ -16,7 +17,8 @@ class Game:
         print('Starting the game')
         print('The players come sit around the table')
         if simulation==True:
-            self.players = [Player(i+1,base_money,bot=Bot(random.choice(["Folder","Coward","Payer","Follower","Risky","Rich"]))) for i in range(n_players-1)]+[Player(n_players,base_money)]
+            ## ["Folder","Coward","Payer","Follower","Risky","Rich"]
+            self.players = [Player(i+1,base_money,bot=Bot("Random")) for i in range(n_players-1)]+[Player(n_players,base_money)]
         else:
             self.players = [Player(i+1,base_money) for i in range(n_players)]
         print('Setting up the board')
@@ -33,7 +35,7 @@ class Game:
             turn+=1
             while True:
                 self.set_roles(turn)
-                self.set_blinds()
+                self.set_blinds() #TODO Fix the issue where players are going negative
                 self.set_cards()
 
                 self.set_first_round(autoplay,simulation)
@@ -64,13 +66,15 @@ class Game:
                 break
             self.distribute_pots()
             self.deck.reset()
+            self.board.community_cards = list()
             self.players[:] = [x for x in self.players if x.money!=0]
             self.resume_active_players()
-            break
+            if turn==3:break
 
     def pprint(func):
         def magic(self,phase,opt):
             print("#### ==== ####")
+            print(f"{[(x.id,x.active,x.all_in,x.checked) for x in self.players]}")
             func(self,phase,opt)
             print("#### ==== ####\n")
         return magic
@@ -86,7 +90,7 @@ class Game:
     def available_moves(self,phase,player):
         moves = list()
         moves.append("Fold") # EVERYTIME
-        if player.money<=self.board.current_bid:
+        if player.money+player.current_bet<=self.board.current_bid:
             moves.append("All-in")
         else:
             if phase==1 or self.board.current_bid>0:
@@ -97,7 +101,7 @@ class Game:
                 moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
         return moves
 
-    def next_phase(self):
+    def next_phase(self): #TODO Fix the issue where when there are all-ins, others continue to play
         active_players = list()
         betting_players = list()
         for i in self.players:
@@ -202,6 +206,7 @@ class Game:
                     if simulation:
                         if i.bot!=None:
                             choice = i.bot.action(self.available_moves(1,i))
+                            print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     else:
@@ -215,7 +220,7 @@ class Game:
 
     @burn_card
     def the_flop(self): # Need to burn the first card from the deck before flopping
-        print("### THE FLOP ###\r")
+        print(cr.Fore.CYAN+"### THE FLOP ###\r"+cr.Style.RESET_ALL)
         for _ in range(3):
             draw = random.choice(self.deck.content)
             self.board.community_cards.append(draw)
@@ -235,8 +240,10 @@ class Game:
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     if simulation:
-                        if i.bot!=False:
-                            choice = i.bot.action(self.available_moves(1,i))
+                        if i.bot!=None:
+                            print("i.bot!=None")
+                            choice = i.bot.action(self.available_moves(2,i))
+                            print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
                     else:
@@ -251,7 +258,7 @@ class Game:
 
     @burn_card
     def the_turn(self): #same as the flop but one card only # Need to burn the first card from the deck before flopping
-        print("### THE TURN ###\r")
+        print(cr.Fore.BLUE+"### THE TURN ###\r"+cr.Style.RESET_ALL)
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
@@ -270,8 +277,9 @@ class Game:
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     if simulation:
-                        if i.bot!=False:
-                            choice = i.bot.action(self.available_moves(1,i))
+                        if i.bot!=None:
+                            choice = i.bot.action(self.available_moves(3,i))
+                            print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
                     else:
@@ -286,7 +294,7 @@ class Game:
 
     @burn_card
     def the_river(self): #same as the turn # Need to burn the first card from the deck before flopping
-        print("### THE RIVER ###\r")
+        print(cr.Fore.MAGENTA+"### THE RIVER ###\r"+cr.Style.RESET_ALL)
         draw = random.choice(self.deck.content)
         self.board.community_cards.append(draw)
         self.deck.content.remove(draw)
@@ -305,8 +313,9 @@ class Game:
             for i in self.players:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     if simulation:
-                        if i.bot!=False:
-                            choice = i.bot.action(self.available_moves(1,i))
+                        if i.bot!=None:
+                            choice = i.bot.action(self.available_moves(4,i))
+                            print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
                     else:
@@ -329,10 +338,12 @@ class Game:
                 if money_list[-1][1]!=money_list[-2][1]:
                     difference = money_list[-1][1] - money_list[-2][1]
                     money_list[-1][0].money+=difference
-                    money_list[-1][1]-=difference
+                    print(money_list)
+                    print(money_list[-1][1])
+                    money_list[-1][1]-=difference #Fix tuple issue
                 for i in money_list:
                     if i[1]!=0:
-                        self.board.active_pot+=len([x[1] for x in money_list if x[1]!=0])*i[1]
+                        self.board.active_pot['value']+=len([x[1] for x in money_list if x[1]!=0])*i[1]
                         for j in money_list:
                             if j[1]!=0:
                                 j-=i[1]
@@ -358,6 +369,7 @@ class Game:
                     i['value']=0
                 else:
                     rest = pot%nwin
+                    split_pot = pot
                     pot-=rest
                     for j in win:
                         j.money+=split_pot
@@ -494,6 +506,9 @@ class Game:
                         if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
                             print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
                             return finalists
+                        else:
+                            winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                            return winner
                         del final_battle
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]

@@ -43,7 +43,7 @@ class Player:
         if self.bot==None:
             return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
         else:
-            return f"\n[BOT] Player {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"            
+            return f"\n[BOT]({self.bot.mind}) Player {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"            
 
     def __del__(self):
         print(f"Deleting player {self.id}")
@@ -76,12 +76,19 @@ class Player:
         # Pay more than Big Blind (First turn or if someone already bet in further turns)
         qty = "qty"
         self.checked = False
+        print(f"ALERT : {self.money}")
         if self.bot!=None:
-            qty = self.bot.action_relaunch(self.money)
+            qty = self.bot.action_relaunch(self.money,bid)
+            while qty<bid:
+                qty = self.bot.action_relaunch(self.money,bid)
+            qty = str(qty)
+            print(f"Player {self.id} raised to {qty}")
         while not qty.isdecimal():
             qty = input(f"How much do you want to raise to, player {self.id} ? ")
         qty = int(qty)
         difference = qty-self.current_bet
+        if difference>self.money:
+            difference=self.money
         self.money-=difference
         self.current_bet+=difference
         print(self)
@@ -103,9 +110,13 @@ class Player:
         bet = "bet"
         if self.bot!=None:
             bet = self.bot.action_bet(self.money)
+            bet = str(bet)
+            print(f"Player {self.id} bets {bet}")
         while not bet.isdecimal():
             bet = input(f"How much do you wanna bet, player {self.id} ? ")
         bet = int(bet)
+        if bet>self.money:
+            bet=self.money
         self.money-=bet
         self.current_bet+=bet
         print(self)
