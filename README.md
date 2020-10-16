@@ -28,6 +28,12 @@ Dans la prévision :
 - Le nombre des joueurs peut être défini, les adversaires peuvent réagir en tant qu'IA ou que joueur aléatoire.
 - Une IA sera entraînée pour devenir meilleure au fur et à mesure des coups joués. La partie se jouera d'elle même automatiquement pour entraîner l'IA.
 - Plusieurs réseaux neuronaux seront mis en place, par décision. Eventuellement en NEAT, pas encore certain. Algorithmes de Q-Learning prévus.
+
+### <u>Comment tester le projet ?</u>
+- Télécharger le dossier
+- Ouvrir le raccourci CMD dans le dossier téléchargé (Normalement, il doit ouvrir une invite de commande avec le dossier actif en cible)
+- Dans l'invite de commande, taper `python main.py` (en admettant que la commande `python` soit fonctionnelle)
+- Vous pouvez rajouter un argument, comme par exemple "simulation" `python main.py simulation`, ce qui permettra d'utiliser un paramètre prédéfini de lancement. (Options disponibles actuellement : "autoplay","simulation")
 <br>
 <br>
 
@@ -46,3 +52,9 @@ Planned :
 - The amount of players can be chosen, the opponents can react as AIs or as random dummies.
 - An AI will be trained to get better as the game runs. The game will go on by itself to train the AI.
 - Many neural networks are going to be made, by decision. Eventually using NEAT, not sure yet. Q-Learning algorithms planned.
+
+### <u>How to test the project ?</u>
+- Download the folder
+- Open the CMD shortcut inside the downloaded folder (It should normally open a command prompt with the active folder as a target)
+- In the command prompt, type `python main.py` (admitting that the `python` command is enabled)
+- You can add an argument, like for example "simulation" `python main.py simulation`, which'll allow the use of a predefined launch setting. (Currently available options : "autoplay","simulation")

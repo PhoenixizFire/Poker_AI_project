@@ -60,6 +60,8 @@ class Player:
         while not bet.isdecimal():
             bet = input(f"Setting {arg} blind. How much do you pay, player {self.id} ? ")
         bet = int(bet)
+        if bet>self.money:
+            bet = self.money
         self.money-=bet
         self.current_bet+=bet
         return bet

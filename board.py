@@ -40,11 +40,13 @@ class Board:
             }
         )
 
-    def reset_board(self):
+    def reset_board(self,player_list):
         self.small_blind = int()
         self.big_blind = int()
         self.current_bid = 0
         self.community_cards = list()
+        self.pots = list()
+        self.new_pot(player_list)
 
     def highest_card(self,player):
         max_value = 0

@@ -66,7 +66,7 @@ class Game:
                 break
             self.distribute_pots()
             self.deck.reset()
-            self.board.community_cards = list()
+            self.board.reset_board([x for x in self.players if x.active==True])
             self.players[:] = [x for x in self.players if x.money!=0]
             self.resume_active_players()
             if turn==3:break
@@ -74,7 +74,7 @@ class Game:
     def pprint(func):
         def magic(self,phase,opt):
             print("#### ==== ####")
-            print(f"{[(x.id,x.active,x.all_in,x.checked) for x in self.players]}")
+            #print(f"{[(x.id,x.active,x.all_in,x.checked) for x in self.players]}")
             func(self,phase,opt)
             print("#### ==== ####\n")
         return magic
@@ -110,6 +110,12 @@ class Game:
                 if i.all_in==False:
                     betting_players.append(i.current_bet)
         check_list = [x.checked for x in self.players if x.active==True and x.all_in==False]
+        count_max_value = 0
+        for x in [x for x in self.players if x.active==True and x.all_in==False]:
+            if x.current_bet==self.board.current_bid:
+                count_max_value+=1
+        if count_max_value!=len([x for x in self.players if x.active==True and x.all_in==False]):
+            return False
         if len(active_players)==1: #IF ONLY ONE PLAYER LEFT => NEXT PHASE
             for i in active_players:
                 if i.active:
@@ -151,9 +157,13 @@ class Game:
     def set_roles(self,turn):
         n_players = len(self.players)
         for i in self.players:
-            i.dealer = False
-            i.small_blind = False
-            i.big_blind = False
+            if i.money>0:
+                i.dealer = False
+                i.small_blind = False
+                i.big_blind = False
+                i.active=True
+                i.all_in=False
+                i.checked=False
         print("\033[31m"+"Players status reset"+"\033[0m")
         self.players[(turn-1)%n_players].dealer = True
         print(f"Player {((turn-1)%n_players)+1} is the dealer")
@@ -241,7 +251,6 @@ class Game:
                 if i.id==active_id and i.active==True and i.all_in==False:
                     if simulation:
                         if i.bot!=None:
-                            print("i.bot!=None")
                             choice = i.bot.action(self.available_moves(2,i))
                             print(f"Player {i.id} did : {choice}")
                         else:
