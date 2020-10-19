@@ -66,8 +66,13 @@ class Game:
                 break
             self.distribute_pots()
             self.deck.reset()
+            self.set_roles(turn)
             self.board.reset_board([x for x in self.players if x.active==True])
-            self.players[:] = [x for x in self.players if x.money!=0]
+            #self.players[:] = [x for x in self.players if x.money!=0]
+            for x in self.players:
+                if x.money==0:
+                    x.active=False
+                    print(cr.Fore.YELLOW+f"{x.id} is out."+cr.Style.RESET_ALL)
             self.resume_active_players()
             if turn==3:break
 
@@ -102,6 +107,7 @@ class Game:
         return moves
 
     def next_phase(self): #TODO Fix the issue where when there are all-ins, others continue to play
+        print(f"Actives : {[x.id for x in self.players if x.active==True]}")
         active_players = list()
         betting_players = list()
         for i in self.players:
@@ -223,9 +229,10 @@ class Game:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     self.play_moves(i,choice,1)
             while_token+=1
-        for i in self.players:
-            self.board.active_pot['value']+=i.current_bet
-            i.current_bet=0
+        #for i in self.players:
+            #self.board.active_pot['value']+=i.current_bet
+            #i.current_bet=0
+        self.manage_pots()
         self.board.current_bid=0
 
     @burn_card
@@ -260,9 +267,10 @@ class Game:
                     self.play_moves(i,choice,2)
             while_token+=1
         for i in self.players:
-            self.board.active_pot['value']+=i.current_bet
-            i.current_bet=0
+            #self.board.active_pot['value']+=i.current_bet
+            #i.current_bet=0
             i.checked=False
+        self.manage_pots()
         self.board.current_bid=0
 
     @burn_card
@@ -296,9 +304,10 @@ class Game:
                     self.play_moves(i,choice,3)
             while_token+=1
         for i in self.players:
-            self.board.active_pot['value']+=i.current_bet
-            i.current_bet=0
-            self.checked=False
+            #self.board.active_pot['value']+=i.current_bet
+            #i.current_bet=0
+            i.checked=False
+        self.manage_pots()
         self.board.current_bid=0
 
     @burn_card
@@ -335,41 +344,46 @@ class Game:
         self.board.current_bid=0
 
     def manage_pots(self):
-        if self.all_in==True:
-            money_list = list()
+        if self.all_in==True: # IF GAME DETECTED SOMEONE ALL-IN'D
+            money_list = list() #LIST OF PLAYERS AND MONEY
             for i in self.players: # Exemple [0,0,50,100,300,500]
                 if i.active:
-                    money_list.append((i,i.money))
+                    money_list.append((i,i.money)) # money_list[0] = (Player,Player.money)
             if len(money_list)==1:
                 pass
-            else:
-                money_list = sorted(money_list, key=lambda tup: tup[1])
+            else: # IF MORE THAN ONE PEOPLE ACTIVE
+                money_list = sorted(money_list, key=lambda tup: tup[1]) # SORT THE LIST BY VALUE
+                print(f"{money_list}")
                 if money_list[-1][1]!=money_list[-2][1]:
                     difference = money_list[-1][1] - money_list[-2][1]
                     money_list[-1][0].money+=difference
-                    print(money_list)
-                    print(money_list[-1][1])
-                    money_list[-1][1]-=difference #Fix tuple issue
+                    money_list[-1] = (money_list[-1][0],money_list[-1][1]-difference)
                 for i in money_list:
                     if i[1]!=0:
                         self.board.active_pot['value']+=len([x[1] for x in money_list if x[1]!=0])*i[1]
                         for j in money_list:
                             if j[1]!=0:
-                                j-=i[1]
+                                j=(j[0],j[1]-i[1])
                         self.board.new_pot([x[0] for x in money_list if x[1]!=0])
-        else:
+                    if i[1]==0:
+                        print(cr.Fore.YELLOW+f"{i}"+cr.Style.RESET_ALL)
+        else: #IF NOT ALL-IN
             for i in self.players:
                 self.board.active_pot['value']+=i.current_bet
                 i.current_bet=0
-                self.checked=False
+                i.checked=False
         self.all_in=False
 
     def distribute_pots(self):
+        print(cr.Fore.MAGENTA+f"Number of pots : {len(self.board.pots)}"+cr.Style.RESET_ALL)
         for i in self.board.pots:
+            #print(f"{i}")
             player_list = i['player_list']
+            #print(f"{player_list}")
             pot = i['value']
             win = self.showdown([x for x in player_list if x.active==True])
             if type(win)==list:
+                print("Splitting the pot")
                 nwin = len(win)
                 if pot%nwin==0:
                     split_pot = pot/nwin
@@ -517,8 +531,8 @@ class Game:
                             return finalists
                         else:
                             winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
+                            print(f"Winner : {winner}")
                             return winner
-                        del final_battle
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")

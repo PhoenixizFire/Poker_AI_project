@@ -64,6 +64,8 @@ class Player:
             bet = self.money
         self.money-=bet
         self.current_bet+=bet
+        if self.money==0:
+            self.all_in=True
         return bet
 
     def call(self,bid):
@@ -81,7 +83,8 @@ class Player:
         print(f"ALERT : {self.money}")
         if self.bot!=None:
             qty = self.bot.action_relaunch(self.money,bid)
-            while qty<bid:
+            while qty+self.current_bet<bid or qty>self.money:
+                print(qty)
                 qty = self.bot.action_relaunch(self.money,bid)
             qty = str(qty)
             print(f"Player {self.id} raised to {qty}")

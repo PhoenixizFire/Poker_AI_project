@@ -1,4 +1,5 @@
 import operator
+import colorama as cr
 from functools import reduce
 from cards import Deck
 
@@ -32,6 +33,7 @@ class Board:
         self.active_pot['value'] = value
 
     def new_pot(self,player_list):
+        print(cr.Fore.RED+"GENERATING A NEW POT"+cr.Style.RESET_ALL)
         self.pots.append(
             {
                 "_id" : len(self.pots)+1,

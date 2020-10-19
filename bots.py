@@ -31,7 +31,7 @@ class Bot:
             self.all_in = 2
             self.money = 4
         if self.mind == "Random":
-            self.fold = random.randint(1,90)
+            self.fold = random.randint(1,60)
             self.bet = random.randint(1,50)
             self.check = random.randint(1,75)
             self.call = random.randint(1,75)
@@ -100,12 +100,15 @@ class Bot:
         cut = money//9
         if cut==0:
             cut = 1
-        if cut*self.money<=2*bid:
-            relaunch = random.randint(2*bid+1,2*bid+cut)
+        if 2*bid>money:
+            return money
         else:
-            relaunch = random.randint(cut*self.money-1,cut*self.money)
-            while relaunch==0:
+            if cut*self.money<=2*bid:
+                relaunch = random.randint(2*bid+1,2*bid+cut)
+            else:
                 relaunch = random.randint(cut*self.money-1,cut*self.money)
+                while relaunch==0:
+                    relaunch = random.randint(cut*self.money-1,cut*self.money)
         return relaunch
 
     def action_bet(self,money): #TODO régler le problème de la mise négative
