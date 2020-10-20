@@ -7,6 +7,7 @@ class Card:
         self.value = value
         self.figure = figure
         self.short = self.name()
+        self.tk = self.visual()
 
     """def __repr__(self):
         if self.value==1:
@@ -21,7 +22,8 @@ class Card:
             return f"{self.value} of {self.figure}"""
 
     def __repr__(self):
-        return cr.Back.WHITE+self.short+cr.Style.RESET_ALL
+        #return cr.Back.WHITE+self.short+cr.Style.RESET_ALL
+        return self.tk
 
     def __gt__(self,b):
         return self.value>b.value
@@ -50,6 +52,28 @@ class Card:
         elif self.figure=="Diamonds":
             figure = cr.Fore.RED+"♦"+cr.Style.RESET_ALL
         return f"{cr.Fore.BLACK}{value}{figure}{cr.Style.RESET_ALL}"
+
+    def visual(self):
+        value,figure = int(),str()
+        if self.value==14:
+            value = "A"
+        elif self.value==11:
+            value = "J"
+        elif self.value==12:
+            value = "Q"
+        elif self.value==13:
+            value = "K"
+        else:
+            value = str(self.value)
+        if self.figure=="Hearts":
+            figure = "♥"
+        elif self.figure=="Spades":
+            figure = "♠"
+        elif self.figure=="Clubs":
+            figure = "♣"
+        elif self.figure=="Diamonds":
+            figure = "♦"
+        return f"{value}{figure}"
 
 
 class Deck:
