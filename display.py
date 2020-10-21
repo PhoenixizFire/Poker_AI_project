@@ -1,3 +1,5 @@
+# Useful link to determine coordinates over an oval/ellipse : https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
+
 import tkinter as tk
 from game import Game
 from player import Player
@@ -8,15 +10,18 @@ import random
 import colorama as cr
 from PIL import Image,ImageTk
 import webbrowser
+import math
+import time
 
-WIDTH = 1200
-HEIGHT = 675
+WIDTH = 1600
+HEIGHT = 900
 
-class VisualGame:
+class VisualGame(Game):
 
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Poker")
+        self.root.title("Poker AI Project")
+        self.root.iconbitmap('images/chips.ico')
         self.root.geometry(f"{int(WIDTH*.66)}x{int(HEIGHT*.66)}")
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
@@ -41,24 +46,36 @@ class VisualGame:
         self.credits_button = tk.Button(self.main_menu, text='GitHub', command=self.show_credits,width=10,height=2,font=(None,15))
         self.credits_button.grid(row=1,column=2,padx=5,pady=20)
 
-        self.settings_panel = tk.Frame(self.main_menu)
+        self.settings_panel = tk.Frame(self.root)
 
-        self.settings_player = tk.Spinbox(self.settings_panel,from_=2,to_=10,increment=1,textvariable=tk.DoubleVar(value=6))
-        self.settings_player.grid(row=0,column=0,padx=10,pady=20)
+        self.var_players = tk.IntVar(value=6)
+        self.var_money = tk.IntVar(value=1500)
+        self.var_simulation = tk.IntVar(value=1)
 
-        self.settings_money = tk.Entry(self.settings_panel,textvariable=tk.DoubleVar(value=1500))
-        self.settings_money.grid(row=0,column=1,padx=10,pady=20)
+        self.settings_back = tk.Button(self.settings_panel, text='<',command=self.open_settings_menu,width=3,height=1,font=(None,10,'bold'))
+        self.settings_back.grid(row=0,column=0,padx=10,pady=10,sticky='nw')
 
-        self.settings_simulation = tk.Checkbutton(self.settings_panel,text='Simulation',variable=tk.IntVar(value=1))
-        self.settings_simulation.grid(row=0,column=2,padx=10,pady=10)
+        self.settings_label = tk.Label(self.settings_panel, text='Settings',font=(None,50))
+        self.settings_label.grid(row=0,column=1,columnspan=3,padx=10,pady=20)
+
+        self.settings_player = tk.Spinbox(self.settings_panel,from_=2,to_=10,increment=1,textvariable=self.var_players,width=10,font=(None,13))
+        self.settings_player.grid(row=2,column=1,padx=10,pady=20)
+
+        self.settings_money = tk.Entry(self.settings_panel,textvariable=self.var_money,width=10,font=(None,13))
+        self.settings_money.grid(row=2,column=2,padx=10,pady=20)
+
+        self.settings_simulation = tk.Checkbutton(self.settings_panel,text='Simulation',width=10,font=(None,13),variable=self.var_simulation)
+        self.settings_simulation.grid(row=2,column=3,padx=10,pady=20)
 
         self.root.mainloop()
 
     def open_settings_menu(self):
         if self.settings_panel.winfo_ismapped()==True:
             self.settings_panel.grid_forget()
+            self.main_menu.grid()
         else:
-            self.settings_panel.grid(row=2,columnspan=3,padx=10,pady=20)
+            self.main_menu.grid_forget()
+            self.settings_panel.grid()
 
     def show_credits(self):
         webbrowser.open('http://github.com/PhoenixizFire')
@@ -73,17 +90,47 @@ class VisualGame:
             self.deck.content.remove(draw)
         for i in self.players:
             print(i)
-        self.background.itemconfig(self.player1_hand,text=f"{self.players[0].hand}")
-        self.background.itemconfig(self.player2_hand,text=f"{self.players[1].hand}")
-        self.background.itemconfig(self.player3_hand,text=f"{self.players[2].hand}")
-        self.background.itemconfig(self.player4_hand,text=f"{self.players[3].hand}")
-        self.background.itemconfig(self.player5_hand,text=f"{self.players[4].hand}")
-        self.background.itemconfig(self.player6_hand,text=f"{self.players[5].hand}")
-        self.background.itemconfig(self.community_cards,text=f"{self.board.community_cards}")
+            self.background.itemconfig(i.player_hand,text=f"{i.hand}")
 
-        self.init_button.grid_forget()
+        Game.the_flop(self)
+        self.background.itemconfig(self.community_cards,text=f"{self.board.community_cards}")
+        self.button_panel.grid_forget()
         self.background.grid_forget()
         self.background.grid(padx=0,pady=0)
+
+    def update_display(self):
+        for i in self.players:
+            self.background.itemconfig(i.player_hand,text=f"{i.hand}")
+            self.background.itemconfig(i.player_money,text=f"{i.money}")
+            self.background.itemconfig(i.player_bet,text=f"{i.current_bet}")
+            if i.dealer==False and i.small_blind==False and i.big_blind==False:
+                self.background.itemconfig(i.player_button,fill='',width=0)
+                self.background.itemconfig(i.player_button_name,text=f"")
+            else:
+                if i.dealer==True:
+                    self.background.itemconfig(i.player_button,fill='white',width=1)
+                    self.background.itemconfig(i.player_button_name,text=f"DE",font=(None,10,'bold'),fill='red')
+                if i.small_blind==True:
+                    self.background.itemconfig(i.player_button,fill='white',width=1)
+                    self.background.itemconfig(i.player_button_name,text=f"SB",font=(None,10,'bold'))
+                if i.big_blind==True:
+                    self.background.itemconfig(i.player_button,fill='white',width=1)
+                    self.background.itemconfig(i.player_button_name,text=f"BB",font=(None,10,'bold'))
+
+        self.background.itemconfig(self.community_cards,text=f"{self.board.community_cards}")
+
+    def main(self,simulation=False):
+        turn=1
+        Game.set_roles(self,turn)
+        self.update_display()
+        Game.set_blinds(self)
+        self.update_display()
+        Game.set_cards(self)
+        self.update_display()
+
+        #Game.set_first_round(self,autoplay,simulation)
+        Game.the_flop(self)
+        self.update_display()
 
     def init_game(self,n_players,base_money,sb=25,bb=50,simulation=False):
         print('Starting the game')
@@ -96,53 +143,56 @@ class VisualGame:
         self.board = Board(sb,bb,self.players)
         print('Shuffling the cards')
         self.deck = Deck()
-        self.deck.big
         self.all_in = False
         
-        self.game_menu = tk.Frame(self.root,bg='#4459E3')
+        self.game_menu = tk.Frame(self.root,bg='#4459E3') #bg same as self.background
         self.game_menu.rowconfigure(0,weight=10)
         self.game_menu.columnconfigure(0,weight=10)
 
-        self.init_button = tk.Button(self.game_menu,text='Play',command=self.set_cards)
-        self.init_button.grid()
+        self.button_panel = tk.Frame(self.game_menu)
+        self.button_panel.grid()
 
-        self.background = tk.Canvas(self.game_menu,width=WIDTH,height=HEIGHT,bg='#4459E3',bd=0, highlightthickness=0, relief='ridge')
+        self.init_button = tk.Button(self.button_panel,text='Play',command=self.main)
+        self.init_button.grid(row=0,column=0,padx=10,pady=10)
+
+        self.cards_button = tk.Button(self.button_panel,text='Give cards',command=self.set_cards)
+        self.cards_button.grid(row=0,column=1,padx=10,pady=10)
+
+        self.background = tk.Canvas(self.game_menu,width=WIDTH,height=HEIGHT,bd=0, highlightthickness=0, relief='ridge',bg='#4459E3') #bg='#4459E3'
         self.background.grid(padx=0,pady=0)
 
         self.background.create_oval(WIDTH/32*6,HEIGHT/18*5.3,WIDTH/32*26,HEIGHT/18*12.8,fill='#333333')
         self.background.create_oval(WIDTH/32*6.5,HEIGHT/18*5.7,WIDTH/32*25.5,HEIGHT/18*12.3,fill='#80522F')
         self.background.create_oval(WIDTH/32*7.5,HEIGHT/18*6.6,WIDTH/32*24.5,HEIGHT/18*11.4,fill='#2D9F01')
 
-        self.player1_active = self.background.create_rectangle(WIDTH/32*3, HEIGHT/18*8, WIDTH/32*5,  HEIGHT/18*10,fill='#FFFFFF',)
-        self.player1_name   = self.background.create_text(     WIDTH/32*4, HEIGHT/18*9,                           text=self.players[0].id)
-        self.player1_money  = self.background.create_text(     WIDTH/32*4, HEIGHT/18*9.5,                         text=f"{self.players[0].money} $")
-        self.player1_hand   = self.background.create_text(     WIDTH/32*4, HEIGHT/18*10.5,                        text=f"{self.players[0].hand}")
-        self.player2_active = self.background.create_rectangle(WIDTH/32*10,HEIGHT/18*3, WIDTH/32*12, HEIGHT/18*5, fill='#FFFFFF')
-        self.player2_name   = self.background.create_text(     WIDTH/32*11,HEIGHT/18*4,                           text=self.players[1].id)
-        self.player2_money  = self.background.create_text(     WIDTH/32*11,HEIGHT/18*4.5,                         text=f"{self.players[1].money} $")
-        self.player2_hand   = self.background.create_text(     WIDTH/32*11,HEIGHT/18*5.5,                         text=f"{self.players[1].hand}")
-        self.player3_active = self.background.create_rectangle(WIDTH/32*21,HEIGHT/18*3, WIDTH/32*23, HEIGHT/18*5, fill='#FFFFFF')
-        self.player3_name   = self.background.create_text(     WIDTH/32*22,HEIGHT/18*4,                           text=self.players[2].id)
-        self.player3_money  = self.background.create_text(     WIDTH/32*22,HEIGHT/18*4.5,                         text=f"{self.players[2].money} $")
-        self.player3_hand   = self.background.create_text(     WIDTH/32*22,HEIGHT/18*5.5,                         text=f"{self.players[2].hand}")
-        self.player4_active = self.background.create_rectangle(WIDTH/32*27,HEIGHT/18*8, WIDTH/32*29, HEIGHT/18*10,fill='#FFFFFF')
-        self.player4_name   = self.background.create_text(     WIDTH/32*28,HEIGHT/18*9,                           text=self.players[3].id)
-        self.player4_money  = self.background.create_text(     WIDTH/32*28,HEIGHT/18*9.5,                         text=f"{self.players[3].money} $")
-        self.player4_hand   = self.background.create_text(     WIDTH/32*28,HEIGHT/18*10.5,                         text=f"{self.players[3].hand}")
-        self.player5_active = self.background.create_rectangle(WIDTH/32*21,HEIGHT/18*13,WIDTH/32*23, HEIGHT/18*15,fill='#FFFFFF')
-        self.player5_name   = self.background.create_text(     WIDTH/32*22,HEIGHT/18*14,                          text=self.players[4].id)
-        self.player5_money  = self.background.create_text(     WIDTH/32*22,HEIGHT/18*14.5,                        text=f"{self.players[4].money} $")
-        self.player5_hand   = self.background.create_text(     WIDTH/32*22,HEIGHT/18*15.5,                        text=f"{self.players[4].hand}")
-        self.player6_active = self.background.create_rectangle(WIDTH/32*10,HEIGHT/18*13,WIDTH/32*12, HEIGHT/18*15,fill='#FFFFFF')
-        self.player6_name   = self.background.create_text(     WIDTH/32*11,HEIGHT/18*14,                          text=self.players[5].id)
-        self.player6_money  = self.background.create_text(     WIDTH/32*11,HEIGHT/18*14.5,                        text=f"{self.players[5].money} $")
-        self.player6_hand   = self.background.create_text(     WIDTH/32*11,HEIGHT/18*15.5,                        text=f"{self.players[5].hand}")
+        angle = 360/n_players
+        for i,x in enumerate(self.players):
+            coord_x = ((((WIDTH/32*26)-(WIDTH/32*6))/2)+WIDTH/32*2)*math.cos(math.radians(i*angle))+WIDTH/2
+            coord_y = ((((HEIGHT/18*12.8)-(HEIGHT/18*5.3))/2)+HEIGHT/18*2)*math.sin(math.radians(i*angle))+HEIGHT/2
+            bet_x = ((((WIDTH/32*26)-(WIDTH/32*6))/2)-WIDTH/32*2)*math.cos(math.radians(i*angle))+WIDTH/2
+            bet_y = ((((HEIGHT/18*12.8)-(HEIGHT/18*5.3))/2)-HEIGHT/18*2)*math.sin(math.radians(i*angle))+HEIGHT/2
 
-        self.community_board = self.background.create_rectangle(WIDTH/32*14,HEIGHT/18*6.5,WIDTH/32*18,HEIGHT/18*8,fill='#FFFFFF')
-        self.community_cards = self.background.create_text(     WIDTH/32*16,HEIGHT/18*9,                         text=f"{self.board.community_cards}")
+            x.player_active = self.background.create_rectangle(coord_x - WIDTH/32*1, coord_y - HEIGHT/18*1, coord_x + WIDTH/32*1, coord_y + HEIGHT/18*1, fill='#FFFFFF',)
+            x.player_name   = self.background.create_text(     coord_x,              coord_y,                                                            text=x.id)
+            x.player_money  = self.background.create_text(     coord_x,              coord_y+HEIGHT/18*0.5,                                              text=f"{x.money} $")
+            x.player_hand   = self.background.create_text(     coord_x,              coord_y+HEIGHT/18*1.5,                                              text=f"{x.hand}")
+            x.player_button = self.background.create_oval(     coord_x-WIDTH/32*1.25,coord_y+HEIGHT/18*0.75,coord_x-WIDTH/32*0.75,coord_y+HEIGHT/18*1.25,fill='',width=0)
+            x.player_button_name = self.background.create_text(coord_x-WIDTH/32*1,   coord_y+HEIGHT/18*1,                                                text='')
+            x.player_action = self.background.create_text(     coord_x,              coord_y-HEIGHT/18*1.5,                                              text='BET',fill='YELLOW',font=(None,10,'bold'))
+            x.player_bet    = self.background.create_text(     bet_x,                bet_y,                                                              text=f"{x.current_bet}")
+
+        self.community_board = self.background.create_rectangle(WIDTH/32*14,HEIGHT/18*6.5,WIDTH/32*18,HEIGHT/18*8, fill='#FFFFFF')
+        self.community_cards = self.background.create_text(     WIDTH/32*16,HEIGHT/18*9,                           text=f"{self.board.community_cards}")
+        self.pot             = self.background.create_text(     WIDTH/32*16,HEIGHT/18*7.25,                        text=f"{[x.id for x in self.board.active_pot['player_list']]}\n{self.board.active_pot['value']}")
 
     def setup_game_menu(self):
-        self.init_game(6,1500,simulation=True)
+        try:
+            if self.var_money.get()>0:
+                self.init_game(self.var_players.get(),self.var_money.get(),simulation=True)
+            else:
+                CRASH = 42/0
+        except:
+            self.init_game(self.var_players.get(),1500,simulation=True)
         self.main_menu.grid_forget()
         self.game_menu.grid(sticky="nsew")
         self.root.geometry(f"{int(WIDTH)}x{int(HEIGHT)}")

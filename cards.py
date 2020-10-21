@@ -82,7 +82,7 @@ class Deck:
         self.content = list()
         self.create_deck()
         self.shuffle()
-        self.big = self.intro_cards()
+        #self.big = self.intro_cards()
 
     def create_deck(self):
         print("Adding cards to the deck")
