@@ -8,6 +8,7 @@ class Player:
         self.small_blind = False # Est-il small blind sur la manche ?
         self.big_blind = False # Est-il big blind sur la manche ?
         self.current_bet = int() # Combien a-t-il de jetons devant lui pour ce tour ?
+        self.last_move = str()
         self.active = True # Le joueur est-il toujours actif ou s'est-il couché ?
         self.all_in = False # Le joueur a-t-il fait tapis ?
         self.checked = False # Le joueur a-t-il check ? 
@@ -55,8 +56,10 @@ class Player:
             bet = str(auto)
         if self.small_blind==True:
             arg = "small"
+            self.last_move = 'Blind'
         elif self.big_blind==True:
             arg = "big"
+            self.last_move = 'Blind'
         while not bet.isdecimal():
             bet = input(f"Setting {arg} blind. How much do you pay, player {self.id} ? ")
         bet = int(bet)
@@ -76,9 +79,8 @@ class Player:
         self.current_bet+=difference
         print(self)
 
-    def relaunch(self,bid): #raise
+    def relaunch(self,bid,qty="qty"): #raise
         # Pay more than Big Blind (First turn or if someone already bet in further turns)
-        qty = "qty"
         self.checked = False
         print(f"ALERT : {self.money}")
         if self.bot!=None:
@@ -109,10 +111,9 @@ class Player:
         self.current_bet = 0
         return active_pot
 
-    def bet(self):
+    def bet(self,bet="bet"):
         # Second turn and further
         self.checked = False
-        bet = "bet"
         if self.bot!=None:
             bet = self.bot.action_bet(self.money)
             bet = str(bet)
@@ -140,3 +141,6 @@ class Player:
         self.money = 0
         self.all_in = True
         return self.current_bet
+
+    def reset_move(self):
+        self.last_move = ''

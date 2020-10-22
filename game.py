@@ -149,6 +149,7 @@ class Game:
         elif choice == "Call":
             player.call(self.board.current_bid)
         elif choice == "Raise":
+            print("ALERT, THIS IS THE CURRENT HIGH BID : "+str(self.board.current_bid))
             self.board.current_bid = player.relaunch(self.board.current_bid)
             if player.all_in==True:
                 self.all_in=True
