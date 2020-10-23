@@ -31,7 +31,7 @@ class Game:
     
     def main(self,autoplay=False,simulation=False):
         turn = 0
-        while len(self.players)>1:
+        while len([x for x in self.players if x.active==True])>1:
             turn+=1
             while True:
                 self.set_roles(turn)
@@ -162,7 +162,8 @@ class Game:
             player.tapis()
 
     def set_roles(self,turn):
-        n_players = len(self.players)
+        list_players = [x for x in self.players if x.money>0]
+        n_players = len(list_players)
         for i in self.players:
             if i.money>0:
                 i.dealer = False
@@ -172,11 +173,11 @@ class Game:
                 i.all_in=False
                 i.checked=False
         print("\033[31m"+"Players status reset"+"\033[0m")
-        self.players[(turn-1)%n_players].dealer = True
+        list_players[(turn-1)%n_players].dealer = True
         print(f"Player {((turn-1)%n_players)+1} is the dealer")
-        self.players[turn%n_players].small_blind = True
+        list_players[turn%n_players].small_blind = True
         print(f"Player {(turn%n_players)+1} is the small blind")
-        self.players[(turn+1)%n_players].big_blind = True
+        list_players[(turn+1)%n_players].big_blind = True
         print(f"Player {((turn+1)%n_players)+1} is the big blind")
 
     def set_blinds(self):
