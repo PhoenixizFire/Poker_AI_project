@@ -146,20 +146,30 @@ class Game:
            choice = input(f"Player {player.id}, what do you want to do ? {self.available_moves(phase,player)}")
         if choice == "Fold":
             self.board.active_pot = player.fold(self.board.active_pot)
+            return choice
         elif choice == "Call":
             player.call(self.board.current_bid)
+            return choice
         elif choice == "Raise":
             print("ALERT, THIS IS THE CURRENT HIGH BID : "+str(self.board.current_bid))
             self.board.current_bid = player.relaunch(self.board.current_bid)
             if player.all_in==True:
                 self.all_in=True
+                return "All-in"
+            return choice+" at "+str(self.board.current_bid)
         elif choice == "Bet":
             self.board.current_bid = player.bet()
+            if player.all_in==True:
+                self.all_in=True
+                return "All-in"
+            return choice+" "+str(self.board.current_bid)
         elif choice == "Check":
             player.check()
+            return choice
         elif choice == "All-in":
             self.all_in=True
             player.tapis()
+            return choice
 
     def set_roles(self,turn):
         list_players = [x for x in self.players if x.money>0]
@@ -346,6 +356,7 @@ class Game:
         self.board.current_bid=0
 
     def manage_pots(self):
+        print(cr.Fore.RED+"MANAGING POTS"+cr.Fore.RESET)
         if self.all_in==True: # IF GAME DETECTED SOMEONE ALL-IN'D
             money_list = list() #LIST OF PLAYERS AND MONEY
             for i in self.players: # Exemple [0,0,50,100,300,500]
