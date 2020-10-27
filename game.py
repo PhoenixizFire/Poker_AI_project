@@ -100,7 +100,10 @@ class Game:
         else:
             if phase==1 or self.board.current_bid>0:
                 moves.append("Call") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
-                moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+                if player.money>2*self.board.current_bid: #CHECK IF PLAYER CAN PAY A REAL RAISE
+                    moves.append("Raise") # ONLY IN PRE FLOP OR LATER IF THERE IS AN ACTIVE BET
+                else:
+                    moves.append("All-in")
             if phase>1 and self.board.current_bid==0:
                 moves.append("Bet") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
                 moves.append("Check") # ONLY AFTER PRE FLOP IF NO ACTIVE BET
@@ -118,7 +121,7 @@ class Game:
         check_list = [x.checked for x in self.players if x.active==True and x.all_in==False]
         count_max_value = 0
         for x in [x for x in self.players if x.active==True and x.all_in==False]:
-            if x.current_bet==self.board.current_bid:
+            if x.current_bet>=self.board.current_bid:
                 count_max_value+=1
         if count_max_value!=len([x for x in self.players if x.active==True and x.all_in==False]):
             return False
@@ -168,7 +171,7 @@ class Game:
             return choice
         elif choice == "All-in":
             self.all_in=True
-            player.tapis()
+            self.board.current_bid = player.tapis()
             return choice
 
     def set_roles(self,turn):
@@ -361,25 +364,34 @@ class Game:
             money_list = list() #LIST OF PLAYERS AND MONEY
             for i in self.players: # Exemple [0,0,50,100,300,500]
                 if i.active:
-                    money_list.append((i,i.money)) # money_list[0] = (Player,Player.money)
+                    money_list.append([i,i.current_bet]) # money_list[0] = (Player,Player.current_bet)
             if len(money_list)==1:
                 pass
             else: # IF MORE THAN ONE PEOPLE ACTIVE
-                money_list = sorted(money_list, key=lambda tup: tup[1]) # SORT THE LIST BY VALUE
-                print(f"{money_list}")
-                if money_list[-1][1]!=money_list[-2][1]:
-                    difference = money_list[-1][1] - money_list[-2][1]
-                    money_list[-1][0].money+=difference
-                    money_list[-1] = (money_list[-1][0],money_list[-1][1]-difference)
-                for i in money_list:
-                    if i[1]!=0:
-                        self.board.active_pot['value']+=len([x[1] for x in money_list if x[1]!=0])*i[1]
-                        for j in money_list:
-                            if j[1]!=0:
-                                j=(j[0],j[1]-i[1])
-                        self.board.new_pot([x[0] for x in money_list if x[1]!=0])
-                    if i[1]==0:
-                        print(cr.Fore.YELLOW+f"{i}"+cr.Style.RESET_ALL)
+                sorted_money_list = sorted(money_list, key=lambda tup: tup[1]) # SORT THE LIST BY VALUE
+                print(f"Current sorted money list : {[(x[0].id,x[1])for x in sorted_money_list]}")
+                if sorted_money_list[-1][1]!=sorted_money_list[-2][1]: # Check the highest person in the value list, to regulate the highest all-in
+                    difference = sorted_money_list[-1][1] - sorted_money_list[-2][1]
+                    #money_list[-1][0].money+=difference
+                    sorted_money_list[-1][0]._add_money(difference)
+                    sorted_money_list[-1] = [sorted_money_list[-1][0],sorted_money_list[-1][1]-difference]
+
+                print("SORTED MONEY LIST #####################################")
+                print(sorted_money_list)
+                for tup in sorted_money_list: # THE ISSUE IS HERE : IT LOOPS FOR EVERY PLAYER IN LIST AND NOT EVERY DIFFERENCE #TODO MAKE A DIFFERENCE LIST AND MAKE THE POTS BASED ON THAT
+                    print(tup)
+                    if tup[1]!=0: #Si le joueur n'a pas 0 d'argent
+                        self.board.active_pot['value'] += len([x for x in sorted_money_list if x[1]!=0])*tup[1] # Add value from the lowest player in the current_pot
+                        for j in sorted_money_list: # pour chaque joueur
+                            if j[1]!=0: #si sa monnaie est différente de 0
+                                #j=(j[0],j[1]-tup[1]) # retire l'argent du tuple
+                                j[1]-=tup[1]
+                    if tup[1]==0:
+                        print(f"Player {i.id} is 'tup[1]==0")
+                    # une fois tous les joueurs passés
+                    print("###############################    CREATING NEW POT")
+                    self.board.new_pot([x for x in self.players if x.active==True and x.money!=0])
+                    print(f"Nombre de pots : {len(self.board.pots)}")
         else: #IF NOT ALL-IN
             for i in self.players:
                 self.board.active_pot['value']+=i.current_bet
@@ -390,32 +402,38 @@ class Game:
     def distribute_pots(self):
         print(cr.Fore.MAGENTA+f"Number of pots : {len(self.board.pots)}"+cr.Style.RESET_ALL)
         for i in self.board.pots:
-            #print(f"{i}")
+            winner_listup = list()
             player_list = i['player_list']
-            #print(f"{player_list}")
             pot = i['value']
-            win = self.showdown([x for x in player_list if x.active==True])
+            win,combo = self.showdown([x for x in player_list if x.active==True])
             if type(win)==list:
                 print("Splitting the pot")
+                print(f"Splitting between : {win}")
                 nwin = len(win)
                 if pot%nwin==0:
                     split_pot = pot/nwin
                     for j in win:
                         j.money+=split_pot
+                        winner_listup.append((j.id,split_pot))
                     i['value']=0
                 else:
                     rest = pot%nwin
-                    split_pot = pot
                     pot-=rest
+                    split_pot = pot/nwin
                     for j in win:
                         j.money+=split_pot
                         if rest>0:
                             j.money+=1
                             rest-=1
+                            winner_listup.append((j.id,split_pot+1))
+                        else:
+                            winner_listup.append((j.id,split_pot))
                     i['value']=0
             else: # One winner
                 win.money+=pot
-                pot = 0
+                winner_listup.append((win.id,pot))
+                pot=0
+            yield [x.id for x in i['player_list']], winner_listup, combo               #PLAYER_LIST,WINNER(S),POT,COMBO
 
     def showdown(self,player_list): #everyone reveals their cards #TODO manage pots
         scores = dict()
@@ -431,7 +449,17 @@ class Game:
             for i in player_list:
                 if i.combo_score==max_score:
                     print(f"Player {i.id} wins")
-                    return i
+                    if max_score==1:combo = "a high card"
+                    elif max_score==2:combo = "a pair"
+                    elif max_score==3:combo = "two pairs"
+                    elif max_score==4:combo = "a three of a kind"
+                    elif max_score==5:combo = "a straight"
+                    elif max_score==6:combo = "a flush"
+                    elif max_score==7:combo = "a full house"
+                    elif max_score==8:combo = "a four of a kind"
+                    elif max_score==9:combo = "a straight flush"
+                    elif max_score==10:combo = "a royal flush"
+                    return i,combo
         else:
             top_cards = dict()
             winners = [x for x,y in scores.items() if y==max_score]
@@ -462,14 +490,14 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a high card"
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a high card"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a high card"
             if max_score==2:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -496,14 +524,14 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a pair"
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a pair"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a pair"
             if max_score==3:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -529,7 +557,7 @@ class Game:
                     else:
                         winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                         print(f"Player {winner.id} wins")
-                        return winner
+                        return winner,"twp pairs"
                     if len(finalists)>1:
                         print("Comparing the last card")
                         final_battle=dict()
@@ -541,15 +569,15 @@ class Game:
                         print([x.value for x in list(final_battle.values())].count(max_card.value))
                         if [x.value for x in list(final_battle.values())].count(max_card.value)>1:
                             print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                            return finalists
+                            return finalists,"two pairs"
                         else:
                             winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                             print(f"Winner : {winner}")
-                            return winner
+                            return winner,"two pairs"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"two pairs"
             if max_score==4:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -575,14 +603,14 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a three of a kind"
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a three of a kind"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a three of a kind"
             if max_score==5:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -612,15 +640,15 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a straight"
                         del final_battle
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a straight"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a straight"
             if max_score==6:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -648,15 +676,15 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a flush"
                         del final_battle
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a flush"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a flush"
             if max_score==7:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -679,14 +707,14 @@ class Game:
                     else:
                         winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                         print(f"Player {winner.id} wins")
-                        return winner
+                        return winner,"a full house"
                     if list(final_battle.values()).count(max_card)>1:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a full house"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a full house"
             if max_score==8:
                 for p in player_list:
                     if p.combo_score==max_score:
@@ -712,14 +740,14 @@ class Game:
                         else:
                             winner = max(final_battle.items(),key=operator.itemgetter(1))[0]
                             print(f"Player {winner.id} wins")
-                            return winner
+                            return winner,"a four of a kind"
                     if cc==kicker_cards:
                         print(f"It's a tie between {['Player '+str(x.id) for x in finalists]} for the win")
-                        return finalists
+                        return finalists,"a four of a kind"
                 else:
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                    return winner
+                    return winner,"a four of a kind"
             if max_score==9:
                 if self.board.straight_flush(Player("Dummy",0))==sorted(self.board.community_cards,key=lambda x: x.value,reverse=True):
                     winner = player_list
@@ -730,7 +758,7 @@ class Game:
                     print(top_cards)
                     winner = max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                return winner
+                return winner,"a straight flush"
             if max_score==10:
                 if self.board.royal_flush(Player("Dummy",0))==sorted(self.board.community_cards,key=lambda x: x.value,reverse=True):
                     winner = player_list
@@ -741,7 +769,7 @@ class Game:
                     print(top_cards)
                     winner= max(top_cards.items(),key=operator.itemgetter(1))[0]
                     print(f"Player {winner.id} wins")
-                return winner
+                return winner,"a royal flush"
 
         # FIVE CARD RULES ALWAYS ACT : For One_Pair, Two_Pair, Three_of_a_Kind, always the kickers up to 5 cards used.
         # In rare case of Four of a Kind in community cards, also take that into account

@@ -78,11 +78,29 @@ class VisualGame(Game):
         self.settings_simulation = tk.Checkbutton(self.settings_panel,text='Simulation',width=10,font=(None,13),variable=self.var_simulation)
         self.settings_simulation.grid(row=2,column=3,padx=10,pady=20)
 
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
         self.root.mainloop()
 
-    def __del__(self):
-        self._update_key = False
-        self.after(500,self.update_display())
+    #def __del__(self):
+        #self.root.destroy()
+    #    self._update_key = False
+    #    self.after(500,self.update_display())
+
+    def _on_closing(self):
+        self.root.destroy()
+
+    def _pause(self):
+        if self._update_key == True:
+            self._update_key = False
+            self.pause_button.config(text='PLAY')
+            self.pause_button.grid_forget()
+            self.pause_button.grid(row=0,column=0)
+        else:
+            self._update_key = True
+            self.update_display()
+            self.pause_button.config(text='PAUSE')
+            self.pause_button.grid_forget()
+            self.pause_button.grid(row=0,column=0)
 
     def _on_mousewheel(self,event):
         if self.settings_panel.winfo_ismapped()==True:
@@ -137,60 +155,67 @@ class VisualGame(Game):
         self.background.grid(padx=0,pady=0)
 
     def update_display(self):
-        if self._update_key==True:
-            for i in self.players:
-                if i.active==False:
-                    self.background.itemconfig(i.player_active,fill='#888888')
-                else:
-                    self.background.itemconfig(i.player_active,fill='white')
-                if i.money==0 and i.all_in==False:
-                    self.background.itemconfig(i.player_active,fill='#555555')
-                self.background.itemconfig(i.player_hand,text=f"{i.hand}")
-                self.background.itemconfig(i.player_money,text=f"{i.money} $")
-                self.background.itemconfig(i.player_bet,text=f"{i.current_bet}")
-                if i.all_in==True:
-                    self.background.itemconfig(i.player_action,text='All-in')
-                else:
-                    self.background.itemconfig(i.player_action,text=f'{i.last_move}')
-                if i.dealer==False and i.small_blind==False and i.big_blind==False:
-                    self.background.itemconfig(i.player_button,fill='',width=0)
-                    self.background.itemconfig(i.player_button_name,text=f"")
-                else:
-                    if i.dealer==True:
-                        self.background.itemconfig(i.player_button,fill='white',width=1)
-                        self.background.itemconfig(i.player_button_name,text=f"DE",font=(None,10,'bold'),fill='red')
-                    if i.small_blind==True:
-                        self.background.itemconfig(i.player_button,fill='white',width=1)
-                        self.background.itemconfig(i.player_button_name,text=f"SB",font=(None,10,'bold'))
-                    if i.big_blind==True:
-                        self.background.itemconfig(i.player_button,fill='white',width=1)
-                        self.background.itemconfig(i.player_button_name,text=f"BB",font=(None,10,'bold'))
+        try:
+            if self._update_key==True:
+                for i in self.players:
+                    if i.active==False:
+                        self.background.itemconfig(i.player_active,fill='#888888')
+                    else:
+                        self.background.itemconfig(i.player_active,fill='white')
+                    if i.money==0 and i.all_in==False:
+                        self.background.itemconfig(i.player_active,fill='#555555')
+                    self.background.itemconfig(i.player_hand,text=f"{i.hand}")
+                    self.background.itemconfig(i.player_money,text=f"{i.money} $")
+                    self.background.itemconfig(i.player_bet,text=f"{i.current_bet}")
+                    if i.all_in==True:
+                        self.background.itemconfig(i.player_action,text='All-in')
+                    else:
+                        self.background.itemconfig(i.player_action,text=f'{i.last_move}')
+                    if i.dealer==False and i.small_blind==False and i.big_blind==False:
+                        self.background.itemconfig(i.player_button,fill='',width=0)
+                        self.background.itemconfig(i.player_button_name,text=f"")
+                    else:
+                        if i.dealer==True:
+                            self.background.itemconfig(i.player_button,fill='white',width=1)
+                            self.background.itemconfig(i.player_button_name,text=f"DE",font=(None,10,'bold'),fill='red')
+                        if i.small_blind==True:
+                            self.background.itemconfig(i.player_button,fill='white',width=1)
+                            self.background.itemconfig(i.player_button_name,text=f"SB",font=(None,10,'bold'),fill='black')
+                        if i.big_blind==True:
+                            self.background.itemconfig(i.player_button,fill='white',width=1)
+                            self.background.itemconfig(i.player_button_name,text=f"BB",font=(None,10,'bold'),fill='black')
 
-            try:
-                for i in self.pot_table:
-                    i.grid_forget()
-            except:
-                self._log_message('Impossible de pot_table.grid_forget()')
+                try:
+                    for i in self.pot_table:
+                        i.grid_forget()
+                except:
+                    self._log_message('Impossible de pot_table.grid_forget()',False)
 
-            self.pot_table = list()
-            if len(self.board.pots)>0:
-                for i in range(len(self.board.pots)):
-                    slot = tk.Entry(self.pots,textvariable=tk.StringVar(value=[x.id for x in self.board.pots[i]['player_list']]))
-                    slot.grid(row=0,column=i)
-                    slot2 = tk.Entry(self.pots,textvariable=tk.StringVar(value=self.board.pots[i]['value']))
-                    slot2.grid(row=1,column=i)
-                    self.pot_table.append(slot)
-                    self.pot_table.append(slot2)
+                self.pot_table = list()
+                if len(self.board.pots)>0:
+                    for i in range(len(self.board.pots)):
+                        slot = tk.Entry(self.pots,textvariable=tk.StringVar(value=[x.id for x in self.board.pots[i]['player_list']]))
+                        slot.grid(row=0,column=i)
+                        slot2 = tk.Entry(self.pots,textvariable=tk.StringVar(value=self.board.pots[i]['value']))
+                        slot2.grid(row=1,column=i)
+                        self.pot_table.append(slot)
+                        self.pot_table.append(slot2)
 
-            self.background.itemconfig(self.community_cards,text=f"{self.board.community_cards}")
-            self.background.itemconfig(self.pot, text=f"{[x.id for x in self.board.active_pot['player_list']]}\n{self.board.active_pot['value']}")
-            self.root.after(500,self.update_display)
+                self.background.itemconfig(self.community_cards,text=f"{self.board.community_cards}")
+                self.background.itemconfig(self.pot, text=f"Current bid : {self.board.current_bid}\n{[x.id for x in self.board.active_pot['player_list']]}\n{self.board.active_pot['value']}")
+                self.root.after(500,self.update_display)
+
+        except:
+            print("Fenêtre introuvable")
 
     def reset_actions(self):
         for i in self.players:
             i.reset_move()
 
     def main(self,simulation=False):
+        self.pause_button = tk.Button(self.game_menu,text='PAUSE',command=self._pause)
+        self.pause_button.grid(row=0,column=0)
+
         self._continue_flag = tk.BooleanVar(value=False)
         autoplay=False
         turn=0
@@ -208,6 +233,8 @@ class VisualGame(Game):
                 self.root.after(1500,self.background.itemconfig(self.current_step,text='Pre-Flop'))
                 self.root.after(2000,lambda : self.set_first_round(autoplay,simulation))
                 self.root.wait_variable(self._continue_flag)
+                #self._update_key = True
+                #self.update_display()
                 self._continue_flag.set(False)
                 self.root.after(2500,lambda : self.reset_actions())
                 self.root.after(3000,lambda : Game.the_flop(self))
@@ -215,6 +242,8 @@ class VisualGame(Game):
                 self.root.after(3000,self.background.itemconfig(self.current_step,text='Flop'))
                 self.root.after(3500,lambda : self.set_second_round(autoplay,simulation))
                 self.root.wait_variable(self._continue_flag)
+                #self._update_key = True
+                #self.update_display()
                 self._continue_flag.set(False)
                 self.root.after(2500,lambda : self.reset_actions())
                 self.root.after(3000,lambda : Game.the_turn(self))
@@ -222,6 +251,8 @@ class VisualGame(Game):
                 self.root.after(3000,self.background.itemconfig(self.current_step,text='Turn'))
                 self.root.after(3500,lambda : self.set_third_round(autoplay,simulation))
                 self.root.wait_variable(self._continue_flag)
+                #self._update_key = True
+                #self.update_display()
                 self._continue_flag.set(False)
                 self.root.after(2500,lambda : self.reset_actions())
                 self.root.after(3000,lambda : Game.the_river(self))
@@ -229,19 +260,30 @@ class VisualGame(Game):
                 self.root.after(3000,self.background.itemconfig(self.current_step,text='River'))
                 self.root.after(3500,lambda : self.set_fourth_round(autoplay,simulation))
                 self.root.wait_variable(self._continue_flag)
+                #self._update_key = True
+                #self.update_display()
                 self._continue_flag.set(False)
                 break
             for i in self.players:
                 i.checked=False
-            self.distribute_pots()
+            self._log_message("### RESULTS ###")
+            for output in self.distribute_pots():
+                if len(output[1])==1:
+                    self._log_message(f"In the pot containing players :\n    {output[0]},\nPlayer {output[1][0][0]} wins {output[1][0][1]} with {output[2]}")
+                else:
+                    for winner,money in output[1]:
+                        self._log_message(f"In the pot containing players :\n    {output[0]},\nPlayer {winner} is tied on {output[2]} and wins {money}")
+                self._log_message("")
             self.deck.reset()
             self.set_roles(turn)
             self.board.reset_board([x for x in self.players if x.active==True])
             for x in self.players:
                 if x.money==0:
                     x.active=False
-                    x.last_move=""
-            if turn==5:break
+                x.last_move=""
+            if turn==5:
+                self._update_key = False
+                break
         
     def init_game(self,n_players,base_money,sb=25,bb=50,simulation=False):
         self._update_key=True
@@ -339,7 +381,7 @@ class VisualGame(Game):
                                 self._move_list.append(__button)
                                 self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                             self.settings_panel.wait_variable(self._chosen_action)
-                            self.update_display()
+                            #self.update_display()
                     else:
                         self._chosen_action = tk.StringVar()
                         self._chosen_action.set('')
@@ -349,7 +391,7 @@ class VisualGame(Game):
                             self._move_list.append(__button)
                             self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                         self.settings_panel.wait_variable(self._chosen_action)
-                        self.update_display()
+                        #self.update_display()
                     choice = i.last_move
                     output = self.play_moves(i,choice,1)
                     self._log_message(f"Player {i.id} did : {output}")
@@ -357,6 +399,7 @@ class VisualGame(Game):
         self.manage_pots()
         self.board.current_bid=0
         self._continue_flag.set(True)
+        #self._update_key = False
 
     def set_second_round(self,autoplay=False,simulation=False):
         self._log_message("### THE FLOP ###")
@@ -382,7 +425,7 @@ class VisualGame(Game):
                                 self._move_list.append(__button)
                                 self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                             self.settings_panel.wait_variable(self._chosen_action)
-                            self.update_display()
+                            #self.update_display()
                     else:
                         self._chosen_action = tk.StringVar()
                         self._chosen_action.set('')
@@ -392,7 +435,7 @@ class VisualGame(Game):
                             self._move_list.append(__button)
                             self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                         self.settings_panel.wait_variable(self._chosen_action)
-                        self.update_display()
+                        #self.update_display()
                     choice = i.last_move
                     output = self.play_moves(i,choice,2)
                     self._log_message(f"Player {i.id} did : {output}")
@@ -402,6 +445,7 @@ class VisualGame(Game):
         self.manage_pots()
         self.board.current_bid=0
         self._continue_flag.set(True)
+        #self._update_key = False
 
     def set_third_round(self,autoplay=False,simulation=False): #same as second
         self._log_message("### THE TURN ###")
@@ -427,7 +471,7 @@ class VisualGame(Game):
                                 self._move_list.append(__button)
                                 self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                             self.settings_panel.wait_variable(self._chosen_action)
-                            self.update_display()
+                            #self.update_display()
                     else:
                         self._chosen_action = tk.StringVar()
                         self._chosen_action.set('')
@@ -437,7 +481,7 @@ class VisualGame(Game):
                             self._move_list.append(__button)
                             self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                         self.settings_panel.wait_variable(self._chosen_action)
-                        self.update_display()
+                        #self.update_display()
                     choice = i.last_move
                     output = self.play_moves(i,choice,3)
                     self._log_message(f"Player {i.id} did : {output}")
@@ -447,6 +491,7 @@ class VisualGame(Game):
         self.manage_pots()
         self.board.current_bid=0
         self._continue_flag.set(True)
+        #self._update_key = False
 
     def set_fourth_round(self,autoplay=False,simulation=False): #same as second and third
         self._log_message("### THE RIVER ###")
@@ -472,7 +517,7 @@ class VisualGame(Game):
                                 self._move_list.append(__button)
                                 self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                             self.settings_panel.wait_variable(self._chosen_action)
-                            self.update_display()
+                            #self.update_display()
                     else:
                         self._chosen_action = tk.StringVar()
                         self._chosen_action.set('')
@@ -482,7 +527,7 @@ class VisualGame(Game):
                             self._move_list.append(__button)
                             self._move_list[e].grid(row=0,column=e,padx=10,pady=10)
                         self.settings_panel.wait_variable(self._chosen_action)
-                        self.update_display()
+                        #self.update_display()
                     choice = i.last_move
                     output = self.play_moves(i,choice,4)
                     self._log_message(f"Player {i.id} did : {output}")

@@ -40,6 +40,14 @@ class Player:
     def big_blind(self,boolean):
         self._big_blind = boolean
 
+    @property
+    def money(self):
+        return self._money
+
+    @money.setter
+    def money(self,value):
+        self._money = value
+
     def __repr__(self):
         if self.bot==None:
             return f"\nPlayer {self.id} :\n{self.hand} ; Current money : {self.money} $ ; Bet : {self.current_bet}\n"
@@ -48,6 +56,9 @@ class Player:
 
     def __del__(self):
         print(f"Deleting player {self.id}")
+
+    def _add_money(self,value):
+        self.money+=value
 
     def set_blind(self,auto=0):
         if auto==0:

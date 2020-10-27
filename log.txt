@@ -507,3 +507,1194 @@
 2020-10-26 18:07:51.191 : ### PRE-FLOP ###
 2020-10-26 18:07:51.195 : Player 3 did : Fold
 2020-10-26 18:07:51.209 : Player 4 did : Call
+2020-10-27 09:22:19.749 : Creating the board
+2020-10-27 09:22:19.754 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 09:22:35.268 : Impossible de pot_table.grid_forget()
+2020-10-27 09:22:38.793 : ### PRE-FLOP ###
+2020-10-27 09:22:38.801 : Player 4 did : Call
+2020-10-27 09:22:38.814 : Player 5 did : Call
+2020-10-27 09:23:32.303 : Player 6 did : Call
+2020-10-27 09:23:32.306 : Player 1 did : Fold
+2020-10-27 09:23:32.319 : Player 2 did : Fold
+2020-10-27 09:23:38.846 : ### THE FLOP ###
+2020-10-27 09:23:38.851 : Player 3 did : Check
+2020-10-27 09:23:38.870 : Player 4 did : Check
+2020-10-27 09:23:38.883 : Player 5 did : Bet 483
+2020-10-27 10:07:51.907 : Creating the board
+2020-10-27 10:07:51.911 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:07:53.520 : Impossible de pot_table.grid_forget()
+2020-10-27 10:07:57.035 : ### PRE-FLOP ###
+2020-10-27 10:07:57.043 : Player 4 did : Call
+2020-10-27 10:07:57.085 : Player 5 did : Raise at 1327
+2020-10-27 10:08:01.441 : Player 6 did : Call
+2020-10-27 10:08:01.443 : Player 1 did : Call
+2020-10-27 10:08:01.455 : Player 2 did : Fold
+2020-10-27 10:08:01.469 : Player 3 did : Call
+2020-10-27 10:08:01.481 : Player 4 did : Call
+2020-10-27 10:08:08.024 : ### THE FLOP ###
+2020-10-27 10:08:08.032 : Player 3 did : Fold
+2020-10-27 10:08:08.057 : Player 4 did : Bet 113
+2020-10-27 10:08:08.072 : Player 5 did : Fold
+2020-10-27 10:08:11.609 : Player 6 did : Call
+2020-10-27 10:08:11.612 : Player 1 did : Fold
+2020-10-27 10:08:18.140 : ### THE TURN ###
+2020-10-27 10:08:18.153 : Player 4 did : Check
+2020-10-27 10:08:20.723 : Player 6 did : Check
+2020-10-27 10:08:27.239 : ### THE RIVER ###
+2020-10-27 10:08:27.255 : Player 4 did : Bet 35
+2020-10-27 10:08:28.641 : Player 6 did : Call
+2020-10-27 10:08:32.166 : ### PRE-FLOP ###
+2020-10-27 10:08:32.170 : Player 5 did : Raise at 151
+2020-10-27 10:08:51.794 : Player 6 did : Call
+2020-10-27 10:08:51.795 : Player 1 did : Fold
+2020-10-27 10:08:51.809 : Player 2 did : Call
+2020-10-27 10:08:51.820 : Player 3 did : Call
+2020-10-27 10:08:51.830 : Player 4 did : Call
+2020-10-27 10:08:58.357 : ### THE FLOP ###
+2020-10-27 10:08:58.368 : Player 4 did : Check
+2020-10-27 10:08:58.381 : Player 5 did : Fold
+2020-10-27 10:09:28.787 : Player 6 did : Check
+2020-10-27 10:09:28.796 : Player 2 did : Bet 587
+2020-10-27 10:09:28.818 : Player 3 did : Fold
+2020-10-27 10:09:28.852 : Player 4 did : Fold
+2020-10-27 10:09:31.968 : Player 6 did : Call
+2020-10-27 10:09:38.496 : ### THE TURN ###
+2020-10-27 10:09:40.697 : Player 6 did : Check
+2020-10-27 10:09:40.701 : Player 2 did : Check
+2020-10-27 10:09:47.228 : ### THE RIVER ###
+2020-10-27 10:09:52.497 : Player 6 did : Check
+2020-10-27 10:09:52.501 : Player 2 did : Check
+2020-10-27 10:09:56.037 : ### PRE-FLOP ###
+2020-10-27 10:09:59.898 : Player 6 did : Call
+2020-10-27 10:09:59.904 : Player 1 did : Raise at 75
+2020-10-27 10:09:59.915 : Player 2 did : Call
+2020-10-27 10:09:59.927 : Player 3 did : Fold
+2020-10-27 10:09:59.945 : Player 4 did : Call
+2020-10-27 10:10:01.792 : Player 6 did : Call
+2020-10-27 10:10:08.326 : ### THE FLOP ###
+2020-10-27 10:12:46.540 : Creating the board
+2020-10-27 10:12:46.544 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:12:47.783 : Impossible de pot_table.grid_forget()
+2020-10-27 10:12:51.292 : ### PRE-FLOP ###
+2020-10-27 10:12:51.299 : Player 4 did : Call
+2020-10-27 10:12:51.349 : Player 5 did : Call
+2020-10-27 10:12:53.835 : Player 6 did : Call
+2020-10-27 10:12:53.837 : Player 1 did : Fold
+2020-10-27 10:12:53.857 : Player 2 did : Call
+2020-10-27 10:13:00.389 : ### THE FLOP ###
+2020-10-27 10:13:00.398 : Player 3 did : Check
+2020-10-27 10:13:00.408 : Player 4 did : Bet 160
+2020-10-27 10:13:00.417 : Player 5 did : Fold
+2020-10-27 10:13:02.835 : Player 6 did : Call
+2020-10-27 10:13:02.837 : Player 2 did : Fold
+2020-10-27 10:13:02.848 : Player 3 did : Call
+2020-10-27 10:13:09.378 : ### THE TURN ###
+2020-10-27 10:13:09.388 : Player 3 did : Fold
+2020-10-27 10:13:09.413 : Player 4 did : Bet 142
+2020-10-27 10:13:18.354 : Player 6 did : Call
+2020-10-27 10:13:24.873 : ### THE RIVER ###
+2020-10-27 10:13:24.880 : Player 4 did : Check
+2020-10-27 10:13:27.683 : Player 6 did : Check
+2020-10-27 10:13:31.217 : ### PRE-FLOP ###
+2020-10-27 10:13:31.226 : Player 5 did : Raise at 1449
+2020-10-27 10:14:55.410 : Player 6 did : Call
+2020-10-27 10:14:55.415 : Player 1 did : Call
+2020-10-27 10:14:55.431 : Player 2 did : Fold
+2020-10-27 10:14:55.442 : Player 3 did : Fold
+2020-10-27 10:14:55.461 : Player 4 did : All-in
+2020-10-27 10:17:26.699 : Creating the board
+2020-10-27 10:17:26.704 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:17:28.911 : Impossible de pot_table.grid_forget()
+2020-10-27 10:17:32.429 : ### PRE-FLOP ###
+2020-10-27 10:17:32.437 : Player 4 did : Call
+2020-10-27 10:17:32.458 : Player 5 did : Call
+2020-10-27 10:17:33.858 : Player 6 did : Call
+2020-10-27 10:17:33.861 : Player 1 did : Raise at 331
+2020-10-27 10:17:33.880 : Player 2 did : Raise at 671
+2020-10-27 10:17:33.902 : Player 3 did : Call
+2020-10-27 10:17:33.926 : Player 4 did : Raise at 1416
+2020-10-27 10:17:33.936 : Player 5 did : Fold
+2020-10-27 10:17:39.363 : Player 6 did : Call
+2020-10-27 10:17:39.365 : Player 1 did : Call
+2020-10-27 10:17:39.385 : Player 2 did : Call
+2020-10-27 10:17:39.414 : Player 3 did : Fold
+2020-10-27 10:17:45.966 : ### THE FLOP ###
+2020-10-27 10:17:45.984 : Player 4 did : Check
+2020-10-27 10:18:06.898 : Player 6 did : Check
+2020-10-27 10:18:06.902 : Player 1 did : Check
+2020-10-27 10:18:06.913 : Player 2 did : Fold
+2020-10-27 10:18:13.440 : ### THE TURN ###
+2020-10-27 10:18:13.443 : Player 4 did : Bet 44
+2020-10-27 10:18:15.858 : Player 6 did : Call
+2020-10-27 10:18:15.861 : Player 1 did : Call
+2020-10-27 10:18:22.390 : ### THE RIVER ###
+2020-10-27 10:18:22.399 : Player 4 did : Check
+2020-10-27 10:18:24.459 : Player 6 did : Check
+2020-10-27 10:18:24.461 : Player 1 did : Check
+2020-10-27 10:18:28.005 : ### PRE-FLOP ###
+2020-10-27 10:18:28.009 : Player 5 did : Raise at 160
+2020-10-27 10:18:32.931 : Player 6 did : All-in
+2020-10-27 10:18:32.934 : Player 1 did : Raise at 1456
+2020-10-27 10:18:32.944 : Player 2 did : Fold
+2020-10-27 10:18:32.963 : Player 3 did : Fold
+2020-10-27 10:18:32.986 : Player 5 did : Fold
+2020-10-27 10:18:39.548 : ### THE FLOP ###
+2020-10-27 10:18:39.567 : Player 1 did : Check
+2020-10-27 10:18:39.588 : Player 1 did : Check
+2020-10-27 10:18:39.611 : Player 1 did : Fold
+2020-10-27 10:18:46.160 : ### THE TURN ###
+2020-10-27 10:18:52.682 : ### THE RIVER ###
+2020-10-27 10:18:56.237 : ### PRE-FLOP ###
+2020-10-27 10:18:56.245 : Player 1 did : Call
+2020-10-27 10:18:56.262 : Player 2 did : Call
+2020-10-27 10:18:56.273 : Player 3 did : Call
+2020-10-27 10:18:56.288 : Player 4 did : Call
+2020-10-27 10:19:02.824 : ### THE FLOP ###
+2020-10-27 10:19:02.828 : Player 5 did : Check
+2020-10-27 10:19:02.840 : Player 1 did : Check
+2020-10-27 10:19:02.853 : Player 2 did : Fold
+2020-10-27 10:19:02.872 : Player 3 did : Check
+2020-10-27 10:19:02.885 : Player 4 did : Check
+2020-10-27 10:19:09.427 : ### THE TURN ###
+2020-10-27 10:19:09.432 : Player 5 did : Check
+2020-10-27 10:19:09.450 : Player 1 did : Check
+2020-10-27 10:19:09.469 : Player 3 did : Check
+2020-10-27 10:19:09.487 : Player 4 did : Check
+2020-10-27 10:19:16.025 : ### THE RIVER ###
+2020-10-27 10:19:16.036 : Player 5 did : Bet 137
+2020-10-27 10:19:16.054 : Player 1 did : Call
+2020-10-27 10:19:16.074 : Player 3 did : Fold
+2020-10-27 10:19:16.092 : Player 4 did : Call
+2020-10-27 10:19:19.640 : ### PRE-FLOP ###
+2020-10-27 10:19:19.667 : Player 2 did : Fold
+2020-10-27 10:19:19.689 : Player 3 did : Fold
+2020-10-27 10:19:19.706 : Player 4 did : Raise at 1214
+2020-10-27 10:19:19.723 : Player 5 did : Fold
+2020-10-27 10:19:19.753 : Player 1 did : Call
+2020-10-27 10:19:26.286 : ### THE FLOP ###
+2020-10-27 10:19:26.298 : Player 1 did : Check
+2020-10-27 10:19:26.321 : Player 4 did : Check
+2020-10-27 10:19:32.867 : ### THE TURN ###
+2020-10-27 10:19:32.875 : Player 1 did : Check
+2020-10-27 10:19:32.890 : Player 4 did : Check
+2020-10-27 10:19:39.429 : ### THE RIVER ###
+2020-10-27 10:19:39.444 : Player 1 did : Fold
+2020-10-27 10:19:43.026 : ### PRE-FLOP ###
+2020-10-27 10:19:43.050 : Player 3 did : Fold
+2020-10-27 10:19:43.076 : Player 4 did : Call
+2020-10-27 10:19:43.089 : Player 5 did : Fold
+2020-10-27 10:19:43.100 : Player 1 did : Call
+2020-10-27 10:19:49.631 : ### THE FLOP ###
+2020-10-27 10:19:49.671 : Player 4 did : Check
+2020-10-27 10:19:49.687 : Player 1 did : Check
+2020-10-27 10:19:56.209 : ### THE TURN ###
+2020-10-27 10:19:56.225 : Player 4 did : Check
+2020-10-27 10:19:56.250 : Player 1 did : Check
+2020-10-27 10:20:02.790 : ### THE RIVER ###
+2020-10-27 10:20:02.797 : Player 4 did : Bet 1884
+2020-10-27 10:20:02.818 : Player 1 did : Raise at 4083
+2020-10-27 10:20:02.835 : Player 4 did : Fold
+2020-10-27 10:23:34.804 : Creating the board
+2020-10-27 10:23:34.807 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:23:36.518 : Impossible de pot_table.grid_forget()
+2020-10-27 10:23:40.042 : ### PRE-FLOP ###
+2020-10-27 10:23:40.050 : Player 4 did : Call
+2020-10-27 10:23:40.071 : Player 5 did : Fold
+2020-10-27 10:23:44.426 : Player 6 did : Call
+2020-10-27 10:23:44.429 : Player 1 did : Raise at 165
+2020-10-27 10:23:44.442 : Player 2 did : Fold
+2020-10-27 10:23:44.463 : Player 3 did : Fold
+2020-10-27 10:23:44.495 : Player 4 did : Call
+2020-10-27 10:23:52.021 : Player 6 did : Call
+2020-10-27 10:23:58.534 : ### THE FLOP ###
+2020-10-27 10:23:58.540 : Player 4 did : Fold
+2020-10-27 10:25:10.843 : Player 6 did : Check
+2020-10-27 10:25:10.847 : Player 1 did : Fold
+2020-10-27 10:25:17.388 : ### THE TURN ###
+2020-10-27 10:25:23.932 : ### THE RIVER ###
+2020-10-27 10:25:27.480 : ### PRE-FLOP ###
+2020-10-27 10:25:27.492 : Player 5 did : Call
+2020-10-27 10:26:27.765 : Player 6 did : Call
+2020-10-27 10:26:27.770 : Player 1 did : Raise at 147
+2020-10-27 10:26:27.781 : Player 2 did : Fold
+2020-10-27 10:26:27.801 : Player 3 did : Raise at 631
+2020-10-27 10:26:27.825 : Player 4 did : Call
+2020-10-27 10:26:27.845 : Player 5 did : Fold
+2020-10-27 10:26:42.443 : Player 6 did : Call
+2020-10-27 10:26:42.445 : Player 1 did : Call
+2020-10-27 10:26:48.982 : ### THE FLOP ###
+2020-10-27 10:26:48.991 : Player 4 did : Fold
+2020-10-27 10:26:53.240 : Player 6 did : Check
+2020-10-27 10:26:53.243 : Player 1 did : Check
+2020-10-27 10:26:53.258 : Player 3 did : Bet 363
+2020-10-27 10:27:05.696 : Player 6 did : Raise at 800
+2020-10-27 10:27:05.700 : Player 1 did : Fold
+2020-10-27 10:27:05.714 : Player 3 did : Call
+2020-10-27 10:27:12.246 : ### THE TURN ###
+2020-10-27 10:27:18.120 : Player 6 did : Bet 20
+2020-10-27 10:27:18.124 : Player 3 did : All-in
+2020-10-27 10:27:24.665 : ### THE RIVER ###
+2020-10-27 10:28:45.528 : Player 6 did : Check
+2020-10-27 10:28:49.356 : Player 6 did : Check
+2020-10-27 10:28:49.835 : Player 6 did : Check
+2020-10-27 10:28:50.029 : Player 6 did : Check
+2020-10-27 10:28:50.267 : Player 6 did : Check
+2020-10-27 10:28:50.916 : Player 6 did : Check
+2020-10-27 10:28:51.077 : Player 6 did : Check
+2020-10-27 10:28:51.230 : Player 6 did : Check
+2020-10-27 10:28:56.343 : Player 6 did : Bet 20
+2020-10-27 10:28:59.877 : ### PRE-FLOP ###
+2020-10-27 10:31:48.594 : Player 6 did : Call
+2020-10-27 10:31:48.611 : Player 1 did : Raise at 115
+2020-10-27 10:31:48.629 : Player 2 did : Raise at 326
+2020-10-27 10:31:48.665 : Player 3 did : Raise at 1872
+2020-10-27 10:31:48.706 : Player 4 did : All-in
+2020-10-27 10:31:48.726 : Player 5 did : All-in
+2020-10-27 10:31:51.501 : Player 6 did : All-in
+2020-10-27 10:31:51.505 : Player 1 did : Fold
+2020-10-27 10:31:51.516 : Player 2 did : Fold
+2020-10-27 10:31:58.059 : ### THE FLOP ###
+2020-10-27 10:31:58.066 : Player 3 did : Bet 3951
+2020-10-27 10:32:04.604 : ### THE TURN ###
+2020-10-27 10:32:04.621 : Player 3 did : Bet 1156
+2020-10-27 10:32:11.149 : ### THE RIVER ###
+2020-10-27 10:32:11.161 : Player 3 did : Bet 639
+2020-10-27 10:32:14.720 : ### PRE-FLOP ###
+2020-10-27 10:32:14.731 : Player 1 did : Fold
+2020-10-27 10:32:14.756 : Player 2 did : Fold
+2020-10-27 10:32:14.776 : Player 3 did : Call
+2020-10-27 10:32:14.793 : Player 4 did : Call
+2020-10-27 10:32:14.811 : Player 3 did : Fold
+2020-10-27 10:32:21.370 : ### THE FLOP ###
+2020-10-27 10:32:27.908 : ### THE TURN ###
+2020-10-27 10:32:34.453 : ### THE RIVER ###
+2020-10-27 10:32:38.001 : ### PRE-FLOP ###
+2020-10-27 10:32:38.015 : Player 1 did : Call
+2020-10-27 10:32:38.034 : Player 2 did : Raise at 238
+2020-10-27 10:32:38.045 : Player 3 did : Call
+2020-10-27 10:32:38.060 : Player 4 did : Call
+2020-10-27 10:32:38.071 : Player 1 did : Fold
+2020-10-27 10:32:44.607 : ### THE FLOP ###
+2020-10-27 10:32:44.612 : Player 3 did : Bet 252
+2020-10-27 10:32:44.626 : Player 4 did : Fold
+2020-10-27 10:32:44.643 : Player 2 did : Call
+2020-10-27 10:37:55.043 : Creating the board
+2020-10-27 10:37:55.047 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:37:56.230 : Impossible de pot_table.grid_forget()
+2020-10-27 10:37:59.745 : ### PRE-FLOP ###
+2020-10-27 10:37:59.754 : Player 4 did : Call
+2020-10-27 10:37:59.799 : Player 5 did : Call
+2020-10-27 10:38:01.369 : Player 6 did : Call
+2020-10-27 10:38:01.372 : Player 1 did : Raise at 1328
+2020-10-27 10:38:01.382 : Player 2 did : Fold
+2020-10-27 10:38:01.398 : Player 3 did : Raise at 1450
+2020-10-27 10:38:01.421 : Player 4 did : Raise at 1450
+2020-10-27 10:38:01.440 : Player 5 did : Raise at 1450
+2020-10-27 10:38:03.017 : Player 6 did : Call
+2020-10-27 10:38:03.019 : Player 1 did : Call
+2020-10-27 10:38:09.546 : ### THE FLOP ###
+2020-10-27 10:38:09.556 : Player 3 did : Check
+2020-10-27 10:38:09.586 : Player 4 did : Check
+2020-10-27 10:38:09.602 : Player 5 did : Check
+2020-10-27 10:38:20.941 : Player 6 did : Check
+2020-10-27 10:38:20.951 : Player 1 did : Bet 40
+2020-10-27 10:38:20.968 : Player 3 did : Fold
+2020-10-27 10:38:20.986 : Player 4 did : Fold
+2020-10-27 10:38:21.005 : Player 5 did : Fold
+2020-10-27 10:38:23.250 : Player 6 did : Call
+2020-10-27 10:38:29.776 : ### THE TURN ###
+2020-10-27 10:38:31.298 : Player 6 did : Check
+2020-10-27 10:38:31.300 : Player 1 did : Check
+2020-10-27 10:38:37.822 : ### THE RIVER ###
+2020-10-27 10:38:41.753 : Player 6 did : Check
+2020-10-27 10:38:41.756 : Player 1 did : Check
+2020-10-27 10:38:45.303 : ### PRE-FLOP ###
+2020-10-27 10:38:45.310 : Player 5 did : Fold
+2020-10-27 10:47:19.108 : Creating the board
+2020-10-27 10:47:19.112 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 10:47:20.670 : Impossible de pot_table.grid_forget()
+2020-10-27 10:47:24.196 : ### PRE-FLOP ###
+2020-10-27 10:47:24.205 : Player 4 did : Call
+2020-10-27 10:47:24.225 : Player 5 did : Fold
+2020-10-27 10:47:27.065 : Player 6 did : Call
+2020-10-27 10:47:27.068 : Player 1 did : Fold
+2020-10-27 10:47:27.086 : Player 2 did : Call
+2020-10-27 10:47:33.623 : ### THE FLOP ###
+2020-10-27 10:47:33.629 : Player 3 did : Check
+2020-10-27 10:47:33.639 : Player 4 did : Check
+2020-10-27 10:51:41.114 : Player 6 did : Check
+2020-10-27 10:51:41.118 : Player 2 did : Bet 644
+2020-10-27 10:51:41.128 : Player 3 did : Call
+2020-10-27 10:51:41.138 : Player 4 did : Call
+2020-10-27 10:51:44.130 : Player 6 did : Call
+2020-10-27 10:51:50.637 : ### THE TURN ###
+2020-10-27 10:51:50.639 : Player 3 did : Check
+2020-10-27 10:51:50.659 : Player 4 did : Bet 266
+2020-10-27 10:51:51.887 : Player 6 did : Call
+2020-10-27 10:51:51.893 : Player 2 did : Call
+2020-10-27 10:51:51.927 : Player 3 did : Call
+2020-10-27 10:51:58.477 : ### THE RIVER ###
+2020-10-27 10:51:58.484 : Player 3 did : Bet 180
+2020-10-27 10:51:58.503 : Player 4 did : Call
+2020-10-27 10:52:47.930 : Player 6 did : Call
+2020-10-27 10:52:47.935 : Player 2 did : Call
+2020-10-27 10:52:51.483 : ### PRE-FLOP ###
+2020-10-27 10:52:51.489 : Player 5 did : Fold
+2020-10-27 10:52:55.442 : Player 6 did : Call
+2020-10-27 10:52:55.445 : Player 1 did : Raise at 165
+2020-10-27 10:52:55.459 : Player 2 did : Call
+2020-10-27 10:52:55.475 : Player 3 did : Call
+2020-10-27 10:52:55.499 : Player 4 did : Raise at 310
+2020-10-27 10:53:00.186 : Player 6 did : Call
+2020-10-27 10:53:00.191 : Player 1 did : Call
+2020-10-27 10:53:00.204 : Player 2 did : Call
+2020-10-27 10:53:00.217 : Player 3 did : Call
+2020-10-27 10:53:06.757 : ### THE FLOP ###
+2020-10-27 10:53:06.775 : Player 4 did : Check
+2020-10-27 10:53:29.787 : Player 6 did : Check
+2020-10-27 10:53:29.791 : Player 1 did : Fold
+2020-10-27 10:53:29.814 : Player 2 did : Check
+2020-10-27 10:53:29.836 : Player 3 did : Check
+2020-10-27 10:53:36.369 : ### THE TURN ###
+2020-10-27 10:53:36.384 : Player 4 did : Check
+2020-10-27 10:53:37.403 : Player 6 did : Check
+2020-10-27 10:53:37.407 : Player 2 did : Bet 20
+2020-10-27 10:53:37.428 : Player 3 did : Call
+2020-10-27 10:53:37.448 : Player 4 did : Call
+2020-10-27 10:53:56.683 : Player 6 did : Call
+2020-10-27 10:54:03.192 : ### THE RIVER ###
+2020-10-27 10:54:03.204 : Player 4 did : Check
+2020-10-27 10:54:08.829 : Player 6 did : Check
+2020-10-27 10:54:08.835 : Player 2 did : Check
+2020-10-27 10:54:08.847 : Player 3 did : Check
+2020-10-27 10:54:12.400 : ### PRE-FLOP ###
+2020-10-27 10:54:18.019 : Player 6 did : All-in
+2020-10-27 10:54:18.023 : Player 1 did : Call
+2020-10-27 10:54:18.037 : Player 2 did : All-in
+2020-10-27 10:54:18.060 : Player 3 did : Raise at 2072
+2020-10-27 10:54:18.078 : Player 4 did : Fold
+2020-10-27 10:54:18.114 : Player 5 did : Fold
+2020-10-27 10:54:18.138 : Player 1 did : Fold
+2020-10-27 10:54:24.672 : ### THE FLOP ###
+2020-10-27 10:54:24.686 : Player 3 did : Fold
+2020-10-27 10:54:31.220 : ### THE TURN ###
+2020-10-27 10:54:37.766 : ### THE RIVER ###
+2020-10-27 10:54:41.334 : ### PRE-FLOP ###
+2020-10-27 10:54:41.353 : Player 3 did : Raise at 2763
+2020-10-27 10:54:41.379 : Player 4 did : Fold
+2020-10-27 10:54:41.407 : Player 5 did : All-in
+2020-10-27 10:54:56.292 : Player 6 did : All-in
+2020-10-27 10:54:56.298 : Player 1 did : Fold
+2020-10-27 10:55:02.850 : ### THE FLOP ###
+2020-10-27 10:55:02.867 : Player 3 did : Fold
+2020-10-27 10:55:09.399 : ### THE TURN ###
+2020-10-27 10:55:15.947 : ### THE RIVER ###
+2020-10-27 10:55:19.524 : ### PRE-FLOP ###
+2020-10-27 10:55:19.540 : Player 5 did : Call
+2020-10-27 10:55:19.563 : Player 1 did : Call
+2020-10-27 10:55:19.576 : Player 3 did : Raise at 3677
+2020-10-27 10:55:19.587 : Player 5 did : Call
+2020-10-27 10:55:19.600 : Player 1 did : Fold
+2020-10-27 10:55:26.148 : ### THE FLOP ###
+2020-10-27 10:55:26.165 : Player 3 did : Check
+2020-10-27 10:55:26.182 : Player 5 did : Fold
+2020-10-27 10:55:32.723 : ### THE TURN ###
+2020-10-27 10:55:32.742 : Player 3 did : Check
+2020-10-27 10:55:39.281 : ### THE RIVER ###
+2020-10-27 10:55:39.288 : Player 3 did : Check
+2020-10-27 11:01:36.713 : Creating the board
+2020-10-27 11:01:36.717 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 11:01:37.981 : Impossible de pot_table.grid_forget()
+2020-10-27 11:01:41.491 : ### PRE-FLOP ###
+2020-10-27 11:01:41.493 : Player 4 did : Fold
+2020-10-27 11:01:41.506 : Player 5 did : Raise at 1161
+2020-10-27 11:01:44.904 : Player 6 did : Call
+2020-10-27 11:01:44.905 : Player 1 did : Fold
+2020-10-27 11:01:44.915 : Player 2 did : Fold
+2020-10-27 11:01:44.924 : Player 3 did : Fold
+2020-10-27 11:01:51.457 : ### THE FLOP ###
+2020-10-27 11:01:51.468 : Player 5 did : Check
+2020-10-27 11:01:53.056 : Player 6 did : Check
+2020-10-27 11:01:59.570 : ### THE TURN ###
+2020-10-27 11:01:59.581 : Player 5 did : Check
+2020-10-27 11:02:01.592 : Player 6 did : Check
+2020-10-27 11:02:08.105 : ### THE RIVER ###
+2020-10-27 11:02:08.122 : Player 5 did : Bet 258
+2020-10-27 11:02:12.214 : Player 6 did : Call
+2020-10-27 11:02:15.751 : ### PRE-FLOP ###
+2020-10-27 11:02:15.764 : Player 5 did : Raise at 2323
+2020-10-27 11:02:21.743 : Player 6 did : All-in
+2020-10-27 11:02:21.745 : Player 1 did : Fold
+2020-10-27 11:02:21.756 : Player 2 did : Fold
+2020-10-27 11:02:21.769 : Player 3 did : Fold
+2020-10-27 11:02:21.786 : Player 4 did : Fold
+2020-10-27 11:02:28.322 : ### THE FLOP ###
+2020-10-27 11:02:28.328 : Player 5 did : Check
+2020-10-27 11:02:28.349 : Player 5 did : Bet 3365
+2020-10-27 11:02:34.884 : ### THE TURN ###
+2020-10-27 11:02:34.896 : Player 5 did : Check
+2020-10-27 11:02:41.442 : ### THE RIVER ###
+2020-10-27 11:02:41.460 : Player 5 did : Bet 230
+2020-10-27 11:02:45.013 : ### PRE-FLOP ###
+2020-10-27 11:02:48.214 : Player 6 did : Call
+2020-10-27 11:02:48.218 : Player 1 did : Fold
+2020-10-27 11:02:48.242 : Player 2 did : Fold
+2020-10-27 11:02:48.260 : Player 3 did : Fold
+2020-10-27 11:02:48.286 : Player 4 did : Fold
+2020-10-27 11:02:54.837 : ### THE FLOP ###
+2020-10-27 11:02:54.855 : Player 5 did : Bet 14
+2020-10-27 11:03:00.479 : Player 6 did : Call
+2020-10-27 11:03:07.001 : ### THE TURN ###
+2020-10-27 11:03:07.007 : Player 5 did : All-in
+2020-10-27 11:03:08.879 : Player 6 did : Call
+2020-10-27 11:03:15.400 : ### THE RIVER ###
+2020-10-27 11:06:55.043 : Creating the board
+2020-10-27 11:06:55.047 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 11:06:56.166 : Impossible de pot_table.grid_forget()
+2020-10-27 11:06:59.681 : ### PRE-FLOP ###
+2020-10-27 11:06:59.696 : Player 4 did : Call
+2020-10-27 11:06:59.728 : Player 5 did : Fold
+2020-10-27 11:07:07.902 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:07.904 : Player 6 did : Call
+2020-10-27 11:07:07.915 : Player 1 did : Fold
+2020-10-27 11:07:07.925 : Player 2 did : Fold
+2020-10-27 11:07:07.946 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:14.484 : ### THE FLOP ###
+2020-10-27 11:07:14.495 : Player 3 did : Bet 483
+2020-10-27 11:07:14.521 : Player 4 did : Raise at 1082
+2020-10-27 11:07:16.608 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:16.609 : Player 6 did : Call
+2020-10-27 11:07:16.625 : Player 3 did : Raise at 967
+2020-10-27 11:07:16.643 : Player 4 did : Fold
+2020-10-27 11:07:27.040 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:27.042 : Player 6 did : Call
+2020-10-27 11:07:27.055 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:33.580 : ### THE TURN ###
+2020-10-27 11:07:33.587 : Player 3 did : Bet 158
+2020-10-27 11:07:35.063 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:35.065 : Player 6 did : Call
+2020-10-27 11:07:35.076 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:41.601 : ### THE RIVER ###
+2020-10-27 11:07:41.613 : Player 3 did : Fold
+2020-10-27 11:07:41.659 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:41.701 : Impossible de pot_table.grid_forget()
+2020-10-27 11:07:45.242 : ### PRE-FLOP ###
+2020-10-27 11:07:45.251 : Player 5 did : Fold
+2020-10-27 11:08:12.575 : Impossible de pot_table.grid_forget()
+2020-10-27 11:08:12.579 : Player 6 did : Call
+2020-10-27 11:08:12.591 : Player 1 did : Fold
+2020-10-27 11:08:12.611 : Player 2 did : Raise at 326
+2020-10-27 11:08:12.631 : Player 3 did : All-in
+2020-10-27 11:08:12.649 : Player 4 did : Raise at 318
+2020-10-27 11:10:15.689 : Creating the board
+2020-10-27 11:10:15.693 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 11:10:16.708 : Impossible de pot_table.grid_forget()
+2020-10-27 11:10:20.227 : ### PRE-FLOP ###
+2020-10-27 11:10:20.238 : Player 4 did : Raise at 1161
+2020-10-27 11:10:20.281 : Player 5 did : Call
+2020-10-27 11:10:23.407 : Player 6 did : Call
+2020-10-27 11:10:23.409 : Player 1 did : Call
+2020-10-27 11:10:23.420 : Player 2 did : Raise at 1475
+2020-10-27 11:10:23.430 : Player 3 did : Call
+2020-10-27 11:10:23.438 : Player 4 did : Fold
+2020-10-27 11:10:23.456 : Player 5 did : Call
+2020-10-27 11:10:27.578 : Player 6 did : Call
+2020-10-27 11:10:27.580 : Player 1 did : Call
+2020-10-27 11:10:34.111 : ### THE FLOP ###
+2020-10-27 11:10:34.122 : Player 3 did : Bet 8
+2020-10-27 11:10:34.141 : Player 5 did : Fold
+2020-10-27 11:10:35.623 : Player 6 did : Call
+2020-10-27 11:10:35.625 : Player 1 did : Fold
+2020-10-27 11:10:35.644 : Player 2 did : Call
+2020-10-27 11:10:42.180 : ### THE TURN ###
+2020-10-27 11:10:42.183 : Player 3 did : Check
+2020-10-27 11:10:44.087 : Player 6 did : Check
+2020-10-27 11:10:44.089 : Player 2 did : Check
+2020-10-27 11:10:50.630 : ### THE RIVER ###
+2020-10-27 11:10:50.644 : Player 3 did : Check
+2020-10-27 11:11:04.838 : Player 6 did : Check
+2020-10-27 11:11:04.841 : Player 2 did : Fold
+2020-10-27 11:11:08.392 : ### PRE-FLOP ###
+2020-10-27 11:11:08.400 : Player 5 did : All-in
+2020-10-27 11:11:15.814 : Player 6 did : All-in
+2020-10-27 11:11:15.816 : Player 1 did : Fold
+2020-10-27 11:11:15.827 : Player 2 did : Fold
+2020-10-27 11:11:15.837 : Player 3 did : Fold
+2020-10-27 11:11:22.375 : ### THE FLOP ###
+2020-10-27 11:11:22.386 : Player 4 did : Fold
+2020-10-27 11:11:28.931 : ### THE TURN ###
+2020-10-27 11:11:35.476 : ### THE RIVER ###
+2020-10-27 11:11:39.051 : ### PRE-FLOP ###
+2020-10-27 11:11:39.065 : Player 1 did : Fold
+2020-10-27 11:11:39.091 : Player 2 did : Fold
+2020-10-27 11:11:39.105 : Player 3 did : Call
+2020-10-27 11:11:39.123 : Player 4 did : Call
+2020-10-27 11:11:45.685 : ### THE FLOP ###
+2020-10-27 11:11:45.745 : Player 5 did : Fold
+2020-10-27 11:11:45.765 : Player 3 did : Fold
+2020-10-27 11:11:52.306 : ### THE TURN ###
+2020-10-27 11:11:58.841 : ### THE RIVER ###
+2020-10-27 11:12:02.384 : ### PRE-FLOP ###
+2020-10-27 11:12:02.387 : Player 2 did : All-in
+2020-10-27 11:12:02.401 : Player 3 did : Call
+2020-10-27 11:12:02.414 : Player 4 did : Fold
+2020-10-27 11:12:08.957 : ### THE FLOP ###
+2020-10-27 11:12:08.976 : Player 3 did : Check
+2020-10-27 11:12:08.996 : Player 5 did : Fold
+2020-10-27 11:12:09.007 : Player 3 did : Fold
+2020-10-27 11:12:15.546 : ### THE TURN ###
+2020-10-27 11:12:22.078 : ### THE RIVER ###
+2020-10-27 11:12:25.635 : ### PRE-FLOP ###
+2020-10-27 11:12:25.645 : Player 5 did : Fold
+2020-10-27 11:12:25.661 : Player 2 did : Fold
+2020-10-27 11:12:25.674 : Player 3 did : Call
+2020-10-27 11:12:32.206 : ### THE FLOP ###
+2020-10-27 11:12:32.211 : Player 4 did : Fold
+2020-10-27 11:12:38.740 : ### THE TURN ###
+2020-10-27 11:12:45.283 : ### THE RIVER ###
+2020-10-27 11:41:09.994 : Creating the board
+2020-10-27 11:41:09.998 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 11:41:28.295 : Impossible de pot_table.grid_forget()
+2020-10-27 11:41:31.805 : ### PRE-FLOP ###
+2020-10-27 11:41:31.808 : Player 4 did : Fold
+2020-10-27 11:41:31.819 : Player 5 did : Call
+2020-10-27 11:46:58.354 : Player 6 did : Call
+2020-10-27 11:46:58.364 : Player 1 did : Fold
+2020-10-27 11:46:58.391 : Player 2 did : Call
+2020-10-27 11:47:04.908 : ### THE FLOP ###
+2020-10-27 11:47:04.913 : Player 3 did : Fold
+2020-10-27 11:47:04.949 : Player 5 did : Fold
+2020-10-27 11:47:06.592 : Player 6 did : Check
+2020-10-27 11:47:06.594 : Player 2 did : Check
+2020-10-27 11:47:13.118 : ### THE TURN ###
+2020-10-27 11:47:17.333 : Player 6 did : Check
+2020-10-27 11:47:17.336 : Player 2 did : Bet 966
+2020-10-27 11:48:02.566 : Player 6 did : Call
+2020-10-27 11:48:09.075 : ### THE RIVER ###
+2020-10-27 11:48:13.290 : Player 6 did : Check
+2020-10-27 11:48:13.292 : Player 2 did : Check
+2020-10-27 11:48:16.824 : ### PRE-FLOP ###
+2020-10-27 11:48:16.827 : Player 5 did : Raise at 161
+2020-10-27 11:49:22.010 : Player 6 did : Raise at 500
+2020-10-27 11:49:22.015 : Player 1 did : Call
+2020-10-27 11:49:22.040 : Player 2 did : Fold
+2020-10-27 11:49:22.099 : Player 3 did : Raise at 1421
+2020-10-27 11:49:22.143 : Player 4 did : Fold
+2020-10-27 11:49:22.166 : Player 5 did : Call
+2020-10-27 11:49:29.567 : Player 6 did : Call
+2020-10-27 11:49:29.570 : Player 1 did : Raise at 1000
+2020-10-27 11:49:29.597 : Player 3 did : Fold
+2020-10-27 11:49:29.618 : Player 5 did : Fold
+2020-10-27 11:49:51.259 : Player 6 did : Call
+2020-10-27 11:49:57.765 : ### THE FLOP ###
+2020-10-27 12:33:54.571 : Creating the board
+2020-10-27 12:33:54.574 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 12:33:56.489 : Impossible de pot_table.grid_forget()
+2020-10-27 12:34:00.002 : ### PRE-FLOP ###
+2020-10-27 12:34:00.010 : Player 4 did : Fold
+2020-10-27 12:34:00.035 : Player 5 did : Call
+2020-10-27 12:34:08.407 : Player 6 did : Call
+2020-10-27 12:34:08.410 : Player 1 did : Call
+2020-10-27 12:34:08.423 : Player 2 did : Raise at 488
+2020-10-27 12:34:08.448 : Player 3 did : Raise at 1083
+2020-10-27 12:34:08.477 : Player 5 did : Call
+2020-10-27 12:34:13.117 : Player 6 did : Call
+2020-10-27 12:34:13.119 : Player 1 did : Call
+2020-10-27 12:34:13.135 : Player 2 did : Fold
+2020-10-27 12:34:19.658 : ### THE FLOP ###
+2020-10-27 12:34:19.663 : Player 3 did : Check
+2020-10-27 12:34:19.690 : Player 5 did : Bet 275
+2020-10-27 12:34:23.189 : Player 6 did : Call
+2020-10-27 12:34:23.192 : Player 1 did : Call
+2020-10-27 12:34:23.205 : Player 3 did : Call
+2020-10-27 12:34:29.725 : ### THE TURN ###
+2020-10-27 12:34:29.732 : Player 3 did : Bet 75
+2020-10-27 12:34:29.759 : Player 5 did : Call
+2020-10-27 12:34:59.772 : Player 6 did : Call
+2020-10-27 12:34:59.776 : Player 1 did : Call
+2020-10-27 12:35:06.292 : ### THE RIVER ###
+2020-10-27 12:35:06.297 : Player 3 did : Check
+2020-10-27 12:35:06.315 : Player 5 did : Fold
+2020-10-27 12:35:09.479 : Player 6 did : Check
+2020-10-27 12:35:09.481 : Player 1 did : Check
+2020-10-27 12:35:13.010 : ### PRE-FLOP ###
+2020-10-27 12:35:13.022 : Player 5 did : Call
+2020-10-27 15:42:45.210 : Creating the board
+2020-10-27 15:42:45.224 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 15:42:46.409 : Impossible de pot_table.grid_forget()
+2020-10-27 15:42:49.912 : ### PRE-FLOP ###
+2020-10-27 15:42:49.917 : Player 4 did : Fold
+2020-10-27 15:42:49.948 : Player 5 did : Call
+2020-10-27 15:43:00.875 : Player 6 did : Call
+2020-10-27 15:43:00.878 : Player 1 did : Fold
+2020-10-27 15:43:00.907 : Player 2 did : Call
+2020-10-27 15:43:07.458 : ### THE FLOP ###
+2020-10-27 15:43:07.469 : Player 3 did : Bet 966
+2020-10-27 15:43:07.522 : Player 5 did : All-in
+2020-10-27 15:43:15.235 : Player 6 did : Call
+2020-10-27 15:43:15.239 : Player 2 did : Call
+2020-10-27 15:43:21.763 : ### THE TURN ###
+2020-10-27 15:43:21.767 : Player 3 did : Bet 1283
+2020-10-27 15:43:43.548 : Player 6 did : Call
+2020-10-27 15:43:43.552 : Player 2 did : Fold
+2020-10-27 15:43:50.076 : ### THE RIVER ###
+2020-10-27 15:43:50.094 : Player 3 did : Bet 108
+2020-10-27 15:43:58.336 : Player 6 did : Call
+2020-10-27 15:43:58.344 : ### RESULTS ###
+2020-10-27 15:55:46.376 : Creating the board
+2020-10-27 15:55:46.380 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 15:55:47.571 : Impossible de pot_table.grid_forget()
+2020-10-27 15:55:51.075 : ### PRE-FLOP ###
+2020-10-27 15:55:51.078 : Player 4 did : Fold
+2020-10-27 15:55:51.089 : Player 5 did : Fold
+2020-10-27 15:55:52.367 : Player 6 did : Call
+2020-10-27 15:55:52.378 : Player 1 did : Fold
+2020-10-27 15:55:52.387 : Player 2 did : Fold
+2020-10-27 15:55:58.909 : ### THE FLOP ###
+2020-10-27 15:55:58.917 : Player 3 did : Check
+2020-10-27 15:56:00.847 : Player 6 did : Check
+2020-10-27 15:56:07.352 : ### THE TURN ###
+2020-10-27 15:56:07.356 : Player 3 did : Bet 804
+2020-10-27 15:56:08.808 : Player 6 did : Call
+2020-10-27 15:56:15.313 : ### THE RIVER ###
+2020-10-27 15:56:15.322 : Player 3 did : Bet 355
+2020-10-27 15:56:19.446 : Player 6 did : Call
+2020-10-27 15:56:19.451 : ### RESULTS ###
+2020-10-27 15:56:19.468 : In the pot containing players [1, 2, 3, 4, 5, 6],
+Player (3, 2443) wins (3, 2443) with a three of a kind
+2020-10-27 15:56:19.479 : 
+
+2020-10-27 15:56:23.005 : ### PRE-FLOP ###
+2020-10-27 15:56:23.007 : Player 5 did : Fold
+2020-10-27 15:58:28.774 : Creating the board
+2020-10-27 15:58:28.778 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 15:58:30.026 : Impossible de pot_table.grid_forget()
+2020-10-27 15:58:33.530 : ### PRE-FLOP ###
+2020-10-27 15:58:33.535 : Player 4 did : Fold
+2020-10-27 15:58:33.568 : Player 5 did : Fold
+2020-10-27 15:58:35.494 : Player 6 did : Call
+2020-10-27 15:58:35.496 : Player 1 did : Fold
+2020-10-27 15:58:35.511 : Player 2 did : Call
+2020-10-27 15:58:42.033 : ### THE FLOP ###
+2020-10-27 15:58:42.036 : Player 3 did : Bet 1448
+2020-10-27 15:58:44.598 : Player 6 did : Call
+2020-10-27 15:58:44.600 : Player 2 did : Call
+2020-10-27 15:58:51.117 : ### THE TURN ###
+2020-10-27 15:58:51.119 : Player 3 did : Fold
+2020-10-27 15:58:52.766 : Player 6 did : Check
+2020-10-27 15:58:52.768 : Player 2 did : Check
+2020-10-27 15:58:59.303 : ### THE RIVER ###
+2020-10-27 15:59:01.878 : Player 6 did : Check
+2020-10-27 15:59:01.881 : Player 2 did : All-in
+2020-10-27 15:59:04.829 : Player 6 did : All-in
+2020-10-27 15:59:04.836 : ### RESULTS ###
+2020-10-27 15:59:04.851 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 4498 with a pair
+2020-10-27 15:59:04.872 : 
+
+2020-10-27 15:59:04.902 : In the pot containing players :
+    [2, 6],
+Player 6 wins 4 with a pair
+2020-10-27 15:59:04.922 : 
+
+2020-10-27 15:59:04.953 : In the pot containing players :
+    [2, 6],
+Player 6 wins 0 with a pair
+2020-10-27 15:59:04.971 : 
+
+2020-10-27 15:59:08.512 : ### PRE-FLOP ###
+2020-10-27 16:00:01.243 : Creating the board
+2020-10-27 16:00:01.246 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:00:02.682 : Impossible de pot_table.grid_forget()
+2020-10-27 16:00:06.187 : ### PRE-FLOP ###
+2020-10-27 16:00:06.191 : Player 4 did : Call
+2020-10-27 16:00:06.208 : Player 5 did : Fold
+2020-10-27 16:00:07.533 : Player 6 did : Call
+2020-10-27 16:00:07.535 : Player 1 did : Fold
+2020-10-27 16:00:07.544 : Player 2 did : Fold
+2020-10-27 16:00:14.058 : ### THE FLOP ###
+2020-10-27 16:00:14.068 : Player 3 did : Fold
+2020-10-27 16:00:14.121 : Player 4 did : Check
+2020-10-27 16:00:15.837 : Player 6 did : Check
+2020-10-27 16:00:22.343 : ### THE TURN ###
+2020-10-27 16:00:22.351 : Player 4 did : Fold
+2020-10-27 16:00:28.920 : ### THE RIVER ###
+2020-10-27 16:00:28.941 : ### RESULTS ###
+2020-10-27 16:00:28.982 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 175 with two pairs
+2020-10-27 16:00:32.519 : ### PRE-FLOP ###
+2020-10-27 16:00:32.531 : Player 5 did : Call
+2020-10-27 16:01:18.169 : Player 6 did : Call
+2020-10-27 16:01:18.178 : Player 1 did : Call
+2020-10-27 16:01:18.204 : Player 2 did : Raise at 488
+2020-10-27 16:01:18.235 : Player 3 did : Fold
+2020-10-27 16:01:18.270 : Player 4 did : Fold
+2020-10-27 16:01:18.312 : Player 5 did : Raise at 1287
+2020-10-27 16:01:44.266 : Player 6 did : Call
+2020-10-27 16:01:44.269 : Player 1 did : All-in
+2020-10-27 16:01:44.280 : Player 2 did : Fold
+2020-10-27 16:01:50.824 : ### THE FLOP ###
+2020-10-27 16:01:50.846 : Player 5 did : Fold
+2020-10-27 16:02:02.202 : Player 6 did : Check
+2020-10-27 16:02:10.094 : Player 6 did : Check
+2020-10-27 16:02:11.628 : Player 6 did : Check
+2020-10-27 16:02:12.095 : Player 6 did : Check
+2020-10-27 16:02:12.262 : Player 6 did : Check
+2020-10-27 16:02:12.515 : Player 6 did : Check
+2020-10-27 16:02:12.676 : Player 6 did : Check
+2020-10-27 16:02:12.878 : Player 6 did : Check
+2020-10-27 16:02:13.008 : Player 6 did : Check
+2020-10-27 16:02:13.313 : Player 6 did : Check
+2020-10-27 16:02:13.498 : Player 6 did : Check
+2020-10-27 16:02:13.679 : Player 6 did : Check
+2020-10-27 16:02:13.840 : Player 6 did : Check
+2020-10-27 16:02:13.925 : Player 6 did : Check
+2020-10-27 16:02:14.080 : Player 6 did : Check
+2020-10-27 16:02:14.282 : Player 6 did : Check
+2020-10-27 16:02:14.726 : Player 6 did : Check
+2020-10-27 16:02:14.897 : Player 6 did : Check
+2020-10-27 16:02:15.041 : Player 6 did : Check
+2020-10-27 16:02:15.214 : Player 6 did : Check
+2020-10-27 16:07:58.285 : Creating the board
+2020-10-27 16:07:58.289 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:07:59.648 : Impossible de pot_table.grid_forget()
+2020-10-27 16:08:03.154 : ### PRE-FLOP ###
+2020-10-27 16:08:03.160 : Player 4 did : Fold
+2020-10-27 16:08:03.209 : Player 5 did : Call
+2020-10-27 16:08:06.571 : Player 6 did : Call
+2020-10-27 16:08:06.573 : Player 1 did : Fold
+2020-10-27 16:08:06.586 : Player 2 did : Raise at 1467
+2020-10-27 16:08:06.606 : Player 3 did : All-in
+2020-10-27 16:08:06.627 : Player 5 did : Fold
+2020-10-27 16:09:25.228 : Creating the board
+2020-10-27 16:09:25.232 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:09:28.487 : Impossible de pot_table.grid_forget()
+2020-10-27 16:09:31.991 : ### PRE-FLOP ###
+2020-10-27 16:09:31.994 : Player 4 did : Call
+2020-10-27 16:09:32.004 : Player 5 did : Raise at 166
+2020-10-27 16:09:33.939 : Player 6 did : Call
+2020-10-27 16:09:33.942 : Player 1 did : Raise at 402
+2020-10-27 16:09:33.954 : Player 2 did : Raise at 845
+2020-10-27 16:09:33.964 : Player 3 did : All-in
+2020-10-27 16:09:33.976 : Player 4 did : Fold
+2020-10-27 16:09:34.000 : Player 5 did : Fold
+2020-10-27 16:09:42.187 : Player 6 did : All-in
+2020-10-27 16:09:42.189 : Player 1 did : Fold
+2020-10-27 16:09:42.204 : Player 2 did : All-in
+2020-10-27 16:09:48.743 : ### THE FLOP ###
+2020-10-27 16:09:55.266 : ### THE TURN ###
+2020-10-27 16:10:01.807 : ### THE RIVER ###
+2020-10-27 16:10:01.815 : ### RESULTS ###
+2020-10-27 16:10:01.832 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 3 wins 5118 with a pair
+2020-10-27 16:10:01.841 : 
+2020-10-27 16:10:01.857 : In the pot containing players :
+    [2, 3, 6],
+Player 3 wins 4500 with a pair
+2020-10-27 16:10:01.867 : 
+2020-10-27 16:10:01.884 : In the pot containing players :
+    [2, 3, 6],
+Player 3 wins 4500 with a pair
+2020-10-27 16:10:01.895 : 
+2020-10-27 16:10:01.923 : In the pot containing players :
+    [2, 3, 6],
+Player 3 wins 4500 with a pair
+2020-10-27 16:10:01.953 : 
+2020-10-27 16:10:05.486 : ### PRE-FLOP ###
+2020-10-27 16:10:05.505 : Player 1 did : Fold
+2020-10-27 16:10:05.534 : Player 3 did : Call
+2020-10-27 16:10:05.557 : Player 4 did : Call
+2020-10-27 16:18:42.216 : Creating the board
+2020-10-27 16:18:42.219 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:18:44.006 : Impossible de pot_table.grid_forget()
+2020-10-27 16:18:47.509 : ### PRE-FLOP ###
+2020-10-27 16:18:47.517 : Player 4 did : Call
+2020-10-27 16:18:47.545 : Player 5 did : Call
+2020-10-27 16:18:49.888 : Player 6 did : Call
+2020-10-27 16:18:49.891 : Player 1 did : Call
+2020-10-27 16:18:49.901 : Player 2 did : Call
+2020-10-27 16:18:56.413 : ### THE FLOP ###
+2020-10-27 16:18:56.422 : Player 3 did : Check
+2020-10-27 16:18:56.449 : Player 4 did : Bet 322
+2020-10-27 16:18:56.487 : Player 5 did : Fold
+2020-10-27 16:18:57.787 : Player 6 did : Call
+2020-10-27 16:18:57.790 : Player 1 did : Fold
+2020-10-27 16:18:57.806 : Player 2 did : Call
+2020-10-27 16:18:57.844 : Player 3 did : Raise at 966
+2020-10-27 16:18:57.861 : Player 4 did : Fold
+2020-10-27 16:19:17.282 : Player 6 did : Call
+2020-10-27 16:19:17.288 : Player 2 did : Call
+2020-10-27 16:19:23.818 : ### THE TURN ###
+2020-10-27 16:19:23.824 : Player 3 did : Bet 317
+2020-10-27 16:19:27.625 : Player 6 did : Call
+2020-10-27 16:19:27.628 : Player 2 did : Call
+2020-10-27 16:19:34.144 : ### THE RIVER ###
+2020-10-27 16:19:34.149 : Player 3 did : Bet 107
+2020-10-27 16:19:37.449 : Player 6 did : All-in
+2020-10-27 16:19:37.451 : Player 2 did : Fold
+2020-10-27 16:19:37.463 : Player 3 did : Fold
+2020-10-27 16:19:37.477 : ### RESULTS ###
+2020-10-27 16:19:37.492 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 4578 with a three of a kind
+2020-10-27 16:19:37.515 : 
+2020-10-27 16:19:41.042 : ### PRE-FLOP ###
+2020-10-27 16:19:41.049 : Player 5 did : Fold
+2020-10-27 16:19:48.386 : Player 6 did : Call
+2020-10-27 16:19:48.391 : Player 1 did : Fold
+2020-10-27 16:19:48.402 : Player 2 did : Call
+2020-10-27 16:19:48.421 : Player 3 did : Call
+2020-10-27 16:19:54.945 : ### THE FLOP ###
+2020-10-27 16:19:54.960 : Player 4 did : Fold
+2020-10-27 16:20:11.594 : Player 6 did : Check
+2020-10-27 16:20:11.598 : Player 2 did : Check
+2020-10-27 16:20:11.612 : Player 3 did : Bet 5
+2020-10-27 16:20:16.834 : Player 6 did : Call
+2020-10-27 16:20:16.838 : Player 2 did : Fold
+2020-10-27 16:20:23.373 : ### THE TURN ###
+2020-10-27 16:20:26.443 : Player 6 did : Check
+2020-10-27 16:20:26.448 : Player 3 did : Check
+2020-10-27 16:20:32.964 : ### THE RIVER ###
+2020-10-27 16:20:38.864 : Player 6 did : Bet 10
+2020-10-27 16:20:38.871 : Player 3 did : Fold
+2020-10-27 16:20:38.888 : ### RESULTS ###
+2020-10-27 16:20:38.902 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 220 with a pair
+2020-10-27 16:20:38.930 : 
+2020-10-27 16:20:42.489 : ### PRE-FLOP ###
+2020-10-27 16:20:48.667 : Player 6 did : Call
+2020-10-27 16:20:48.677 : Player 1 did : Call
+2020-10-27 16:20:48.716 : Player 2 did : Call
+2020-10-27 16:20:48.747 : Player 3 did : Fold
+2020-10-27 16:20:48.779 : Player 4 did : Call
+2020-10-27 16:20:55.334 : ### THE FLOP ###
+2020-10-27 16:20:55.342 : Player 5 did : Bet 1395
+2020-10-27 16:21:03.234 : Player 6 did : Call
+2020-10-27 16:21:03.237 : Player 1 did : Fold
+2020-10-27 16:21:03.249 : Player 2 did : Fold
+2020-10-27 16:21:03.277 : Player 4 did : Fold
+2020-10-27 16:21:09.811 : ### THE TURN ###
+2020-10-27 16:21:09.823 : Player 5 did : Check
+2020-10-27 16:21:19.510 : Player 6 did : Bet 10
+2020-10-27 16:21:19.517 : Player 5 did : All-in
+2020-10-27 16:21:33.824 : Player 6 did : Call
+2020-10-27 16:21:40.339 : ### THE RIVER ###
+2020-10-27 16:22:10.857 : Player 6 did : Check
+2020-10-27 16:22:27.332 : Player 6 did : Check
+2020-10-27 16:22:27.833 : Player 6 did : Check
+2020-10-27 16:22:27.969 : Player 6 did : Check
+2020-10-27 16:22:28.122 : Player 6 did : Check
+2020-10-27 16:22:28.329 : Player 6 did : Check
+2020-10-27 16:22:28.557 : Player 6 did : Check
+2020-10-27 16:22:28.728 : Player 6 did : Check
+2020-10-27 16:31:07.193 : Creating the board
+2020-10-27 16:31:07.197 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:31:08.396 : Impossible de pot_table.grid_forget()
+2020-10-27 16:31:11.900 : ### PRE-FLOP ###
+2020-10-27 16:31:11.903 : Player 4 did : Raise at 1494
+2020-10-27 16:31:11.913 : Player 5 did : Fold
+2020-10-27 16:31:19.197 : Player 6 did : Call
+2020-10-27 16:31:19.199 : Player 1 did : Fold
+2020-10-27 16:31:19.209 : Player 2 did : All-in
+2020-10-27 16:31:19.228 : Player 3 did : Fold
+2020-10-27 16:31:19.253 : Player 4 did : Fold
+2020-10-27 16:31:24.067 : Player 6 did : All-in
+2020-10-27 16:31:30.574 : ### THE FLOP ###
+2020-10-27 16:31:37.083 : ### THE TURN ###
+2020-10-27 16:31:43.594 : ### THE RIVER ###
+2020-10-27 16:31:43.605 : ### RESULTS ###
+2020-10-27 16:31:43.652 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 2 wins 4544 with a pair
+2020-10-27 16:31:43.668 : 
+2020-10-27 16:31:43.695 : In the pot containing players :
+    [6],
+Player 6 wins 1500 with a high card
+2020-10-27 16:31:43.716 : 
+2020-10-27 16:37:33.328 : Creating the board
+2020-10-27 16:37:33.333 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:37:34.515 : Impossible de pot_table.grid_forget()
+2020-10-27 16:37:38.026 : ### PRE-FLOP ###
+2020-10-27 16:37:38.040 : Player 4 did : Call
+2020-10-27 16:37:38.073 : Player 5 did : Fold
+2020-10-27 16:37:40.805 : Player 6 did : Call
+2020-10-27 16:37:40.808 : Player 1 did : Raise at 332
+2020-10-27 16:37:40.825 : Player 2 did : Fold
+2020-10-27 16:37:40.836 : Player 3 did : Call
+2020-10-27 16:37:40.847 : Player 4 did : Raise at 665
+2020-10-27 16:37:46.628 : Player 6 did : Call
+2020-10-27 16:37:46.630 : Player 1 did : Call
+2020-10-27 16:37:46.644 : Player 3 did : Call
+2020-10-27 16:37:53.169 : ### THE FLOP ###
+2020-10-27 16:37:53.176 : Player 3 did : Check
+2020-10-27 16:37:53.204 : Player 4 did : Check
+2020-10-27 16:37:59.532 : Player 6 did : Check
+2020-10-27 16:37:59.535 : Player 1 did : Bet 183
+2020-10-27 16:37:59.548 : Player 3 did : Call
+2020-10-27 16:37:59.559 : Player 4 did : Fold
+2020-10-27 16:38:03.036 : Player 6 did : Call
+2020-10-27 16:38:09.550 : ### THE TURN ###
+2020-10-27 16:38:09.555 : Player 3 did : Bet 71
+2020-10-27 16:38:19.076 : Player 6 did : Call
+2020-10-27 16:38:19.079 : Player 1 did : Call
+2020-10-27 16:38:25.609 : ### THE RIVER ###
+2020-10-27 16:38:25.618 : Player 3 did : Check
+2020-10-27 16:38:29.940 : Player 6 did : Check
+2020-10-27 16:38:29.943 : Player 1 did : Bet 127
+2020-10-27 16:38:29.954 : Player 3 did : Fold
+2020-10-27 16:38:32.444 : Player 6 did : Call
+2020-10-27 16:38:32.446 : ### RESULTS ###
+2020-10-27 16:38:32.460 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 3701 with two pairs
+2020-10-27 16:38:32.472 : 
+2020-10-27 16:38:36.001 : ### PRE-FLOP ###
+2020-10-27 16:38:36.015 : Player 5 did : Fold
+2020-10-27 16:38:48.652 : Player 6 did : Call
+2020-10-27 16:38:48.663 : Player 1 did : Call
+2020-10-27 16:38:48.691 : Player 2 did : Call
+2020-10-27 16:38:48.728 : Player 3 did : Call
+2020-10-27 16:38:55.247 : ### THE FLOP ###
+2020-10-27 16:38:55.264 : Player 4 did : Check
+2020-10-27 16:39:01.333 : Player 6 did : Check
+2020-10-27 16:39:01.338 : Player 1 did : Check
+2020-10-27 16:39:01.363 : Player 2 did : Bet 1105
+2020-10-27 16:39:01.383 : Player 3 did : All-in
+2020-10-27 16:39:01.415 : Player 4 did : All-in
+2020-10-27 16:39:06.585 : Player 6 did : Call
+2020-10-27 16:39:06.588 : Player 1 did : Fold
+2020-10-27 16:39:06.600 : Player 2 did : Fold
+2020-10-27 16:39:13.131 : ### THE TURN ###
+2020-10-27 16:40:48.599 : Creating the board
+2020-10-27 16:40:48.603 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:40:49.979 : Impossible de pot_table.grid_forget()
+2020-10-27 16:40:53.504 : ### PRE-FLOP ###
+2020-10-27 16:40:53.514 : Player 4 did : Raise at 332
+2020-10-27 16:40:53.538 : Player 5 did : Call
+2020-10-27 16:40:58.843 : Player 6 did : Call
+2020-10-27 16:40:58.845 : Player 1 did : Fold
+2020-10-27 16:40:58.859 : Player 2 did : Call
+2020-10-27 16:40:58.876 : Player 3 did : Fold
+2020-10-27 16:41:05.425 : ### THE FLOP ###
+2020-10-27 16:41:05.436 : Player 4 did : Bet 258
+2020-10-27 16:41:05.461 : Player 5 did : Raise at 1031
+2020-10-27 16:41:06.451 : Player 6 did : Call
+2020-10-27 16:41:06.454 : Player 2 did : Call
+2020-10-27 16:41:06.464 : Player 4 did : Fold
+2020-10-27 16:41:12.992 : ### THE TURN ###
+2020-10-27 16:41:13.001 : Player 5 did : Fold
+2020-10-27 16:41:21.091 : Player 6 did : Check
+2020-10-27 16:41:21.096 : Player 2 did : Bet 104
+2020-10-27 16:41:25.436 : Player 6 did : Call
+2020-10-27 16:41:31.943 : ### THE RIVER ###
+2020-10-27 16:41:36.675 : Player 6 did : Check
+2020-10-27 16:41:36.678 : Player 2 did : Check
+2020-10-27 16:41:36.702 : ### RESULTS ###
+2020-10-27 16:41:36.733 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 2 wins 4937 with a three of a kind
+2020-10-27 16:41:36.748 : 
+2020-10-27 16:41:40.285 : ### PRE-FLOP ###
+2020-10-27 16:41:40.288 : Player 5 did : Call
+2020-10-27 16:41:41.794 : Player 6 did : All-in
+2020-10-27 16:41:41.796 : Player 1 did : Call
+2020-10-27 16:41:41.806 : Player 2 did : Call
+2020-10-27 16:41:41.817 : Player 3 did : Fold
+2020-10-27 16:41:41.828 : Player 4 did : Raise at 189
+2020-10-27 16:41:41.840 : Player 5 did : All-in
+2020-10-27 16:41:41.852 : Player 1 did : Call
+2020-10-27 16:41:41.863 : Player 2 did : Call
+2020-10-27 16:41:41.875 : Player 4 did : Raise at 337
+2020-10-27 16:41:41.888 : Player 1 did : Call
+2020-10-27 16:41:41.917 : Player 2 did : Fold
+2020-10-27 16:41:48.439 : ### THE FLOP ###
+2020-10-27 16:41:54.962 : ### THE TURN ###
+2020-10-27 16:41:54.977 : Player 4 did : Check
+2020-10-27 16:41:55.002 : Player 1 did : Bet 902
+2020-10-27 16:41:55.024 : Player 4 did : All-in
+2020-10-27 16:41:55.045 : Player 1 did : Fold
+2020-10-27 16:42:01.593 : ### THE RIVER ###
+2020-10-27 16:42:01.600 : ### RESULTS ###
+2020-10-27 16:42:01.616 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 5 wins 294 with a pair
+2020-10-27 16:42:01.634 : 
+2020-10-27 16:42:01.662 : In the pot containing players :
+    [1, 4],
+Player 4 wins 411 with a pair
+2020-10-27 16:42:01.683 : 
+2020-10-27 16:42:01.700 : In the pot containing players :
+    [1, 4],
+Player 4 wins 674 with a pair
+2020-10-27 16:42:01.719 : 
+2020-10-27 16:42:01.745 : In the pot containing players :
+    [1, 4],
+Player 4 wins 337 with a pair
+2020-10-27 16:42:01.759 : 
+2020-10-27 16:42:01.773 : In the pot containing players :
+    [1, 4],
+Player 4 wins 1746 with a pair
+2020-10-27 16:42:01.776 : 
+2020-10-27 16:42:01.780 : In the pot containing players :
+    [4],
+Player 4 wins 0 with a pair
+2020-10-27 16:42:01.783 : 
+2020-10-27 16:42:01.792 : In the pot containing players :
+    [4],
+Player 4 wins 0 with a pair
+2020-10-27 16:42:01.794 : 
+2020-10-27 16:42:01.798 : In the pot containing players :
+    [4],
+Player 4 wins 573 with a pair
+2020-10-27 16:42:01.800 : 
+2020-10-27 16:42:05.327 : ### PRE-FLOP ###
+2020-10-27 16:42:05.339 : Player 1 did : Fold
+2020-10-27 16:42:05.368 : Player 2 did : Raise at 3759
+2020-10-27 16:42:05.393 : Player 3 did : Fold
+2020-10-27 16:42:05.414 : Player 4 did : All-in
+2020-10-27 16:42:05.430 : Player 5 did : Fold
+2020-10-27 16:42:05.466 : Player 2 did : All-in
+2020-10-27 16:42:20.782 : Creating the board
+2020-10-27 16:42:20.786 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 16:42:22.226 : Impossible de pot_table.grid_forget()
+2020-10-27 16:42:25.730 : ### PRE-FLOP ###
+2020-10-27 16:42:25.738 : Player 4 did : Call
+2020-10-27 16:42:25.766 : Player 5 did : Call
+2020-10-27 16:42:30.804 : Player 6 did : Call
+2020-10-27 16:42:30.806 : Player 1 did : Raise at 498
+2020-10-27 16:42:30.821 : Player 2 did : Fold
+2020-10-27 16:42:30.843 : Player 3 did : Fold
+2020-10-27 16:42:30.861 : Player 4 did : Call
+2020-10-27 16:42:30.877 : Player 5 did : Fold
+2020-10-27 16:42:34.604 : Player 6 did : Call
+2020-10-27 16:42:41.116 : ### THE FLOP ###
+2020-10-27 16:42:41.125 : Player 4 did : Check
+2020-10-27 16:42:42.724 : Player 6 did : Check
+2020-10-27 16:42:42.726 : Player 1 did : Bet 333
+2020-10-27 16:42:42.749 : Player 4 did : Fold
+2020-10-27 16:42:44.628 : Player 6 did : Call
+2020-10-27 16:42:51.147 : ### THE TURN ###
+2020-10-27 16:43:06.045 : Player 6 did : Check
+2020-10-27 16:43:06.049 : Player 1 did : Check
+2020-10-27 16:43:12.575 : ### THE RIVER ###
+2020-10-27 16:43:14.753 : Player 6 did : Check
+2020-10-27 16:43:14.757 : Player 1 did : Check
+2020-10-27 16:43:14.773 : ### RESULTS ###
+2020-10-27 16:43:14.795 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 2285 with a high card
+2020-10-27 16:43:14.814 : 
+2020-10-27 16:43:18.362 : ### PRE-FLOP ###
+2020-10-27 16:43:18.365 : Player 5 did : Fold
+2020-10-27 16:43:37.355 : Player 6 did : Call
+2020-10-27 16:43:37.360 : Player 1 did : Raise at 221
+2020-10-27 16:43:37.377 : Player 2 did : Call
+2020-10-27 16:43:37.392 : Player 3 did : Fold
+2020-10-27 16:43:37.412 : Player 4 did : Raise at 485
+2020-10-27 16:43:40.211 : Player 6 did : Call
+2020-10-27 16:43:40.214 : Player 1 did : All-in
+2020-10-27 16:43:40.227 : Player 2 did : Call
+2020-10-27 16:43:40.240 : Player 4 did : Call
+2020-10-27 16:43:42.203 : Player 6 did : Call
+2020-10-27 16:43:48.712 : ### THE FLOP ###
+2020-10-27 16:43:55.228 : ### THE TURN ###
+2020-10-27 16:43:55.240 : Player 4 did : Fold
+2020-10-27 17:08:04.789 : Creating the board
+2020-10-27 17:08:04.793 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 17:08:05.976 : Impossible de pot_table.grid_forget()
+2020-10-27 17:08:09.498 : ### PRE-FLOP ###
+2020-10-27 17:08:09.504 : Player 4 did : Fold
+2020-10-27 17:08:09.529 : Player 5 did : Call
+2020-10-27 17:08:12.041 : Player 6 did : Call
+2020-10-27 17:08:12.043 : Player 1 did : Call
+2020-10-27 17:08:12.052 : Player 2 did : Call
+2020-10-27 17:08:18.578 : ### THE FLOP ###
+2020-10-27 17:08:18.585 : Player 3 did : Fold
+2020-10-27 17:08:18.612 : Player 5 did : Check
+2020-10-27 17:09:09.402 : Player 6 did : Check
+2020-10-27 17:09:09.410 : Player 1 did : Fold
+2020-10-27 17:09:09.442 : Player 2 did : Fold
+2020-10-27 17:09:15.970 : ### THE TURN ###
+2020-10-27 17:09:15.978 : Player 5 did : Fold
+2020-10-27 17:09:22.535 : ### THE RIVER ###
+2020-10-27 17:09:22.542 : ### RESULTS ###
+2020-10-27 17:09:22.558 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 250 with a high card
+2020-10-27 17:09:22.568 : 
+2020-10-27 17:09:26.097 : ### PRE-FLOP ###
+2020-10-27 17:09:26.108 : Player 5 did : Call
+2020-10-27 17:09:46.870 : Player 6 did : Call
+2020-10-27 17:09:46.875 : Player 1 did : Call
+2020-10-27 17:09:46.900 : Player 2 did : Call
+2020-10-27 17:09:46.923 : Player 3 did : Fold
+2020-10-27 17:09:53.455 : ### THE FLOP ###
+2020-10-27 17:09:53.458 : Player 4 did : Check
+2020-10-27 17:09:53.468 : Player 5 did : Check
+2020-10-27 17:09:57.625 : Player 6 did : Check
+2020-10-27 17:09:57.628 : Player 1 did : Check
+2020-10-27 17:09:57.645 : Player 2 did : Bet 930
+2020-10-27 17:09:57.673 : Player 4 did : Call
+2020-10-27 17:09:57.705 : Player 5 did : Fold
+2020-10-27 17:10:00.194 : Player 6 did : Call
+2020-10-27 17:10:00.197 : Player 1 did : All-in
+2020-10-27 17:10:00.209 : Player 2 did : Fold
+2020-10-27 17:10:00.223 : Player 4 did : Call
+2020-10-27 17:10:06.481 : Player 6 did : Call
+2020-10-27 17:10:13.005 : ### THE TURN ###
+2020-10-27 17:10:19.524 : ### THE RIVER ###
+2020-10-27 17:10:19.539 : Player 4 did : Fold
+2020-10-27 17:30:18.220 : Creating the board
+2020-10-27 17:30:18.224 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 17:30:22.855 : Impossible de pot_table.grid_forget()
+2020-10-27 17:30:26.366 : ### PRE-FLOP ###
+2020-10-27 17:30:26.372 : Player 4 did : Call
+2020-10-27 17:30:26.382 : Player 5 did : Raise at 331
+2020-10-27 17:30:31.321 : Player 6 did : Call
+2020-10-27 17:30:31.323 : Player 1 did : Call
+2020-10-27 17:30:31.332 : Player 2 did : Call
+2020-10-27 17:30:31.345 : Player 3 did : Fold
+2020-10-27 17:30:31.376 : Player 4 did : Call
+2020-10-27 17:30:37.901 : ### THE FLOP ###
+2020-10-27 17:30:37.907 : Player 4 did : Fold
+2020-10-27 17:30:37.931 : Player 5 did : Check
+2020-10-27 17:31:41.731 : Creating the board
+2020-10-27 17:31:41.734 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 17:31:42.816 : Impossible de pot_table.grid_forget()
+2020-10-27 17:31:46.330 : ### PRE-FLOP ###
+2020-10-27 17:31:46.339 : Player 4 did : Call
+2020-10-27 17:31:46.369 : Player 5 did : Fold
+2020-10-27 17:31:50.465 : Player 6 did : Call
+2020-10-27 17:31:50.468 : Player 1 did : Call
+2020-10-27 17:31:50.485 : Player 2 did : Fold
+2020-10-27 17:31:57.026 : ### THE FLOP ###
+2020-10-27 17:31:57.031 : Player 3 did : Check
+2020-10-27 17:31:57.048 : Player 4 did : Bet 1127
+2020-10-27 17:33:20.668 : Creating the board
+2020-10-27 17:33:20.672 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 17:33:21.727 : Impossible de pot_table.grid_forget()
+2020-10-27 17:33:25.245 : ### PRE-FLOP ###
+2020-10-27 17:33:25.250 : Player 4 did : Call
+2020-10-27 17:33:25.268 : Player 5 did : Fold
+2020-10-27 17:33:26.617 : Player 6 did : Call
+2020-10-27 17:33:26.618 : Player 1 did : Fold
+2020-10-27 17:33:26.628 : Player 2 did : Call
+2020-10-27 17:33:33.150 : ### THE FLOP ###
+2020-10-27 17:33:33.159 : Player 3 did : Check
+2020-10-27 17:33:33.174 : Player 4 did : Fold
+2020-10-27 17:35:59.900 : Creating the board
+2020-10-27 17:35:59.904 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-10-27 17:36:00.855 : Impossible de pot_table.grid_forget()
+2020-10-27 17:36:04.366 : ### PRE-FLOP ###
+2020-10-27 17:36:04.371 : Player 4 did : Call
+2020-10-27 17:36:04.388 : Player 5 did : Call
+2020-10-27 17:36:05.416 : Player 6 did : Call
+2020-10-27 17:36:05.419 : Player 1 did : Raise at 497
+2020-10-27 17:36:05.430 : Player 2 did : Call
+2020-10-27 17:36:05.449 : Player 3 did : Call
+2020-10-27 17:36:05.477 : Player 4 did : Raise at 1287
+2020-10-27 17:36:05.496 : Player 5 did : Call

@@ -119,5 +119,3 @@ class Bot:
         while bet==0:
             bet = random.randint(cut*self.money-1,cut*self.money)
         return bet
-
-
