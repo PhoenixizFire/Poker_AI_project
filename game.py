@@ -25,7 +25,7 @@ class Game:
         self.board = Board(sb,bb,self.players)
         print('Shuffling the cards')
         self.deck = Deck()
-        self.deck.big
+        #self.deck.big
         self.all_in = False
         self.main(autoplay,simulation)
     
@@ -376,8 +376,8 @@ class Game:
                     sorted_money_list[-1][0]._add_money(difference)
                     sorted_money_list[-1] = [sorted_money_list[-1][0],sorted_money_list[-1][1]-difference]
 
-                print("SORTED MONEY LIST #####################################")
-                print(sorted_money_list)
+                """print("SORTED MONEY LIST #####################################")
+                print(sorted_money_list):
                 for tup in sorted_money_list: # THE ISSUE IS HERE : IT LOOPS FOR EVERY PLAYER IN LIST AND NOT EVERY DIFFERENCE #TODO MAKE A DIFFERENCE LIST AND MAKE THE POTS BASED ON THAT
                     print(tup)
                     if tup[1]!=0: #Si le joueur n'a pas 0 d'argent
@@ -386,12 +386,36 @@ class Game:
                             if j[1]!=0: #si sa monnaie est différente de 0
                                 #j=(j[0],j[1]-tup[1]) # retire l'argent du tuple
                                 j[1]-=tup[1]
+
                     if tup[1]==0:
                         print(f"Player {i.id} is 'tup[1]==0")
                     # une fois tous les joueurs passés
-                    print("###############################    CREATING NEW POT")
+                    if len([x for x in self.players if x.active==True and x.money!=0])>1: # 0 or 1 ?
+                        print("###############################    CREATING NEW POT")
+                        self.board.new_pot([x for x in self.players if x.active==True and x.money!=0])
+                        print(f"Nombre de pots : {len(self.board.pots)}")"""
+
+                count_zeros_in_list = len([y for x,y in sorted_money_list if y==0])
+                print(f"count_zeros_in_list = {count_zeros_in_list}")
+                count_else_in_list = len([y for x,y in sorted_money_list if y!=0])
+                print(f"count_else_in_list = {count_else_in_list}")
+                while count_else_in_list>0:
+                    minimum = min([y for x,y in sorted_money_list if x!=0])
+                    print(f"minimum = {minimum}")
+                    self.board.active_pot['value'] += minimum*count_else_in_list
+                    sorted_money_list = [[x,y-minimum] if y!=0 else [x,y] for x,y in sorted_money_list]
+                    count_zeros_in_list = len([y for x,y in sorted_money_list if y==0])
+                    print(f"count_zeros_in_list = {count_zeros_in_list}")
+                    count_else_in_list = len([y for x,y in sorted_money_list if y!=0])
+                    print(f"count_else_in_list = {count_else_in_list}")
+                    if count_else_in_list>0:
+                        print("###############################    CREATING NEW POT")
+                        self.board.new_pot([x for x,y in sorted_money_list if x.active==True and y!=0])
+                if (len([x for x in self.players if x.active==True and x.all_in==True])!=len([x for x in self.players if x.active==True])) and (len([x for x in self.players if x.active==True and x.all_in==True])>1):
                     self.board.new_pot([x for x in self.players if x.active==True and x.money!=0])
-                    print(f"Nombre de pots : {len(self.board.pots)}")
+                for i in self.players:
+                    i.current_bet=0
+                    i.checked=False
         else: #IF NOT ALL-IN
             for i in self.players:
                 self.board.active_pot['value']+=i.current_bet

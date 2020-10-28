@@ -121,7 +121,7 @@ class VisualGame(Game):
             f.write(str(datestamp)+" : "+message+'\n')
         if log_screen:
             self.historic.config(state='normal')
-            self.historic.insert('insert',message+'\n')
+            self.historic.insert('end',message+'\n')
             self.historic.config(state='disabled')
             self.historic.see('end')
 
