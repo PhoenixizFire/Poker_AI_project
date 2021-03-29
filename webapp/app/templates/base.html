@@ -1,11 +1,11 @@
 <html>
     <head>
         {% if title %}
-        <title>{{ title }} - Microblog</title>
+        <title>{{ title }} - Poker AI Project</title>
         {% else %}
-        <title>Welcome to Microblog</title>
+        <title>Welcome to the web support for Poker AI Project</title>
         {% endif %}
-	    <div>Microblog:
+	    <div>Poker AI Project navbar:
 			<a href="{{ url_for('index') }}">Home</a>
 			<a href="{{ url_for('about') }}">About</a>
 			{% if current_user.is_anonymous %}

@@ -49,6 +49,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/pokergame')
+def pokergame():
+    return render_template('poker.html',title='Poker GAME')
+
 @app.route('/register',methods=['GET','POST'])
 def register():
     if current_user.is_authenticated:
