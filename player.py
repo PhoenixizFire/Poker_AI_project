@@ -88,6 +88,7 @@ class Player:
         self.checked = False
         self.money-=difference
         self.current_bet+=difference
+        print(f"Player {self.id} calls : {self.current_bet}")
         print(self)
 
     def relaunch(self,bid,qty="qty"): #raise
@@ -120,6 +121,7 @@ class Player:
         self.active = False
         active_pot += self.current_bet
         self.current_bet = 0
+        print(f"Player {self.id} folds")
         return active_pot
 
     def bet(self,bet="bet"):
@@ -144,6 +146,7 @@ class Player:
     def check(self):
         self.checked = True
         # Second turn and further only if nobody bet before you (wait for other players to play)
+        print(f"Player {self.id} folds")
         print(self)
 
     def tapis(self):
@@ -151,6 +154,7 @@ class Player:
         self.current_bet+=self.money
         self.money = 0
         self.all_in = True
+        print(f"Player {self.id} goes all-in : {self.current_bet}")
         return self.current_bet
 
     def reset_move(self):

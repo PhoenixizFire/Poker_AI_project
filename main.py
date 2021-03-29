@@ -2,6 +2,7 @@
 ## More informations on the blinds : https://en.wikipedia.org/wiki/Blind_(poker)
 ## More rules about all-in and side pots : https://www.youtube.com/watch?v=rxXzo3UXitY
 ## Informations on who wins based on hands : https://poker.stackexchange.com/questions/6680/how-to-determine-the-winning-hands-in-poker
+## LAST INFO on BB/100 : http://squaces.over-blog.com/article-12451614.html
 
 import os
 import sys
@@ -15,7 +16,7 @@ if __name__=='__main__':
         Game(6,1500,autoplay=True)
     elif sys.argv[1]=='simulation':
         Game(6,1500,simulation=True)
-    elif sys.argv[1]=='trAIning':
+    elif sys.argv[1]=='training':
         Game(6,1500,training=True)
     elif sys.argv[1]=='plAyIng':
         Game(6,1500,AI=True)

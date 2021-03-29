@@ -2284,3 +2284,292 @@ Player 6 wins 824 with a pair
     [2, 4, 6],
 Player 2 wins 702 with a straight
 2020-10-28 17:30:03.568 : 
+2020-11-09 09:45:39.173 : Creating the board
+2020-11-09 09:45:39.179 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-11-09 09:45:40.778 : Impossible de pot_table.grid_forget()
+2020-11-09 09:45:44.290 : ### PRE-FLOP ###
+2020-11-09 09:45:44.295 : Player 4 did : Call
+2020-11-09 09:45:44.301 : Player 5 did : Fold
+2020-11-09 14:11:15.458 : Creating the board
+2020-11-09 14:11:15.463 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2020-11-09 14:11:21.350 : Impossible de pot_table.grid_forget()
+2020-11-09 14:11:24.859 : ### PRE-FLOP ###
+2020-11-09 14:11:24.868 : Player 4 did : Call
+2020-11-09 14:11:24.875 : Player 5 did : Raise at 497
+2020-11-09 14:11:34.624 : Player 6 did : Call
+2020-11-09 14:11:34.632 : Player 1 did : Raise at 1090
+2020-11-09 14:11:34.638 : Player 2 did : Call
+2020-11-09 14:11:34.643 : Player 3 did : Fold
+2020-11-09 14:11:34.649 : Player 4 did : Call
+2020-11-09 14:11:34.654 : Player 5 did : Fold
+2020-11-09 14:11:43.805 : Player 6 did : Call
+2020-11-09 14:11:50.314 : ### THE FLOP ###
+2020-11-09 14:11:50.324 : Player 4 did : Bet 44
+2020-11-09 14:12:18.463 : Player 6 did : Call
+2020-11-09 14:12:18.478 : Player 1 did : Raise at 123
+2020-11-09 14:12:18.483 : Player 2 did : Fold
+2020-11-09 14:12:18.497 : Player 4 did : Raise at 272
+2020-11-09 14:12:19.498 : Player 6 did : Call
+2020-11-09 14:12:19.502 : Player 1 did : All-in
+2020-11-09 14:12:19.508 : Player 4 did : All-in
+2020-11-09 14:12:20.739 : Player 6 did : All-in
+2020-11-09 14:12:27.270 : ### THE TURN ###
+2020-11-09 14:12:33.782 : ### THE RIVER ###
+2020-11-09 14:12:33.788 : ### RESULTS ###
+2020-11-09 14:12:33.800 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 6137 with a pair
+2020-11-09 14:12:33.805 : 
+2020-11-09 14:12:37.340 : ### PRE-FLOP ###
+2020-11-09 14:12:37.349 : Player 2 did : Call
+2020-11-09 14:12:37.354 : Player 3 did : Fold
+2020-11-09 14:12:37.360 : Player 5 did : Fold
+2020-11-09 14:12:43.877 : ### THE FLOP ###
+2020-12-07 10:01:38.161 : Creating the board
+2020-12-07 10:01:38.162 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-01-05 22:39:21.463 : Creating the board
+2021-01-05 22:39:21.471 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-01-05 22:39:30.167 : Impossible de pot_table.grid_forget()
+2021-01-05 22:39:33.687 : ### PRE-FLOP ###
+2021-01-05 22:39:33.693 : Player 4 did : Call
+2021-01-05 22:39:33.710 : Player 5 did : Call
+2021-02-02 22:27:22.378 : Creating the board
+2021-02-02 22:27:22.388 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-02-02 22:27:40.817 : Creating the board
+2021-02-02 22:27:40.823 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-02-02 22:27:43.286 : Impossible de pot_table.grid_forget()
+2021-02-02 22:27:46.814 : ### PRE-FLOP ###
+2021-02-02 22:27:46.821 : Player 4 did : Call
+2021-02-02 22:27:46.832 : Player 5 did : Fold
+2021-02-02 22:28:28.287 : Player 6 did : Call
+2021-02-02 22:28:28.294 : Player 1 did : Call
+2021-02-02 22:28:28.309 : Player 2 did : Raise at 326
+2021-02-02 22:28:28.324 : Player 3 did : Raise at 965
+2021-02-02 22:28:28.335 : Player 4 did : Call
+2021-02-02 22:28:35.252 : Player 6 did : Call
+2021-02-02 22:28:35.261 : Player 1 did : Call
+2021-02-02 22:28:35.272 : Player 2 did : All-in
+2021-02-02 22:28:35.279 : Player 3 did : Fold
+2021-02-02 22:28:35.286 : Player 4 did : Fold
+2021-02-02 22:28:42.316 : Player 6 did : All-in
+2021-02-02 22:28:42.326 : Player 1 did : Fold
+2021-02-02 22:28:48.839 : ### THE FLOP ###
+2021-02-02 22:28:55.359 : ### THE TURN ###
+2021-02-02 22:29:01.886 : ### THE RIVER ###
+2021-02-02 22:29:01.893 : ### RESULTS ###
+2021-02-02 22:29:01.905 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 2 wins 5895 with two pairs
+2021-02-02 22:29:01.911 : 
+2021-02-02 22:29:05.436 : ### PRE-FLOP ###
+2021-02-02 22:29:05.443 : Player 5 did : Fold
+2021-02-02 22:29:05.454 : Player 1 did : Call
+2021-02-02 22:29:05.468 : Player 2 did : Raise at 1309
+2021-02-02 22:29:05.480 : Player 3 did : Fold
+2021-02-02 22:29:05.493 : Player 4 did : Fold
+2021-02-02 22:29:05.500 : Player 1 did : Fold
+2021-02-02 22:29:12.031 : ### THE FLOP ###
+2021-02-02 22:29:18.561 : ### THE TURN ###
+2021-02-02 22:29:25.085 : ### THE RIVER ###
+2021-02-02 22:29:25.092 : ### RESULTS ###
+2021-02-02 22:29:25.103 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 2 wins 1434 with two pairs
+2021-02-02 22:29:25.109 : 
+2021-02-02 22:29:28.640 : ### PRE-FLOP ###
+2021-02-02 22:29:28.648 : Player 1 did : Call
+2021-02-02 22:29:28.655 : Player 2 did : Fold
+2021-02-02 22:29:28.663 : Player 3 did : Fold
+2021-02-02 22:29:28.679 : Player 4 did : Raise at 153
+2021-02-02 22:29:28.694 : Player 5 did : Raise at 1287
+2021-02-02 22:29:28.705 : Player 1 did : Fold
+2021-02-02 22:29:28.719 : Player 4 did : Fold
+2021-02-02 22:29:35.239 : ### THE FLOP ###
+2021-02-02 22:29:41.764 : ### THE TURN ###
+2021-02-02 22:29:48.282 : ### THE RIVER ###
+2021-02-02 22:29:48.290 : ### RESULTS ###
+2021-02-02 22:29:48.301 : In the pot containing players :
+    [1, 2, 3, 4, 5],
+Player 5 wins 1490 with a pair
+2021-02-02 22:29:48.308 : 
+2021-02-02 22:29:51.827 : ### PRE-FLOP ###
+2021-02-02 22:29:51.834 : Player 2 did : Fold
+2021-02-02 22:29:51.845 : Player 3 did : Call
+2021-02-02 22:29:51.856 : Player 4 did : Call
+2021-02-02 22:29:51.868 : Player 5 did : Fold
+2021-02-02 22:29:58.384 : ### THE FLOP ###
+2021-02-02 22:29:58.399 : Player 1 did : Bet 209
+2021-02-02 22:29:58.413 : Player 3 did : Call
+2021-02-02 22:29:58.425 : Player 4 did : Call
+2021-02-02 22:30:04.955 : ### THE TURN ###
+2021-02-02 22:30:04.962 : Player 1 did : Check
+2021-02-02 22:30:04.970 : Player 3 did : Check
+2021-02-02 22:30:04.984 : Player 4 did : Bet 24
+2021-02-02 22:30:04.997 : Player 1 did : Fold
+2021-02-02 22:30:05.009 : Player 3 did : Fold
+2021-02-02 22:30:11.531 : ### THE RIVER ###
+2021-02-02 22:30:11.534 : ### RESULTS ###
+2021-02-02 22:30:11.545 : In the pot containing players :
+    [1, 2, 3, 4, 5],
+Player 4 wins 826 with a pair
+2021-02-02 22:30:11.554 : 
+2021-02-02 22:30:15.088 : ### PRE-FLOP ###
+2021-02-02 22:30:15.104 : Player 3 did : Raise at 161
+2021-02-02 22:30:15.115 : Player 4 did : Fold
+2021-02-02 22:30:15.122 : Player 5 did : Fold
+2021-02-02 22:30:15.132 : Player 1 did : Call
+2021-02-02 22:30:15.143 : Player 2 did : Fold
+2021-02-02 22:30:21.671 : ### THE FLOP ###
+2021-02-02 22:30:21.679 : Player 3 did : Check
+2021-02-02 22:30:21.690 : Player 1 did : Bet 5
+2021-02-02 22:30:21.700 : Player 3 did : Fold
+2021-02-02 22:30:28.219 : ### THE TURN ###
+2021-02-02 22:30:34.734 : ### THE RIVER ###
+2021-02-02 22:30:34.741 : ### RESULTS ###
+2021-02-02 22:30:34.757 : In the pot containing players :
+    [1, 2, 3, 4, 5],
+Player 1 wins 377 with a high card
+2021-02-02 22:30:34.765 : 
+2021-02-02 23:49:55.252 : Creating the board
+2021-02-02 23:49:55.258 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-02-02 23:50:07.774 : Impossible de pot_table.grid_forget()
+2021-02-02 23:50:11.297 : ### PRE-FLOP ###
+2021-02-02 23:50:11.303 : Player 4 did : Call
+2021-02-02 23:50:11.314 : Player 5 did : Fold
+2021-03-28 23:02:52.017 : Creating the board
+2021-03-28 23:02:52.017 : Settings : Players = 6 ; Money = 10000 ; Simulation = True
+2021-03-28 23:02:56.583 : Impossible de pot_table.grid_forget()
+2021-03-28 23:03:00.122 : ### PRE-FLOP ###
+2021-03-28 23:03:00.128 : Player 4 did : Call
+2021-03-28 23:03:00.134 : Player 5 did : Fold
+2021-03-28 23:03:23.636 : Player 6 did : Call
+2021-03-28 23:03:23.645 : Player 1 did : Raise at 6666
+2021-03-28 23:03:23.652 : Player 2 did : Call
+2021-03-28 23:03:23.659 : Player 3 did : All-in
+2021-03-28 23:03:23.665 : Player 4 did : Fold
+2021-03-28 23:03:33.811 : Player 6 did : All-in
+2021-03-28 23:03:33.818 : Player 1 did : Fold
+2021-03-28 23:03:33.825 : Player 2 did : All-in
+2021-03-28 23:03:40.348 : ### THE FLOP ###
+2021-03-28 23:03:46.880 : ### THE TURN ###
+2021-03-28 23:03:53.391 : ### THE RIVER ###
+2021-03-28 23:03:53.399 : ### RESULTS ###
+2021-03-28 23:03:53.410 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 36716 with two pairs
+2021-03-28 23:03:53.416 : 
+2021-03-28 23:03:56.943 : ### PRE-FLOP ###
+2021-03-28 23:03:56.950 : Player 1 did : Call
+2021-03-28 23:03:56.957 : Player 4 did : Fold
+2021-03-28 23:03:56.965 : Player 5 did : Call
+2021-03-28 23:04:03.491 : ### THE FLOP ###
+2021-03-28 23:04:15.732 : Player 6 did : Check
+2021-03-28 23:04:15.740 : Player 1 did : Bet 2183
+2021-03-28 23:04:15.746 : Player 5 did : Fold
+2021-03-28 23:04:22.625 : Player 6 did : Call
+2021-03-28 23:04:29.144 : ### THE TURN ###
+2021-03-28 23:04:41.827 : Player 6 did : Check
+2021-03-28 23:04:41.834 : Player 1 did : Bet 731
+2021-03-28 23:04:44.033 : Player 6 did : Call
+2021-03-28 23:04:50.547 : ### THE RIVER ###
+2021-03-28 23:05:09.734 : Player 6 did : Check
+2021-03-28 23:05:09.742 : Player 1 did : Bet 245
+2021-03-28 23:05:12.326 : Player 6 did : Call
+2021-03-28 23:05:12.335 : ### RESULTS ###
+2021-03-28 23:05:12.345 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 6468 with a straight
+2021-03-28 23:05:12.351 : 
+2021-03-28 23:05:15.881 : ### PRE-FLOP ###
+2021-03-28 23:05:15.888 : Player 4 did : Call
+2021-03-28 23:05:15.896 : Player 5 did : Fold
+2021-03-29 00:48:53.224 : Creating the board
+2021-03-29 00:48:53.230 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-03-29 00:50:31.923 : Impossible de pot_table.grid_forget()
+2021-03-29 00:50:35.444 : ### PRE-FLOP ###
+2021-03-29 00:50:35.451 : Player 4 did : Raise at 829
+2021-03-29 00:50:35.459 : Player 5 did : Call
+2021-03-29 00:50:37.154 : Player 6 did : Call
+2021-03-29 00:50:37.161 : Player 1 did : Call
+2021-03-29 00:50:37.168 : Player 2 did : Call
+2021-03-29 00:50:37.176 : Player 3 did : Call
+2021-03-29 00:50:43.694 : ### THE FLOP ###
+2021-03-29 00:50:43.701 : Player 3 did : Bet 221
+2021-03-29 00:50:43.708 : Player 4 did : Call
+2021-03-29 00:50:43.715 : Player 5 did : Call
+2021-03-29 00:50:47.998 : Player 6 did : Call
+2021-03-29 00:50:48.004 : Player 1 did : Fold
+2021-03-29 00:50:48.011 : Player 2 did : Fold
+2021-03-29 00:50:54.526 : ### THE TURN ###
+2021-03-29 00:50:54.532 : Player 3 did : Check
+2021-03-29 00:50:54.539 : Player 4 did : Check
+2021-03-29 00:50:54.547 : Player 5 did : Bet 50
+2021-03-29 00:50:56.371 : Player 6 did : Call
+2021-03-29 00:50:56.379 : Player 3 did : Call
+2021-03-29 00:50:56.385 : Player 4 did : Fold
+2021-03-29 00:51:02.900 : ### THE RIVER ###
+2021-03-29 00:51:02.907 : Player 3 did : Check
+2021-03-29 00:51:02.914 : Player 5 did : Fold
+2021-03-29 00:51:14.892 : Player 6 did : Check
+2021-03-29 00:51:14.901 : ### RESULTS ###
+2021-03-29 00:51:14.911 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 6008 with a three of a kind
+2021-03-29 00:51:14.917 : 
+2021-03-29 00:51:18.446 : ### PRE-FLOP ###
+2021-03-29 00:51:18.453 : Player 5 did : Call
+2021-03-29 02:04:48.333 : Creating the board
+2021-03-29 02:04:48.340 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-03-29 02:05:07.849 : Impossible de pot_table.grid_forget()
+2021-03-29 02:05:11.364 : ### PRE-FLOP ###
+2021-03-29 02:05:11.370 : Player 4 did : Fold
+2021-03-29 02:05:11.377 : Player 5 did : Call
+2021-03-29 02:05:20.490 : Player 6 did : Call
+2021-03-29 02:05:20.497 : Player 1 did : Call
+2021-03-29 02:05:20.503 : Player 2 did : Fold
+2021-03-29 02:05:27.026 : ### THE FLOP ###
+2021-03-29 02:05:27.033 : Player 3 did : Bet 804
+2021-03-29 02:05:27.040 : Player 5 did : Call
+2021-03-29 02:49:15.161 : Creating the board
+2021-03-29 02:49:15.166 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-03-29 02:49:16.254 : Impossible de pot_table.grid_forget()
+2021-03-29 02:49:19.762 : ### PRE-FLOP ###
+2021-03-29 02:49:19.769 : Player 4 did : Call
+2021-03-29 02:49:19.776 : Player 5 did : Fold
+2021-03-29 02:49:56.824 : Creating the board
+2021-03-29 02:49:56.829 : Settings : Players = 6 ; Money = 1500 ; Simulation = True
+2021-03-29 02:49:58.703 : Impossible de pot_table.grid_forget()
+2021-03-29 02:50:02.230 : ### PRE-FLOP ###
+2021-03-29 02:50:02.236 : Player 4 did : Fold
+2021-03-29 02:50:02.242 : Player 5 did : Fold
+2021-03-29 02:50:05.540 : Player 6 did : Call
+2021-03-29 02:50:05.546 : Player 1 did : Fold
+2021-03-29 02:50:05.552 : Player 2 did : Call
+2021-03-29 02:50:12.073 : ### THE FLOP ###
+2021-03-29 02:50:12.079 : Player 3 did : Check
+2021-03-29 02:50:14.848 : Player 6 did : Check
+2021-03-29 02:50:14.855 : Player 2 did : Bet 161
+2021-03-29 02:50:14.862 : Player 3 did : Fold
+2021-03-29 02:50:18.034 : Player 6 did : Call
+2021-03-29 02:50:24.554 : ### THE TURN ###
+2021-03-29 02:50:52.693 : Player 6 did : Check
+2021-03-29 02:50:52.699 : Player 2 did : Fold
+2021-03-29 02:50:59.225 : ### THE RIVER ###
+2021-03-29 02:50:59.232 : ### RESULTS ###
+2021-03-29 02:50:59.239 : In the pot containing players :
+    [1, 2, 3, 4, 5, 6],
+Player 6 wins 472 with a pair
+2021-03-29 02:50:59.247 : 
+2021-03-29 02:51:02.772 : ### PRE-FLOP ###
+2021-03-29 02:51:02.778 : Player 5 did : Call
+2021-03-29 02:51:04.168 : Player 6 did : Call
+2021-03-29 02:51:04.174 : Player 1 did : Fold
+2021-03-29 02:51:04.181 : Player 2 did : Call
+2021-03-29 02:51:04.187 : Player 3 did : Fold
+2021-03-29 02:51:10.708 : ### THE FLOP ###
+2021-03-29 02:51:10.714 : Player 4 did : Fold
+2021-03-29 02:51:10.720 : Player 5 did : Fold
+2021-03-29 02:51:55.400 : Player 6 did : Check
+2021-03-29 02:51:55.408 : Player 2 did : Bet 136
+2021-03-29 02:51:59.342 : Player 6 did : Call
+2021-03-29 02:52:05.870 : ### THE TURN ###

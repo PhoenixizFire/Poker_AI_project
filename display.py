@@ -15,12 +15,34 @@ import random
 import colorama as cr
 from PIL import Image,ImageTk
 import webbrowser
+import mysql.connector
 import math
 import time
 import os,sys,platform
 
 WIDTH = 1440
 HEIGHT = 810
+
+# Connecteur MYSQL
+
+def connect_sqldb():
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user="root",
+        password="admin",
+        database="pokeraiproject"
+    )
+    return mydb
+
+def log_sql(db:object(),table:str(),log:dict()):
+    cursor = db.cursor()
+    sql = f"INSERT INTO {table} ({','.join(log.keys())}) VALUES ({','.join(log.values())})"
+    cursor.execute(sql)
+    db.commit()
+    cursor.close()
+    db.close()
+
+# Code du jeu
 
 class VisualGame(Game):
 
@@ -124,6 +146,11 @@ class VisualGame(Game):
             self.historic.insert('end',message+'\n')
             self.historic.config(state='disabled')
             self.historic.see('end')
+
+    def _logdb(self):
+        table = f"Table{len(self.players)}Phase{self._phase}" #Table6Phase1
+        request = dict() #TODO Dynamic request selection
+        log_sql(connect_sqldb(),table,request)
 
     def open_settings_menu(self):
         if self.settings_panel.winfo_ismapped()==True:
@@ -357,6 +384,7 @@ class VisualGame(Game):
 
     def set_first_round(self,autoplay=False,simulation=False):
         self._log_message("### PRE-FLOP ###")
+        self._phase = 1
         n_players = len(self.players)
         for i in self.players:
             if i.big_blind:
@@ -403,6 +431,7 @@ class VisualGame(Game):
 
     def set_second_round(self,autoplay=False,simulation=False):
         self._log_message("### THE FLOP ###")
+        self._phase = 2
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -449,6 +478,7 @@ class VisualGame(Game):
 
     def set_third_round(self,autoplay=False,simulation=False): #same as second
         self._log_message("### THE TURN ###")
+        self._phase = 3
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -495,6 +525,7 @@ class VisualGame(Game):
 
     def set_fourth_round(self,autoplay=False,simulation=False): #same as second and third
         self._log_message("### THE RIVER ###")
+        self._phase = 4
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:

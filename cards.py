@@ -22,8 +22,8 @@ class Card:
             return f"{self.value} of {self.figure}"""
 
     def __repr__(self):
-        #return cr.Back.WHITE+self.short+cr.Style.RESET_ALL
-        return self.tk
+        #return cr.Back.WHITE+self.short+cr.Style.RESET_ALL # IF VERSION TEXT
+        return self.tk # IF VERSION WITH TKINTER
 
     def __gt__(self,b):
         return self.value>b.value
@@ -44,7 +44,7 @@ class Card:
         else:
             value = str(self.value)
         if self.figure=="Hearts":
-            figure = cr.Fore.RED+"♥"+cr.Style.RESET_ALL
+            figure = cr.Fore.RED+"♥"#+cr.Style.RESET_ALL
         elif self.figure=="Spades":
             figure = cr.Fore.BLACK+"♠"+cr.Style.RESET_ALL
         elif self.figure=="Clubs":

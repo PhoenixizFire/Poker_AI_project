@@ -78,6 +78,14 @@ class Bot:
             self.relaunch = random.randint(1,100)
             self.all_in = random.randint(1,60)
             self.money = random.randint(1,9)
+        if self.mind == "Noob":
+            self.fold = random.randint(1,100)
+            self.bet = random.randint(1,100)
+            self.check = random.randint(1,100)
+            self.call = random.randint(1,100)
+            self.relaunch = random.randint(1,100)
+            self.all_in = random.randint(1,100)
+            self.money = random.randint(1,9)
 
     def action(self,available_moves):
         move_dict = dict()

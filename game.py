@@ -4,12 +4,33 @@ from player import Player
 from bots import Bot
 import random
 import operator
+import time
 import colorama as cr
 from functools import reduce
+import mysql.connector
+from datetime import datetime
 
 ## n_players between 2 to 10. 3 to 10 for now on
 ## if 2 players, Dealer is Small Blind
 ## small blind and big blind needs to put money before cards are distributed
+
+def connect_sqldb():
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user="root",
+        password="admin",
+        database="pokeraiproject"
+    )
+    return mydb
+
+def log_sql(db:object(),table:str(),log:dict()):
+    cursor = db.cursor()
+    sql = f"INSERT INTO {table} ({','.join(str(x) for x in log.keys())}) VALUES ({','.join(chr(39)+str(x)+chr(39) for x in log.values())});"
+    print("REQUETE SQL AVANT ENVOI : "+sql)
+    cursor.execute(sql)
+    db.commit()
+    cursor.close()
+    db.close()
 
 class Game:
 
@@ -19,6 +40,9 @@ class Game:
         if simulation==True:
             ## ["Folder","Coward","Payer","Follower","Risky","Rich"]
             self.players = [Player(i+1,base_money,bot=Bot("Random")) for i in range(n_players-1)]+[Player(n_players,base_money)]
+        if training==True:
+            base_money = 10000
+            self.players = [Player(i+1,base_money,bot=Bot("Noob")) for i in range(n_players)]
         else:
             self.players = [Player(i+1,base_money) for i in range(n_players)]
         print('Setting up the board')
@@ -27,18 +51,27 @@ class Game:
         self.deck = Deck()
         #self.deck.big
         self.all_in = False
-        self.main(autoplay,simulation)
+        self.main(autoplay,simulation,training)
     
-    def main(self,autoplay=False,simulation=False):
+    def main(self,autoplay=False,simulation=False,training=False):
+        if training:
+            limit = 50
+        else:
+            limit = 3
         turn = 0
         while len([x for x in self.players if x.active==True])>1:
             turn+=1
             while True:
+                self.game_id = datetime.now().strftime("%y%m%d%H%M%S")
+                print(f"Game ID = {self.game_id}")
                 self.set_roles(turn)
+                init_logsql = dict()
+                for x in self.players:
+                    init_logsql[f'{x.id}'] = -x.money
                 self.set_blinds() #TODO Fix the issue where players are going negative
                 self.set_cards()
 
-                self.set_first_round(autoplay,simulation)
+                self.set_first_round(autoplay,simulation,training)
                 self.the_flop()
                 if len([x for x in self.players if x.active])==1:
                     self.the_turn()
@@ -47,7 +80,7 @@ class Game:
                 else:
                     self.resume_active_players()
 
-                self.set_second_round(autoplay,simulation)
+                self.set_second_round(autoplay,simulation,training)
                 self.the_turn()
                 if len([x for x in self.players if x.active])==1:
                     self.the_river()
@@ -55,16 +88,24 @@ class Game:
                 else:
                     self.resume_active_players()
 
-                self.set_third_round(autoplay,simulation)
+                self.set_third_round(autoplay,simulation,training)
                 self.the_river()
                 if len([x for x in self.players if x.active])==1:
                     break
                 else:
                     self.resume_active_players()
 
-                self.set_fourth_round(autoplay,simulation)
+                self.set_fourth_round(autoplay,simulation,training)
                 break
-            self.distribute_pots()
+            print("Avant distribute_pots()")
+            print(f"Nombre de pots {len(self.board.pots)}")
+            for x in self.distribute_pots():
+                print(x)
+            print("Après distribute_pots()")
+            for x in self.players:
+                init_logsql[f'{x.id}'] = init_logsql[f'{x.id}']+x.money
+            print(f"init_logsql : {[(k,v) for k,v in init_logsql.items()]}")
+            self._logdb(5,init_logsql)
             self.deck.reset()
             self.set_roles(turn)
             self.board.reset_board([x for x in self.players if x.active==True])
@@ -74,13 +115,14 @@ class Game:
                     x.active=False
                     print(cr.Fore.YELLOW+f"{x.id} is out."+cr.Style.RESET_ALL)
             self.resume_active_players()
-            if turn==3:break
+            if turn==limit:break
+            time.sleep(1)
 
     def pprint(func):
-        def magic(self,phase,opt):
+        def magic(self,phase,opt,bonus):
             print("#### ==== ####")
             #print(f"{[(x.id,x.active,x.all_in,x.checked) for x in self.players]}")
-            func(self,phase,opt)
+            func(self,phase,opt,bonus)
             print("#### ==== ####\n")
         return magic
 
@@ -91,6 +133,35 @@ class Game:
             self.deck.content.remove(draw)
             func(self)
         return burn
+
+    def _logdb(self,phase:int(),outcome):
+        if outcome==None:
+            table_action = f"Table{len(self.players)}Phase{phase}Action" #Table6Phase1Action
+            print("Log_sql : "+table_action)
+            #table_mise = f"Table{len(self.players)}Phase{phase}Mise"
+        else:
+            table_result = f"Table{len(self.players)}Result"
+            print("Log_sql : "+table_result)
+        request = dict() #TODO Dynamic request selection
+        request["gameID"] = self.game_id
+        if outcome==None:
+            for x,y in enumerate(self.players):
+                request[f"Player{x+1}Action"] = y.last_move
+                request[f"Player{x+1}Bet"] = y.current_bet
+                request[f"Player{x+1}Money"] = y.money
+                request[f"Player{x+1}Status"] = y.active
+                request[f"Player{x+1}Card1Value"] = y.hand[0].value
+                request[f"Player{x+1}Card1Figure"] = y.hand[0].figure
+                request[f"Player{x+1}Card2Value"] = y.hand[1].value
+                request[f"Player{x+1}Card2Figure"] = y.hand[1].figure
+        else:
+            for x,y in enumerate(self.players):
+                request[f"Player{x+1}Outcome"] = outcome[str(x+1)]
+        if outcome==None:
+            log_sql(connect_sqldb(),table_action,request)
+        else:
+            log_sql(connect_sqldb(),table_result,request)
+        #log_sql(connect_sqldb(),table_mise,request)
 
     def available_moves(self,phase,player):
         moves = list()
@@ -221,7 +292,7 @@ class Game:
                 print(i)
 
     @pprint
-    def set_first_round(self,autoplay=False,simulation=False):
+    def set_first_round(self,autoplay=False,simulation=False,training=False):
         n_players = len(self.players)
         for i in self.players:
             if i.big_blind:
@@ -240,13 +311,17 @@ class Game:
                             print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
+                    if training:
+                        choice = i.bot.action(self.available_moves(1,i))
                     else:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(1,i)}")
                     self.play_moves(i,choice,1)
+                    i.last_move = choice
             while_token+=1
         #for i in self.players:
             #self.board.active_pot['value']+=i.current_bet
             #i.current_bet=0
+        self._logdb(1,None)
         self.manage_pots()
         self.board.current_bid=0
 
@@ -260,7 +335,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_second_round(self,autoplay=False,simulation=False):
+    def set_second_round(self,autoplay=False,simulation=False,training=False):
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -277,14 +352,18 @@ class Game:
                             print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
+                    if training:
+                        choice = i.bot.action(self.available_moves(2,i))
                     else:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(2,i)}")
                     self.play_moves(i,choice,2)
+                    i.last_move = choice
             while_token+=1
         for i in self.players:
             #self.board.active_pot['value']+=i.current_bet
             #i.current_bet=0
             i.checked=False
+        self._logdb(2,None)
         self.manage_pots()
         self.board.current_bid=0
 
@@ -297,7 +376,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_third_round(self,autoplay=False,simulation=False): #same as second
+    def set_third_round(self,autoplay=False,simulation=False,training=False): #same as second
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -314,14 +393,18 @@ class Game:
                             print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
+                    if training:
+                        choice = i.bot.action(self.available_moves(3,i))
                     else:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(3,i)}")
                     self.play_moves(i,choice,3)
+                    i.last_move = choice
             while_token+=1
         for i in self.players:
             #self.board.active_pot['value']+=i.current_bet
             #i.current_bet=0
             i.checked=False
+        self._logdb(3,None)
         self.manage_pots()
         self.board.current_bid=0
 
@@ -334,7 +417,7 @@ class Game:
         print(self.board)
 
     @pprint
-    def set_fourth_round(self,autoplay=False,simulation=False): #same as second and third
+    def set_fourth_round(self,autoplay=False,simulation=False,training=False): #same as second and third
         n_players = len(self.players)
         for i in self.players:
             if i.small_blind:
@@ -351,15 +434,21 @@ class Game:
                             print(f"Player {i.id} did : {choice}")
                         else:
                             choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
+                    if training:
+                        choice = i.bot.action(self.available_moves(4,i))
                     else:
                         choice = input(f"Player {i.id}, what do you want to do ? {self.available_moves(4,i)}")
                     self.play_moves(i,choice,4)
+                    i.last_move = choice
             while_token+=1
+        self._logdb(4,None)
         self.manage_pots()
         self.board.current_bid=0
 
     def manage_pots(self):
         print(cr.Fore.RED+"MANAGING POTS"+cr.Fore.RESET)
+        print(f"Nombre de pots {len(self.board.pots)}")
+        print(f"Pot : {self.board.pots}")
         if self.all_in==True: # IF GAME DETECTED SOMEONE ALL-IN'D
             money_list = list() #LIST OF PLAYERS AND MONEY
             for i in self.players: # Exemple [0,0,50,100,300,500]
@@ -399,7 +488,9 @@ class Game:
                 print(f"count_zeros_in_list = {count_zeros_in_list}")
                 count_else_in_list = len([y for x,y in sorted_money_list if y!=0])
                 print(f"count_else_in_list = {count_else_in_list}")
+                debug = 0
                 while count_else_in_list>0:
+                    debug+=1
                     minimum = min([y for x,y in sorted_money_list if x!=0])
                     print(f"minimum = {minimum}")
                     self.board.active_pot['value'] += minimum*count_else_in_list
@@ -411,6 +502,7 @@ class Game:
                     if count_else_in_list>0:
                         print("###############################    CREATING NEW POT")
                         self.board.new_pot([x for x,y in sorted_money_list if x.active==True and y!=0])
+                    if debug==3:break
                 if (len([x for x in self.players if x.active==True and x.all_in==True])!=len([x for x in self.players if x.active==True])) and (len([x for x in self.players if x.active==True and x.all_in==True])>1):
                     self.board.new_pot([x for x in self.players if x.active==True and x.money!=0])
                 for i in self.players:
@@ -424,12 +516,14 @@ class Game:
         self.all_in=False
 
     def distribute_pots(self):
+        print("Reach this ?")
         print(cr.Fore.MAGENTA+f"Number of pots : {len(self.board.pots)}"+cr.Style.RESET_ALL)
+        print("Reach that !")
         for i in self.board.pots:
             winner_listup = list()
             player_list = i['player_list']
             pot = i['value']
-            win,combo = self.showdown([x for x in player_list if x.active==True])
+            win,combo = self.showdown([x for x in player_list if x.active==True]) #unyield each showdown
             if type(win)==list:
                 print("Splitting the pot")
                 print(f"Splitting between : {win}")
@@ -454,6 +548,7 @@ class Game:
                             winner_listup.append((j.id,split_pot))
                     i['value']=0
             else: # One winner
+                print("No split to do")
                 win.money+=pot
                 winner_listup.append((win.id,pot))
                 pot=0
